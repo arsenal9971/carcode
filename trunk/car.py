@@ -1,9 +1,21 @@
 # car.py
 
-import pygame
+import pygame, os
 from math import sin, cos, radians
 
 CAR_DEBUG = False
+
+def load_sound(fname, volume = 0.5, data_folder = 'data'):
+    try:
+        fullname = os.path.join(data_folder, fname)
+        sound = pygame.mixer.Sound(fullname)
+        sound.set_volume(volume)
+    except pygame.error, message:
+        print 'Cannot load sound:', fullname
+        raise SystemExit, message
+
+    return sound
+    
 
 class Light(object):
     """ A car light.
@@ -50,6 +62,7 @@ class BlinkingLight(Light):
 
 class Car(pygame.sprite.Sprite):
     def __init__(self, screen, x_init = 0, y_init = 0, angle_init = 0.0,
+                 running_init = True,
                  body_color = (131, 111, 255)  # SlateBlue1
                  ):
         pygame.sprite.Sprite.__init__(self) # call Sprite initializer
@@ -78,6 +91,9 @@ class Car(pygame.sprite.Sprite):
 
         # gear: forward or reverse
         self.forward_gear = True
+
+        # is the car engine on?
+        self.running = running_init
         
         # set the light colors
         brake_off_color = (255, 99, 71) # tomato
@@ -111,29 +127,38 @@ class Car(pygame.sprite.Sprite):
         self.lights = [self.l_brake, self.r_brake, self.fl_turn, self.fr_turn,
                        self.bl_turn, self.br_turn]
 
-        # load horn sound
-        self.sound = False
-        if pygame.mixer:
-            pygame.mixer.music.set_volume(0.5)  # between 0.0 and 1.0
-            try:
-                pygame.mixer.music.load('data/carhornshort.wav')
-                self.sound = True
-            except:
-                print 'Could not load car horn sound effect.'
+        # load sound effects
+        self.horn_sound = load_sound('carhornshort.wav')
+        self.start_sound = load_sound('Carstart.wav')
+        
         if CAR_DEBUG: print 'Car __init__ finished'
+
+    def turn_flip(self):
+        if self.running:
+            self.turn_off()
+        else:
+            self.turn_on()
+            
+    def turn_on(self):
+        if not self.running:            
+            self.running = True
+            self.start_sound.play()
+            
+    def turn_off(self): self.running = False
 
     def speed(self): return self.speed
 
     def moving(self): return abs(self.speed) > self.eps
 
     def accelerate(self, s = 2):
-        if self.forward_gear:
-            self.speed += s
-        else:
-            self.speed -= s
+        if self.running:
+            if self.forward_gear:
+                self.speed += s
+            else:
+                self.speed -= s
 
     def brake(self, s = 0.8):
-        if self.moving():
+        if self.running and self.moving():
             if self.forward_gear:
                 self.speed -= s
             else:
@@ -149,13 +174,13 @@ class Car(pygame.sprite.Sprite):
         self.forward_gear = not self.forward_gear
 
     def honk(self):
-        if self.sound: pygame.mixer.music.play()
+        self.horn_sound.play()
     
     def steer_left(self, deg = 7.0):
-        if self.moving(): self.angle = round(self.angle + deg) % 360
+        if self.running and self.moving(): self.angle = round(self.angle + deg) % 360
             
     def steer_right(self, deg = -7.0):
-        if self.moving(): self.angle = round(self.angle + deg) % 360
+        if self.running and self.moving(): self.angle = round(self.angle + deg) % 360
  
     def update(self):
         # copy the original unrotated car body

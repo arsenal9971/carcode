@@ -70,14 +70,15 @@ class Arena(object):
     def __add(self, sprite):
         self.allsprites.add(sprite)
 
-    def add_key_car(self, x = 0, y = 0):
+    def add_key_car(self, x = 0, y = 0, running = True):
         """ Add a car controlled by the keyboard.
         """
         if not self.key_car:
             self.key_car = True
-            self.kcar = car.Car(self.screen, x, y)
+            self.kcar = car.Car(self.screen, x, y, running_init = running)
             self.__add(self.kcar)
             self.__init_key_commands()
+            print self.key_command
             self.cars.append(self.kcar)
 
     def add_car(self, x = 0, y = 0):
@@ -94,7 +95,8 @@ class Arena(object):
                             K_LEFT:self.kcar.steer_left,
                             K_RIGHT:self.kcar.steer_right,
                             K_g:self.kcar.flip_gear,
-                            K_h:self.kcar.honk}
+                            K_h:self.kcar.honk,
+                            K_s:self.kcar.turn_flip}
 
     def run_main_loop(self):
         # main animation loop
@@ -103,11 +105,18 @@ class Arena(object):
         while True:
             clock.tick(60)
             for event in pygame.event.get():
-                if event.type == QUIT: 
-                    sys.exit(0)
+                if event.type == QUIT:
+                    print 'QUIT event ...'
+                    return
                 elif self.key_car and event.type == KEYDOWN:  # press any key to quit
-                    try: self.key_command[event.key]()
-                    except: sys.exit(0)
+                    try:
+                        self.key_command[event.key]()
+                    except KeyError:
+                        print 'Unknown key command: %s' % event.key
+                        print self.key_command 
+                        print 'Exiting ...'
+                        return
+
                     ## if event.key == K_UP:
 ##                         self.kcar.accelerate()
 ##                     elif event.key == K_DOWN:
