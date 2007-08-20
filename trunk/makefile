@@ -15,7 +15,7 @@ archive: $(ARCHIVE)
 # -u option updates files in the archive
 # -x option ensures the data/.svn folder is not archived
 $(ARCHIVE): $(PY) $(MISC) $(PNG) $(WAV)
-	ZIP -u $(ARCHIVE) $(PY) $(MISC) $(PNG) $(WAV) #-x data/.svn
+	$(ZIP) -u $(ARCHIVE) $(PY) $(MISC) $(PNG) $(WAV) #-x data/.svn
 
 # - means to ignore errors
 # @ prevents echoing
