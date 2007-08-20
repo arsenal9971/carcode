@@ -1,9 +1,9 @@
 # carcode archive makefile
 
-# macros
+# variables
 ZIP = zip
 ARCHIVE = archive.zip
-PY = trial1.py arena.py car.py
+PY = trial*.py arena.py car.py
 MISC = readme.txt
 DATA_DIR = data
 PNG = $(DATA_DIR)/*.png
