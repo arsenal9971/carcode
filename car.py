@@ -37,10 +37,9 @@ class Light(object):
 	    return self.off_color
 
 class BlinkingLight(Light):
-    """ Simulates blinking by flipping the light on or off every
-    blink_count calls to color(). Of course, in reality, a blinking
-    light usually blinks by time increments, so if for some reason
-    color() is called more frequently, or less frequently, than
+    """ Blinks by flipping the light color every  blink_count calls to color().
+    Of course, in reality, a blinking light usually blinks by time increments, so if
+    for some reason color() is called more frequently, or less frequently, than
     normal, the blinking could be too slow or fast.
     """
     def __init__(self, on_color, off_color, rect, blinking = True, blink_count = 50):
@@ -58,6 +57,9 @@ class BlinkingLight(Light):
             if self.count == self.blink_count:
                 self.onoff_flip()
                 self.count = 0
+        else:
+            self.turn_off()
+
         return Light.color(self)
 
 class Car(pygame.sprite.Sprite):
@@ -130,21 +132,26 @@ class Car(pygame.sprite.Sprite):
         # load sound effects
         self.horn_sound = load_sound('carhornshort.wav')
         self.start_sound = load_sound('Carstart.wav')
+        self.idle_sound = load_sound('car_idle.wav', volume = 0.05)   # hotidle.wav
         
         if CAR_DEBUG: print 'Car __init__ finished'
 
-    def turn_flip(self):
+    def engine_flip(self):
         if self.running:
-            self.turn_off()
+            self.engine_off()
         else:
-            self.turn_on()
+            self.engine_on()
             
-    def turn_on(self):
+    def engine_on(self):
         if not self.running:            
             self.running = True
             self.start_sound.play()
+            self.idle_sound.play(-1)  # loop sound forever
             
-    def turn_off(self): self.running = False
+    def engine_off(self):
+        if self.running:
+            self.running = False
+            self.idle_sound.stop()
 
     def speed(self): return self.speed
 
@@ -181,7 +188,20 @@ class Car(pygame.sprite.Sprite):
             
     def steer_right(self, deg = -7.0):
         if self.running and self.moving(): self.angle = round(self.angle + deg) % 360
- 
+
+    # turn on/off left indicator lights
+    def blinker_left_flip(self):
+        if self.running:
+            self.fl_turn.blink_flip()
+            self.bl_turn.blink_flip()
+
+        
+    # turn on/off right indicator lights
+    def blinker_right_flip(self):
+        if self.running:
+            self.fr_turn.blink_flip()
+            self.br_turn.blink_flip()
+
     def update(self):
         # copy the original unrotated car body
         self.image = self.original_image.copy()
