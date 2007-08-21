@@ -25,7 +25,9 @@ def load_image(name, colorkey = None, data_folder = 'data'):
 
 
 class Arena(object):
-    def __init__(self, width = 800, height = 800, background_image = 'threeSpaces.png', caption = 'Car Arena'):
+    def __init__(self, width = 800, height = 800,
+                 background_image = 'threeSpaces.png', caption = 'Car Arena'):
+        
         if not pygame.font: print 'Warning, fonts disabled'
         if not pygame.mixer: print 'Warning, sound disabled'
         
@@ -34,11 +36,6 @@ class Arena(object):
         pygame.key.set_repeat(50, 50) # produce multiple key events when a
                                       # key is held down
                                       # (delay, interval) in milliseconds
-
-        # make the background
-        ##self.background = pygame.Surface(self.screen.get_size())
-        ##self.background = self.background.convert()
-        ##self.background.fill((250, 250, 250))   # white
 
         # background image
         window = pygame.display.set_mode((width, height))
@@ -49,8 +46,8 @@ class Arena(object):
             self.screen = pygame.display.get_surface()
         except Exception, inst:
             if DEBUG_ARENA: print 'Background exception: %s' % inst
-            # if for some reason the background image can't be loaded, then make a white background
-            # of the supplied width and height
+            # if for some reason the background image can't be loaded, then make
+            # a white background of the supplied width and height
             self.screen = pygame.display.get_surface()
             self.background = pygame.Surface(self.screen.get_size())
             self.background = self.background.convert()
@@ -78,13 +75,12 @@ class Arena(object):
             self.kcar = car.Car(self.screen, x, y, running_init = running)
             self.__add(self.kcar)
             self.__init_key_commands()
-            print self.key_command
             self.cars.append(self.kcar)
 
-    def add_car(self, x = 0, y = 0):
+    def add_car(self, x = 0, y = 0, running = True):
         """ Add a new car to the arena. Returns a reference to the car.
         """
-        c = car.Car(self.screen, x, y)
+        c = car.Car(self.screen, x, y, running_init = running)
         self.__add(c)
         self.cars.append(c)
         return c
@@ -96,7 +92,9 @@ class Arena(object):
                             K_RIGHT:self.kcar.steer_right,
                             K_g:self.kcar.flip_gear,
                             K_h:self.kcar.honk,
-                            K_s:self.kcar.turn_flip}
+                            K_s:self.kcar.engine_flip,
+                            K_z:self.kcar.blinker_left_flip,
+                            K_c:self.kcar.blinker_right_flip}
 
     def run_main_loop(self):
         # main animation loop
@@ -112,25 +110,11 @@ class Arena(object):
                     try:
                         self.key_command[event.key]()
                     except KeyError:
-                        print 'Unknown key command: %s' % event.key
-                        print self.key_command 
-                        print 'Exiting ...'
+                        if DEBUG_EVENTS:
+                            print 'Unknown key command: %s' % event.key
+                            print self.key_command 
+                            print 'Exiting ...'
                         return
-
-                    ## if event.key == K_UP:
-##                         self.kcar.accelerate()
-##                     elif event.key == K_DOWN:
-##                         self.kcar.brake()
-##                     elif event.key == K_LEFT:
-##                         self.kcar.steer_left()
-##                     elif event.key == K_RIGHT:
-##                         self.kcar.steer_right()
-##                     elif event.key == K_g:
-##                         self.kcar.flip_gear()
-##                     elif event.key == K_h:
-##                         self.kcar.honk()
-##                     else:
-##                         sys.exit(0)
                 else: 
                     if DEBUG_EVENTS: print event
 
