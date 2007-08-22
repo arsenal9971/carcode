@@ -1,6 +1,6 @@
 # car.py
 
-import pygame, os
+import pygame, os, time
 from math import sin, cos, radians
 
 CAR_DEBUG = False
@@ -146,6 +146,9 @@ class Car(pygame.sprite.Sprite):
         if not self.running:            
             self.running = True
             self.start_sound.play()
+            # wait until the starting sound finishes before playing
+            # the idling sound
+            time.sleep(self.start_sound.get_length())
             self.idle_sound.play(-1)  # loop sound forever
             
     def engine_off(self):
