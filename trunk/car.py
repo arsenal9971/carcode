@@ -25,42 +25,48 @@ class Light(object):
     def __init__(self, on_color, off_color, rect):
         self.on_color, self.off_color = on_color, off_color
         self.on = False
+        self.cc = off_color   # current color
         self.rect = rect
 
-    def turn_on(self): self.on = True
-    def turn_off(self): self.on = False
-    def onoff_flip(self): self.on = not self.on
-    def color(self): 
-	if self.on:
-	    return self.on_color
-	else:
-	    return self.off_color
+    def turn_on(self):
+        self.on = True
+        self.cc = self.on_color
 
+    def turn_off(self):
+        self.on = False
+        self.cc = self.off_color
+
+    def onoff_flip(self): self.on = not self.on
+
+    def color(self):
+        return self.cc
+    
 class BlinkingLight(Light):
     """ Blinks by flipping the light color every  blink_count calls to color().
     Of course, in reality, a blinking light usually blinks by time increments, so if
     for some reason color() is called more frequently, or less frequently, than
     normal, the blinking could be too slow or fast.
     """
-    def __init__(self, on_color, off_color, rect, blinking = True, blink_count = 50):
+    def __init__(self, on_color, off_color, rect, blinking = False, blink_count = 50):
         Light.__init__(self, on_color, off_color, rect)  # call superclass constructor
-        self.blinking = blinking
         self.blink_count = blink_count  # change color after this many updates
         self.count = 0
 
-    def blink_on(self): self.blinking = True
-    def blink_off(self): self.blinking = False
-    def blink_flip(self): self.blinking = not self.blinking
+    def color_flip(self):
+        if self.cc == self.on_color:
+            self.cc = self.off_color
+        else:
+            self.cc = self.on_color
+
     def color(self):
-        if self.blinking:
+        if not self.on:
+            return self.cc
+        else:
             self.count += 1
             if self.count == self.blink_count:
-                self.onoff_flip()
+                self.color_flip()
                 self.count = 0
-        else:
-            self.turn_off()
-
-        return Light.color(self)
+            return self.cc
 
 class Car(pygame.sprite.Sprite):
     def __init__(self, screen, x_init = 0, y_init = 0, angle_init = 0.0,
@@ -108,9 +114,6 @@ class Car(pygame.sprite.Sprite):
                              pygame.Rect(0, 5, 8, 5))
         self.r_brake = Light(brake_off_color, brake_on_color,
                              pygame.Rect(0, 15, 8, 5))
-
-        self.l_brake.turn_off()
-        self.r_brake.turn_off()
         
         self.fl_turn = BlinkingLight(turn_on_color, turn_off_color,
                                      pygame.Rect(0, 0, 8, 5))
@@ -120,10 +123,8 @@ class Car(pygame.sprite.Sprite):
                                      pygame.Rect(40, 0, 8, 5))
         self.br_turn = BlinkingLight(turn_on_color, turn_off_color,
                                      pygame.Rect(40, 20, 8, 5))
-        self.fl_turn.blink_off()
-        self.fr_turn.blink_off()
-        self.bl_turn.blink_off()
-        self.br_turn.blink_off()
+
+        
 
         # store all the lights in a list for easy processing
         self.lights = [self.l_brake, self.r_brake, self.fl_turn, self.fr_turn,
@@ -147,8 +148,8 @@ class Car(pygame.sprite.Sprite):
         if not self.running:            
             self.running = True
             self.start_sound.play()
-            # wait until the starting sound finishes before playing
-            # the idling sound
+            # wait until the starting sound finishes 
+            # before playing the idling sound
             time.sleep(self.start_sound.get_length())
             self.idle_sound.play(-1)  # loop sound forever
             
@@ -156,6 +157,9 @@ class Car(pygame.sprite.Sprite):
         if self.running:
             self.running = False
             self.idle_sound.stop()
+            # turn off all the lights
+            for light in self.lights:
+                light.turn_off()
 
     def speed(self): return self.speed
 
@@ -196,16 +200,16 @@ class Car(pygame.sprite.Sprite):
     # turn on/off left indicator lights
     def blinker_left_flip(self):
         if self.running:
-            self.fl_turn.blink_flip()
-            self.bl_turn.blink_flip()
+            self.fl_turn.onoff_flip()
+            self.bl_turn.onoff_flip()
 
         
     # turn on/off right indicator lights
     def blinker_right_flip(self):
         if self.running:
-            self.fr_turn.blink_flip()
-            self.br_turn.blink_flip()
-
+            self.fr_turn.onoff_flip()
+            self.br_turn.onoff_flip()
+        
     def update(self):
         # copy the original unrotated car body
         self.image = self.original_image.copy()
