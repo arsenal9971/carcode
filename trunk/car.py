@@ -132,7 +132,8 @@ class Car(pygame.sprite.Sprite):
         # load sound effects
         self.horn_sound = load_sound('carhornshort.wav')
         self.start_sound = load_sound('Carstart.wav')
-        self.idle_sound = load_sound('car_idle.wav', volume = 0.05)   # hotidle.wav
+        self.idle_sound = load_sound('car_idle.wav', volume = 0.05)
+        # or: hotidle.wav
         
         if CAR_DEBUG: print 'Car __init__ finished'
 
