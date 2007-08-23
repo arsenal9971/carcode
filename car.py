@@ -110,10 +110,14 @@ class Car(pygame.sprite.Sprite):
         turn_on_color = (255, 69, 0)  # orange red
 
         # create the lights
-        self.l_brake = Light(brake_off_color, brake_on_color,
-                             pygame.Rect(0, 5, 8, 5))
-        self.r_brake = Light(brake_off_color, brake_on_color,
-                             pygame.Rect(0, 15, 8, 5))
+
+        ## self.l_brake = Light(brake_off_color, brake_on_color,
+##                              pygame.Rect(0, 5, 8, 5))   
+##         self.r_brake = Light(brake_off_color, brake_on_color,
+##                              pygame.Rect(0, 15, 8, 5))
+
+        self.rear_brake = Light(brake_off_color, brake_on_color,
+                                pygame.Rect(0, 8, 3, 9))  # (left, top, width, height)
         
         self.fl_turn = BlinkingLight(turn_on_color, turn_off_color,
                                      pygame.Rect(0, 0, 8, 5))
@@ -127,7 +131,7 @@ class Car(pygame.sprite.Sprite):
         
 
         # store all the lights in a list for easy processing
-        self.lights = [self.l_brake, self.r_brake, self.fl_turn, self.fr_turn,
+        self.lights = [self.rear_brake, self.fl_turn, self.fr_turn,
                        self.bl_turn, self.br_turn]
 
         # load sound effects
