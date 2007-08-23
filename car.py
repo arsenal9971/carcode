@@ -45,7 +45,7 @@ class Light(object):
     def color(self):
         return self.cc
     
-class BlinkingLight(Light):
+class Blinker(Light):
     """ Blinks by flipping the light color every  blink_count calls to color().
     Of course, in reality, a blinking light usually blinks by time increments, so if
     for some reason color() is called more frequently, or less frequently, than
@@ -118,16 +118,14 @@ class Car(pygame.sprite.Sprite):
         self.rear_brake = Light(brake_off_color, brake_on_color,
                                 pygame.Rect(0, 8, 3, 9))  # (left, top, width, height)
         
-        self.fl_turn = BlinkingLight(turn_on_color, turn_off_color,
-                                     pygame.Rect(0, 0, 8, 5))
-        self.fr_turn = BlinkingLight(turn_on_color, turn_off_color,
-                                     pygame.Rect(0, 20, 8, 5))
-        self.bl_turn = BlinkingLight(turn_on_color, turn_off_color,
-                                     pygame.Rect(40, 0, 8, 5))
-        self.br_turn = BlinkingLight(turn_on_color, turn_off_color,
-                                     pygame.Rect(40, 20, 8, 5))
-
-        
+        self.fl_turn = Blinker(turn_on_color, turn_off_color,
+                               pygame.Rect(0, 0, 8, 5))
+        self.fr_turn = Blinker(turn_on_color, turn_off_color,
+                               pygame.Rect(0, 20, 8, 5))
+        self.bl_turn = Blinker(turn_on_color, turn_off_color,
+                               pygame.Rect(40, 0, 8, 5))
+        self.br_turn = Blinker(turn_on_color, turn_off_color,
+                               pygame.Rect(40, 20, 8, 5))
 
         # store all the lights in a list for easy processing
         self.lights = [self.rear_brake, self.fl_turn, self.fr_turn,
