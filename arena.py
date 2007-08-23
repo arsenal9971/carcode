@@ -68,12 +68,14 @@ class Arena(object):
     def __add(self, sprite):
         self.allsprites.add(sprite)
 
-    def add_key_car(self, x = 0, y = 0, running = True):
+    def add_key_car(self, x = 0, y = 0, running = True, tracer_down = False,
+                    show_rect = False):
         """ Add a car controlled by the keyboard.
         """
         if not self.key_car:
             self.has_key_car = True
-            self.key_car = car.TraceCar(self.screen, x, y, running_init = running)
+            self.key_car = car.Car(self.screen, x, y, running_init = running,
+                                   tracer_down = tracer_down, show_rect = show_rect)
             self.__add(self.key_car)
             self.__init_key_commands()
             self.cars.append(self.key_car)
@@ -123,9 +125,16 @@ class Arena(object):
             self.screen.blit(self.background, (0, 0))
             self.allsprites.draw(self.screen)
 
-            # draw sprite tracer trails
-            pygame.draw.line(self.background, self.key_car.tracer_color,
-                             self.key_car.start.midleft, self.key_car.end.midleft,
-                             1)
+            # draw car tracers and rectangles
+            for car in self.cars:
+                if car.tracer_down:
+                    # draw on background so that lines are permanent
+                    pygame.draw.line(self.background, car.tracer_color,
+                                     car.start.center, car.end.center,
+                                     car.tracer_width)
+                if car.show_rect:
+                    # draw on screen so rectangles move
+                    pygame.draw.rect(self.screen, (255, 255, 0),
+                                     car.image.get_rect(center = car.rect.center), 1)
             
             pygame.display.flip()

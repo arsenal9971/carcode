@@ -76,7 +76,11 @@ class Blinker(Light):
 class Car(pygame.sprite.Sprite):
     def __init__(self, screen, x_init = 0, y_init = 0, angle_init = 0.0,
                  running_init = True,
-                 body_color = (131, 111, 255)  # SlateBlue1
+                 body_color = (131, 111, 255),  # SlateBlue1
+                 tracer_color = (255, 0, 0),  # red
+                 tracer_down = False,
+                 tracer_width = 1,
+                 show_rect = False
                  ):
         pygame.sprite.Sprite.__init__(self) # call Sprite initializer
         self.original_image = pygame.Surface((48, 25)).convert_alpha() # 48 wide, 25 high
@@ -136,7 +140,15 @@ class Car(pygame.sprite.Sprite):
         self.start_sound = load_sound('Carstart.wav')
         self.idle_sound = load_sound('car_idle.wav', volume = 0.05)
         # or: hotidle.wav
+
+        # tracer
+        self.tracer_color = tracer_color
+        self.tracer_down = tracer_down
+        self.tracer_width = tracer_width
+        self.start, self.end = self.rect, self.rect
         
+        # flags
+        self.show_rect = show_rect
         if CAR_DEBUG: print 'Car __init__ finished'
 
     def engine_flip(self):
@@ -226,14 +238,19 @@ class Car(pygame.sprite.Sprite):
 
         # move to new position
         if self.moving():
-            # calculate new dx, dy values
-            ##self.__forward()
+            # remember starting position
+            self.start = self.image.get_rect()  #.move(0, 0)  # better way to copy a rect?
+            
             rad = radians(self.angle)
             self.dx = self.speed * cos(rad)
             self.dy = -self.speed * sin(rad)
             
             self.rect.top = (round(self.rect.top + self.dy)) % self.screen.get_height()
             self.rect.left = (round(self.rect.left + self.dx)) % self.screen.get_width()
+
+            # remember ending position
+            self.end = self.image.get_rect()  #.move(0, 0)  # better way to copy a rect?
+            
             self.speed *= self.decel  # deccelerate the car
         else:
             self.speed = 0
@@ -248,49 +265,50 @@ class Car(pygame.sprite.Sprite):
                                                                                                   self.angle)
 
 
-class TraceCar(Car):
-    def __init__(self, screen, x_init = 0, y_init = 0, angle_init = 0.0,
-                 running_init = True,
-                 body_color = (131, 111, 255),  # SlateBlue1
-                 tracer_color = (255, 0, 0),    # red
-                 tracer_down = True
-                 ):
-        Car.__init__(self, screen, x_init, y_init,   # call Car initializer
-                     angle_init, running_init, body_color)
-        self.tracer_color = tracer_color
-        self.tracer_down = tracer_down
-        self.start, self.end = self.rect, self.rect
+## class TraceCar(Car):
+##     def __init__(self, screen, x_init = 0, y_init = 0, angle_init = 0.0,
+##                  running_init = True,
+##                  body_color = (131, 111, 255),  # SlateBlue1
+##                  tracer_color = (255, 0, 0),    # red
+##                  tracer_down = True
+##                  ):
+##         Car.__init__(self, screen, x_init, y_init,   # call Car initializer
+##                      angle_init, running_init, body_color)
+##         self.tracer_color = tracer_color
+##         self.tracer_down = tracer_down
+##         self.start, self.end = self.rect, self.rect
 
-    def update(self):
-        # copy the original unrotated car body
-        self.image = self.original_image.copy()
+##     def update(self):
+##         # copy the original unrotated car body
+##         self.image = self.original_image.copy()
         
-        # draw the lights
-        for light in self.lights:
-            self.image.fill(light.color(), light.rect)
+##         # draw the lights
+##         for light in self.lights:
+##             self.image.fill(light.color(), light.rect)
 	
-        # rotate the car around the axel point
-	##self.image = pygame.transform.scale2x(self.image)
-        ##self.image = pygame.transform.rotate(self.image, self.angle)
-	self.image = pygame.transform.rotozoom(self.image, self.angle, 2.8)
+##         # rotate the car around the axel point
+## 	##self.image = pygame.transform.scale2x(self.image)
+##         self.image = pygame.transform.rotate(self.image, self.angle)
+## 	##self.image = pygame.transform.rotozoom(self.image, self.angle, 2.8)
 
-        # move to new position
-        if self.moving():
-            # remember starting position
-            self.start = self.rect
+##         # move to new position
+##         if self.moving():
+##             # remember starting position
+##             self.start = self.rect.move(0, 0)  # better way to copy a rect?
             
-            # calculate new dx, dy values
-            rad = radians(self.angle)
-            self.dx = self.speed * cos(rad)
-            self.dy = -self.speed * sin(rad)
+##             # calculate new dx, dy values
+##             rad = radians(self.angle)
+##             self.dx = self.speed * cos(rad)
+##             self.dy = -self.speed * sin(rad)
             
-            self.rect.top = (round(self.rect.top + self.dy)) % self.screen.get_height()
-            self.rect.left = (round(self.rect.left + self.dx)) % self.screen.get_width()
+##             self.rect.top = (round(self.rect.top + self.dy)) % self.screen.get_height()
+##             self.rect.left = (round(self.rect.left + self.dx)) % self.screen.get_width()
 
-            # remember ending position
-            self.end = self.rect
-            
-            self.speed *= self.decel  # deccelerate the car
-        else:
-            self.speed = 0
+##             # remember ending position
+##             self.end = self.rect.move(0, 0)  # better way to copy a rect?
+
+##             # deccelerate the car
+##             self.speed *= self.decel  
+##         else:
+##             self.speed = 0
 
