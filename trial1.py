@@ -3,8 +3,8 @@ import arena
 
 def main():
     a = arena.Arena() #background_image = 'twoDots.png')
-    a.add_key_car(running = False)
-    rc = a.add_car()
+    a.add_key_car(running = True)
+    #rc = a.add_car()
     a.run_main_loop()
 
 if __name__ == '__main__':

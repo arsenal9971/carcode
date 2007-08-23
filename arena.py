@@ -59,7 +59,8 @@ class Arena(object):
         self.allsprites = pygame.sprite.RenderPlain()  # a pygame sprite Group class
 
         # is there a keyboard controlled car in the arena?
-        self.key_car = False
+        self.has_key_car = False
+        self.key_car = None
 
         # list of all the cars in this arena
         self.cars = []
@@ -71,11 +72,11 @@ class Arena(object):
         """ Add a car controlled by the keyboard.
         """
         if not self.key_car:
-            self.key_car = True
-            self.kcar = car.Car(self.screen, x, y, running_init = running)
-            self.__add(self.kcar)
+            self.has_key_car = True
+            self.key_car = car.TraceCar(self.screen, x, y, running_init = running)
+            self.__add(self.key_car)
             self.__init_key_commands()
-            self.cars.append(self.kcar)
+            self.cars.append(self.key_car)
 
     def add_car(self, x = 0, y = 0, running = True):
         """ Add a new car to the arena. Returns a reference to the car.
@@ -86,15 +87,15 @@ class Arena(object):
         return c
 
     def __init_key_commands(self):
-        self.key_command = {K_UP:self.kcar.accelerate,
-                            K_DOWN:self.kcar.brake,
-                            K_LEFT:self.kcar.steer_left,
-                            K_RIGHT:self.kcar.steer_right,
-                            K_g:self.kcar.flip_gear,
-                            K_h:self.kcar.honk,
-                            K_s:self.kcar.engine_flip,
-                            K_z:self.kcar.blinker_left_flip,
-                            K_c:self.kcar.blinker_right_flip}
+        self.key_command = {K_UP:self.key_car.accelerate,
+                            K_DOWN:self.key_car.brake,
+                            K_LEFT:self.key_car.steer_left,
+                            K_RIGHT:self.key_car.steer_right,
+                            K_g:self.key_car.flip_gear,
+                            K_h:self.key_car.honk,
+                            K_s:self.key_car.engine_flip,
+                            K_z:self.key_car.blinker_left_flip,
+                            K_c:self.key_car.blinker_right_flip}
 
     def run_main_loop(self):
         # main animation loop
@@ -106,7 +107,7 @@ class Arena(object):
                 if event.type == QUIT:
                     print 'QUIT event ...'
                     return
-                elif self.key_car and event.type == KEYDOWN:  # press any key to quit
+                elif self.has_key_car and event.type == KEYDOWN:  # press any key to quit
                     try:
                         self.key_command[event.key]()
                     except KeyError:
@@ -121,4 +122,10 @@ class Arena(object):
             self.allsprites.update()
             self.screen.blit(self.background, (0, 0))
             self.allsprites.draw(self.screen)
+
+            # draw sprite tracer trails
+            pygame.draw.line(self.background, self.key_car.tracer_color,
+                             self.key_car.start.midleft, self.key_car.end.midleft,
+                             1)
+            
             pygame.display.flip()

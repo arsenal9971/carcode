@@ -4,6 +4,7 @@ import pygame, os, time
 from math import sin, cos, radians
 
 CAR_DEBUG = False
+TRACER_CAR_DEBUG = True
 
 def load_sound(fname, volume = 0.5, data_folder = 'data'):
     try:
@@ -114,7 +115,6 @@ class Car(pygame.sprite.Sprite):
         turn_on_color = (255, 69, 0)  # orange red
 
         # create the lights
-
         self.rear_brake = Light(brake_off_color, brake_on_color,
                                 pygame.Rect(0, 8, 3, 9))  # (left, top, width, height)
         
@@ -246,3 +246,51 @@ class Car(pygame.sprite.Sprite):
                                                                                                   self.dx,
                                                                                                   self.dy,
                                                                                                   self.angle)
+
+
+class TraceCar(Car):
+    def __init__(self, screen, x_init = 0, y_init = 0, angle_init = 0.0,
+                 running_init = True,
+                 body_color = (131, 111, 255),  # SlateBlue1
+                 tracer_color = (255, 0, 0),    # red
+                 tracer_down = True
+                 ):
+        Car.__init__(self, screen, x_init, y_init,   # call Car initializer
+                     angle_init, running_init, body_color)
+        self.tracer_color = tracer_color
+        self.tracer_down = tracer_down
+        self.start, self.end = self.rect, self.rect
+
+    def update(self):
+        # copy the original unrotated car body
+        self.image = self.original_image.copy()
+        
+        # draw the lights
+        for light in self.lights:
+            self.image.fill(light.color(), light.rect)
+	
+        # rotate the car around the axel point
+	##self.image = pygame.transform.scale2x(self.image)
+        ##self.image = pygame.transform.rotate(self.image, self.angle)
+	self.image = pygame.transform.rotozoom(self.image, self.angle, 2.8)
+
+        # move to new position
+        if self.moving():
+            # remember starting position
+            self.start = self.rect
+            
+            # calculate new dx, dy values
+            rad = radians(self.angle)
+            self.dx = self.speed * cos(rad)
+            self.dy = -self.speed * sin(rad)
+            
+            self.rect.top = (round(self.rect.top + self.dy)) % self.screen.get_height()
+            self.rect.left = (round(self.rect.left + self.dx)) % self.screen.get_width()
+
+            # remember ending position
+            self.end = self.rect
+            
+            self.speed *= self.decel  # deccelerate the car
+        else:
+            self.speed = 0
+
