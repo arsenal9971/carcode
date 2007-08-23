@@ -36,7 +36,11 @@ class Light(object):
         self.on = False
         self.cc = self.off_color
 
-    def onoff_flip(self): self.on = not self.on
+    def onoff_flip(self):
+        if self.on:
+            self.turn_off()
+        else:
+            self.turn_on()
 
     def color(self):
         return self.cc
@@ -110,11 +114,6 @@ class Car(pygame.sprite.Sprite):
         turn_on_color = (255, 69, 0)  # orange red
 
         # create the lights
-
-        ## self.l_brake = Light(brake_off_color, brake_on_color,
-##                              pygame.Rect(0, 5, 8, 5))   
-##         self.r_brake = Light(brake_off_color, brake_on_color,
-##                              pygame.Rect(0, 15, 8, 5))
 
         self.rear_brake = Light(brake_off_color, brake_on_color,
                                 pygame.Rect(0, 8, 3, 9))  # (left, top, width, height)
