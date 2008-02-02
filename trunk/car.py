@@ -46,10 +46,11 @@ class Light(object):
     def color(self):
         return self.cc
     
+
 class Blinker(Light):
     """ Blinks by flipping the light color every  blink_count calls to color().
     Of course, in reality, a blinking light usually blinks by time increments, so if
-    for some reason color() is called more frequently, or less frequently, than
+    for some reason color() is called more frequently or less frequently than
     normal, the blinking could be too slow or fast.
     """
     def __init__(self, on_color, off_color, rect, blinking = False, blink_count = 50):

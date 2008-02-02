@@ -6,6 +6,8 @@ from pygame.locals import *
 DEBUG_EVENTS = False
 DEBUG_ARENA = True
 
+WHITE = (250, 250, 250)
+
 def load_image(name, colorkey = None, data_folder = 'data'):
     """ Utility function for loading images.
     Returns (image, rectangle).
@@ -51,7 +53,7 @@ class Arena(object):
             self.screen = pygame.display.get_surface()
             self.background = pygame.Surface(self.screen.get_size())
             self.background = self.background.convert()
-            self.background.fill((250, 250, 250))   # white
+            self.background.fill(WHITE)
             
         pygame.display.set_caption(caption)
         
