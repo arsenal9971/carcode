@@ -14,3 +14,5 @@ The next features to implement include:
   * Demo programs and tutorials --- suitable for beginners --- need to be written.
 
   * Graphical extensions, such as more car details (customization?), environmental details such as puddles, oil slicks, pedestrians, lamp posts, other cars, etc. Indeed, many features that you see in other car games or the like could be added, but, ideally, they should all be things that the beginning programmer should be able to understand and interact with via the car they are controlling.
+
+  * 2D is nice, but 2.5D (e.g. like [Roller Coaster Tycoon http://www.atari.com/rollercoastertycoon/]) might be an appealing improvement. Possibly full-blown 3D might also be used, but the problem with 3D is that simply navigating and moving around could get in the way and make it less useful as an educational tool. Perhaps [pyglet http://www.pyglet.org/] could be used for this?
