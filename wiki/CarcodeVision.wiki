@@ -1,0 +1,16 @@
+#labels Phase-Requirements
+#Vision for carcode.
+
+carcode is intended as a tool for helping beginners learn to program in Python. It simulates a two-dimensional robotic car that you must write programs to control and do simple tasks, such as parking. It can be thought of as an extension of turtle graphics.
+
+Currently a basic user-driven version has been created allowing the user to drive the car around the screen.
+
+The next features to implement include:
+
+  * Add pixel-color sensors to sense that return the color of the pixel they are currently above. These can be used by the car to help steer it automatically, to find yellow lines, etc. [Squeak http://www.squeak.org/] provides something similar (indeed, Squeak could be a good source of ideas for other features to add).
+
+  * Create a super simple, easy to understand API that can be used by beginners to write cool and interesting programs. It should let the programmer access all the basic car features. Clear and complete documentation is important here.
+
+  * Demo programs and tutorials --- suitable for beginners --- need to be written.
+
+  * Graphical extensions, such as more car details (customization?), environmental details such as puddles, oil slicks, pedestrians, lamp posts, other cars, etc. Indeed, many features that you see in other car games or the like could be added, but, ideally, they should all be things that the beginning programmer should be able to understand and interact with via the car they are controlling.
