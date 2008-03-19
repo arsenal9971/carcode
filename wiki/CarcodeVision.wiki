@@ -1,7 +1,9 @@
 #labels Phase-Requirements,Featured
 #Vision for carcode.
 
-carcode is intended as a tool for helping beginners learn to program in Python. It simulates a two-dimensional robotic car that you must write programs to control and do simple tasks, such as parking. It can be thought of as an extension of turtle graphics.
+carcode is intended as a tool for helping beginners learn to program in Python. It simulates a two-dimensional robotic car that you must write programs to control and do simple tasks, such as parking. 
+
+It can be thought of as an extension of turtle graphics, similar in some ways to [Squeak http://www.squeak.org/] or Java's [Robocode http://robocode.sourceforge.net/]. However, both of those projects are relatively complex, and have a relatively steep learning curve. 
 
 Currently a basic user-driven version has been created allowing the user to drive the car around the screen.
 
@@ -19,4 +21,4 @@ The next features to implement include:
 
   * Graphical extensions, such as more car details (customization?), environmental details such as traffic lights, puddles, pedestrians, lamp posts, other cars, etc. Indeed, many features that you see in other car games or the like could be added, but, ideally, they should all be things that the beginning programmer should be able to understand and interact with via the car they are controlling.
 
-  * 2D is nice, but 2.5D (e.g. like [http://www.atari.com/rollercoastertycoon/ Roller Coaster Tycoon]) might be an appealing improvement. Possibly full-blown 3D might also be used, but the problem with 3D is that simply navigating and moving around could get in the way and make it less useful as an educational tool. Perhaps [pyglet http://www.pyglet.org/] could be used for this?
+  * 2D is nice, but 2.5D (e.g. like [http://www.atari.com/rollercoastertycoon/ Roller Coaster Tycoon]) might be an appealing improvement. Possibly full-blown 3D might also be used, but the problem with 3D is that simply navigating and moving around could get in the way and make it less useful as an educational tool. Perhaps [pyglet http://www.pyglet.org/] or [http://www.pysoy.org/ PySoy] could be used for this?
