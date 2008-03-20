@@ -11,13 +11,15 @@ The next features to implement include:
 
   * Add pixel-color sensors to sense that return the color of the pixel they are currently above. These can be used by the car to help steer it automatically, to find yellow lines, etc. [Squeak http://www.squeak.org/] provides something similar (indeed, Squeak could be a good source of ideas for other features to add).
 
+  * Add other kinds of sensors to the car that simulate real-world sensors. For example, add radar sends a "ping" in a certain direction and can estimate the distance to an object given the time it takes for the ping to return.
+
   * Simple crash modeling would fun, i.e. when two solid objects come into contact at least one should be dented or crumple.
 
   * Create a GUI that makes it easy to select different kinds of backgrounds, customize the details of the car, etc.
 
   * Create a super simple, easy to understand API that can be used by beginners to write cool and interesting programs. It should let the programmer access all the basic car features. Clear and complete documentation is important here.
 
-  * Demo programs and tutorials --- suitable for beginners --- need to be written.
+  * Demo programs and tutorials --- suitable for beginners --- need to be written. A nice idea for this is to create a series of challenge that for a drivers test, culminating in programmers earning their carcode driver's license.
 
   * Graphical extensions, such as more car details (customization?), environmental details such as traffic lights, puddles, pedestrians, lamp posts, other cars, etc. Indeed, many features that you see in other car games or the like could be added, but, ideally, they should all be things that the beginning programmer should be able to understand and interact with via the car they are controlling.
 
