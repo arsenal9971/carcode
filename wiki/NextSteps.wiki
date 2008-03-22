@@ -13,3 +13,11 @@ Things to do for carcode, approximately in the order they ought to be done:
   * Create a series of "driving test" challenges, each corresponding to a small programming task suitable for a beginner. The first few should not be hard at all, but should be designed to give users experience using the API. Gradually, the tasks can get more challenging, culminating in the user earning their "carcode license". Indeed, as with a real driving test, the final test could combine all the previous tests into one big final test.
 
   * Automatically recognize when a task is performed. For example, suppose the task is to back into a parking spot. The location where the car should end up could be colored green (or whatever color looks good on the screen), and the system automatically knows both when the car is on the green spot, and facing the correct direction. Then it checks that other rules have been met, e.g. perhaps there is a limit of 3 forward/reverse gear switches.
+
+  * Improve the graphics. This could be done in many different ways, for example: 
+
+     * Using pygame, make the car look more like a car, and the road more like a road. Realism is not necessarily important, but a fun, good-looking style is (e.g. cartoon cars are fun).
+
+     * Using pygame, allow for maps bigger than the screen using scrolling.
+
+     * Re-do the entire graphics front end in 2.5/3D, perhaps using [http://www.pyglet.org/ pyglet] or [http://www.pysoy.org/ PySoy].
