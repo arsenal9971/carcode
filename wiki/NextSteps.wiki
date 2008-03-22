@@ -14,6 +14,8 @@ Things to do for carcode, approximately in the order they ought to be done:
 
   * Automatically recognize when a task is performed. For example, suppose the task is to back into a parking spot. The location where the car should end up could be colored green (or whatever color looks good on the screen), and the system automatically knows both when the car is on the green spot, and facing the correct direction. Then it checks that other rules have been met, e.g. perhaps there is a limit of 3 forward/reverse gear switches.
 
+  * Add a "replay" feature that re-runs a particular carcode session so users can watch it again. This is also very useful for creating demos to show people what carcode is like.
+
   * Improve the graphics. This could be done in many different ways, for example: 
 
      * Using pygame, make the car look more like a car, and the road more like a road. Realism is not necessarily important, but a fun, good-looking style is (e.g. cartoon cars are fun).
