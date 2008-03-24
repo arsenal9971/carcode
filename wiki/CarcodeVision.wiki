@@ -9,9 +9,7 @@ Currently a basic user-driven version has been created allowing the user to driv
 
 The next features to implement include:
 
-  * Add pixel-color sensors to sense that return the color of the pixel they are currently above. These can be used by the car to help steer it automatically, to find yellow lines, etc. [Squeak http://www.squeak.org/] provides something similar (indeed, Squeak could be a good source of ideas for other features to add).
-
-  * Add other kinds of sensors to the car that simulate real-world sensors. For example, add radar sends a "ping" in a certain direction and can estimate the distance to an object given the time it takes for the ping to return.
+  * Add different kinds of PixelColorSensors. These can be used by the car to help steer it automatically, to find yellow lines, etc. [Squeak http://www.squeak.org/] provides something similar (indeed, Squeak could be a good source of ideas for other features to add).
 
   * Simple crash modeling would fun, i.e. when two solid objects come into contact at least one should be dented or crumple.
 
