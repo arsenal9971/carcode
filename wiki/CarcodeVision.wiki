@@ -3,13 +3,13 @@
 
 carcode is intended as a tool for helping beginners learn to program in Python. It simulates a two-dimensional robotic car that you must write programs to control and do simple tasks, such as parking. 
 
-It can be thought of as an extension of turtle graphics, similar in some ways to [Squeak http://www.squeak.org/] or Java's [Robocode http://robocode.sourceforge.net/]. However, both of those projects are relatively complex, and have a relatively steep learning curve. 
+It can be thought of as an extension of turtle graphics, similar in some ways to [http://www.squeak.org/ Squeak] or Java's [http://robocode.sourceforge.net/ Robocode]. However, both of those projects are relatively complex, and have a relatively steep learning curve. 
 
 Currently a basic user-driven version has been created allowing the user to drive the car around the screen.
 
 The next features to implement include:
 
-  * Add different kinds of PixelColorSensors. These can be used by the car to help steer it automatically, to find yellow lines, etc. [Squeak http://www.squeak.org/] provides something similar (indeed, Squeak could be a good source of ideas for other features to add).
+  * Add different kinds of PixelColorSensors. These can be used by the car to help steer it automatically, to find yellow lines, etc. [http://www.squeak.org/ Squeak] provides something similar (indeed, [http://www.squeak.org/ Squeak] could be a good source of ideas for other features to add).
 
   * Simple crash modeling would fun, i.e. when two solid objects come into contact at least one should be dented or crumple.
 
