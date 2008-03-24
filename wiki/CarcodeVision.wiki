@@ -1,6 +1,4 @@
 #labels Phase-Requirements,Featured
-#Vision for carcode.
-
 carcode is intended as a tool for helping beginners learn to program in Python. It simulates a two-dimensional robotic car that you must write programs to control and do simple tasks, such as parking. 
 
 It can be thought of as an extension of turtle graphics, similar in some ways to [http://www.squeak.org/ Squeak] or Java's [http://robocode.sourceforge.net/ Robocode]. However, both of those projects are relatively complex, and have a relatively steep learning curve. 
