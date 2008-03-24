@@ -1,0 +1,7 @@
+Pixel color sensors are a simple way for a car to get feedback from the environment.
+
+The basic color sensor returns True if the background pixel that it is currently above matches the color it senses.
+
+A more advanced radar-type color sensor works as follows. The sensor is aimed in a particular direction, and it returns the distance --- in pixels --- of the nearest pixel of the color that it senses. That is, it returns the length of the line drawn from the pixel sensor to the nearest pixel of the color it matches. If there is no matching color, then None is returned.
+
+The sensors could allow for various kinds of configuration, such as limiting the sensing range, sensing multiple colors, or giving noisy feedback (to simulate real-world sensors).
