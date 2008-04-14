@@ -1,7 +1,0 @@
-To run pygame interactively, try this:
-
->>> import pygame
->>> screen = pygame.display.set_mode((640, 480))
->>> pygame.draw.line(screen, (255, 0, 0), (0, 0), (100, 100))
-<rect(0, 0, 101, 101)>
->>> pygame.display.flip()

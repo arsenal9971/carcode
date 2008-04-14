@@ -3,28 +3,12 @@ import pygame, sys, os
 import car
 from pygame.locals import *
 
+import helpers
+
 DEBUG_EVENTS = False
 DEBUG_ARENA = True
 
 WHITE = (250, 250, 250)
-
-def load_image(name, colorkey = None, data_folder = 'data'):
-    """ Utility function for loading images.
-    Returns (image, rectangle).
-    """
-    fullname = os.path.join(data_folder, name)
-    try:
-        image = pygame.image.load(fullname)
-    except pygame.error, message:
-        print 'Cannot load image:', name
-        raise SystemExit, message
-    image = image.convert()
-    if colorkey is not None:
-        if colorkey is -1:
-            colorkey = image.get_at((0,0))
-        image.set_colorkey(colorkey, RLEACCEL)
-    return image, image.get_rect()
-
 
 class Arena(object):
     def __init__(self, width = 800, height = 800,
@@ -43,7 +27,7 @@ class Arena(object):
         window = pygame.display.set_mode((width, height))
         try:
             # first try to load a background image, if one has been supplied
-            self.background, self.back_rect = load_image(background_image)
+            self.background, self.back_rect = helpers.load_image(background_image)
             window = pygame.display.set_mode((self.back_rect.width, self.back_rect.height))
             self.screen = pygame.display.get_surface()
         except Exception, inst:

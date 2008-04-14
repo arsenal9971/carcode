@@ -1,22 +1,10 @@
-# car.py
 
 import pygame, os, time
 from math import sin, cos, radians
+import helpers
 
 CAR_DEBUG = False
 TRACER_CAR_DEBUG = True
-
-def load_sound(fname, volume = 0.5, data_folder = 'data'):
-    try:
-        fullname = os.path.join(data_folder, fname)
-        sound = pygame.mixer.Sound(fullname)
-        sound.set_volume(volume)
-    except pygame.error, message:
-        print 'Cannot load sound:', fullname
-        raise SystemExit, message
-
-    return sound
-    
 
 class Light(object):
     """ A car light.
@@ -137,9 +125,9 @@ class Car(pygame.sprite.Sprite):
                        self.bl_turn, self.br_turn]
 
         # load sound effects
-        self.horn_sound = load_sound('carhornshort.wav')
-        self.start_sound = load_sound('Carstart.wav')
-        self.idle_sound = load_sound('car_idle.wav', volume = 0.05)
+        self.horn_sound = helpers.load_sound('carhornshort.wav')
+        self.start_sound = helpers.load_sound('Carstart.wav')
+        self.idle_sound = helpers.load_sound('car_idle.wav', volume = 0.05)
         # or: hotidle.wav
 
         # tracer
