@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 
 from arena import Arena
+from car import Car
 
 class CarcodeApp:
     ''' Carcode initialization and mainloop '''
@@ -21,10 +22,25 @@ class CarcodeApp:
         # Create the environment
         self.arena = Arena(self, width, height)
         self.running = False
+        
+        self.init_mappings()
+
+    def init_mappings(self):
+        self.mappings = {
+        'Carcode': self,
+        'Arena': self.arena,
+        'Car': Car
+        }
+
+    def run_script(self, script):
+        fd = file(script, 'r')
+        #fd.open()
+        exec(fd, self.mappings)
+        fd.close()
     
     def quit(self):
         self.running = False
-
+    
     def add_key(self, key, func):
         self.key_commands[key] = func
     
