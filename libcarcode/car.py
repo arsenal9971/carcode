@@ -1,6 +1,8 @@
-
-import pygame, os, time
+import os, time
 from math import sin, cos, radians
+
+import pygame
+
 import helpers
 
 CAR_DEBUG = False
@@ -140,7 +142,7 @@ class Car(pygame.sprite.Sprite):
         self.show_rect = show_rect
         if CAR_DEBUG: print 'Car __init__ finished'
 
-    def engine_flip(self):
+    def flip_engine(self):
         if self.running:
             self.engine_off()
         else:
@@ -211,6 +213,10 @@ class Car(pygame.sprite.Sprite):
         if self.running:
             self.fr_turn.onoff_flip()
             self.br_turn.onoff_flip()
+    
+    def draw(self, surface):
+        self.update()
+        surface.blit(self.image, self.rect)
         
     def update(self):
         # copy the original unrotated car body
@@ -220,11 +226,8 @@ class Car(pygame.sprite.Sprite):
         for light in self.lights:
             self.image.fill(light.color(), light.rect)
 	
-        # rotate the car around the axel point
-	##self.image = pygame.transform.scale2x(self.image)
-        ##self.image = pygame.transform.rotate(self.image, self.angle)
-	self.image = pygame.transform.rotozoom(self.image, self.angle, 2.8)
-
+    	self.image = pygame.transform.rotozoom(self.image, self.angle, 2.8)
+        
         # move to new position
         if self.moving():
             # remember starting position
