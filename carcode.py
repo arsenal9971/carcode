@@ -1,10 +1,11 @@
 #!/usr/bin/python
-import libcarcode
+from libcarcode import CarcodeApp, Car
 
 def main():
-    a = libcarcode.arena.Arena() #background_image = 'twoDots.png')
-    a.add_key_car(running = True, tracer_down = True, show_rect = True)
-    a.run_main_loop()
+    app = CarcodeApp(800, 600)
+    car = Car(app.screen)
+    app.arena.set_car(car)
+    app.main_loop()
 
 if __name__ == '__main__':
     main()
