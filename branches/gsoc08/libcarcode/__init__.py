@@ -1,2 +1,3 @@
-import car
-import arena
+from car import *
+from arena import *
+from app import *
