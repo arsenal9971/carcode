@@ -1,0 +1,44 @@
+
+arena.py,214
+def load_image(11,140
+class Arena(29,706
+    def __init__(30,727
+    def __add(70,2495
+    def add_key_car(73,2561
+    def add_car(85,3088
+    def __init_key_commands(93,3356
+    def run_main_loop(104,3921
+
+car.py,778
+def load_sound(9,113
+class Light(21,448
+    def __init__(26,605
+    def turn_on(32,812
+    def turn_off(36,891
+    def onoff_flip(40,973
+    def color(46,1089
+class Blinker(50,1139
+    def __init__(56,1464
+    def color_flip(61,1741
+    def color(67,1892
+class Car(77,2146
+    def __init__(78,2179
+    def engine_flip(155,5052
+    def engine_on(161,5190
+    def engine_off(170,5550
+    def speed(178,5779
+    def moving(180,5819
+    def accelerate(182,5876
+    def brake(189,6051
+    def set_gear_reverse(196,6241
+    def set_gear_forward(199,6308
+    def flip_gear(202,6374
+    def honk(205,6450
+    def steer_left(208,6506
+    def steer_right(211,6642
+    def blinker_left_flip(215,6808
+    def blinker_right_flip(222,6993
+    def update(227,7137
+
+trial1.py,15
+def main(4,26
