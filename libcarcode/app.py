@@ -1,3 +1,6 @@
+import time 
+import shelve
+
 import pygame
 from pygame.locals import *
 
@@ -24,10 +27,11 @@ class CarcodeApp:
         self.running = False
         
         self.init_mappings()
+        self.events = []
 
     def init_mappings(self):
         self.mappings = {
-        'Carcode': self,
+        'add_key': self.add_key,
         'Arena': self.arena,
         'Car': Car
         }
@@ -40,18 +44,52 @@ class CarcodeApp:
     
     def quit(self):
         self.running = False
+        self.events.append((QUIT, time.time()))
+        d = shelve.open("game1.test")
+        d['events'] = self.events
+        d.close()
     
     def add_key(self, key, func):
         self.key_commands[key] = func
     
+    def rerun(self):
+        d = shelve.open("game1.test")
+        self.events = d['events']
+        d.close()
+        self.running = True
+        cevent = self.events.pop(0)
+        print cevent
+        if cevent[0] == 0:
+            itime = cevent[1]
+        else:
+            print 'Malformed event log'
+            return 0
+        ntime = time.time() + (cevent[1] - itime)
+        while self.running:
+            ctime = time.time()
+            if ctime >= ntime:
+                if cevent[0] == KEYDOWN:
+                    eventkey = cevent[2]
+                    if self.key_commands.has_key(eventkey):
+                        self.key_commands[eventkey]()
+                elif cevent[0] == QUIT:
+                    return 0
+                cevent = self.events.pop(0)
+                ntime = ctime + (cevent[1] - itime)
+                itime = cevent[1]
+            self.arena.draw(self.screen)
+            pygame.display.flip()
+    
     def main_loop(self):
         self.running = True
+        self.events.append((0, time.time()))
         while self.running:
             for event in pygame.event.get():
                 if event.type == QUIT:
-                    onRun = False
+                    self.quit()
                 elif event.type == KEYDOWN:
                     if self.key_commands.has_key(event.key):
+                        self.events.append((KEYDOWN, time.time(), event.key))
                         self.key_commands[event.key]()
             self.arena.draw(self.screen)
             pygame.display.flip()
