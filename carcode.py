@@ -27,10 +27,10 @@ def setup_level(app):
 def main():
     app = CarcodeApp(800, 600)
     
-    setup_level()
+    setup_level(app)
     app.main_loop()
     if opts.monkey:
-        setup_level()
+        setup_level(app)
         app.rerun()
 
 if __name__ == '__main__':
