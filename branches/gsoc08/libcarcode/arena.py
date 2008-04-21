@@ -42,13 +42,12 @@ class Arena:
         self.surface.fill((0,0,0))
         for entity in self.entities:
             entity.draw(self.surface)
-        surface.blit(self.surface, self.surface.get_rect())
-        surface.blit(self.trace, self.trace.get_rect())
+        self.surface.blit(self.trace, self.trace.get_rect())
         c1 = self.car.rect.center
-        self.car.draw(surface)
+        self.car.draw(self.surface)
         c2 = self.car.rect.center
         dx = c2[0] - c1[0]
         dy = c2[1] - c1[1]
         if (dx < 100 and dx > -100) and (dy < 100 and dy > -100):
             pygame.draw.line(self.trace, (0, 0, 255), c1, c2, 2)
-
+        surface.blit(self.surface, self.surface.get_rect())
