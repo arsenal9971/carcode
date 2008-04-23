@@ -1,6 +1,9 @@
 = Developer Info =
 
 *Name*: Carlos Daniel Ruvalcaba Valenzuela
+
 *Blog*: http://cdrv.centralnogales.com/
+
 *Plan*: http://code.google.com/p/carcode/wiki/Gsoc2008Plan
+
 *Code*: svn co https://carcode.googlecode.com/svn/branches/gsoc08 carcode
