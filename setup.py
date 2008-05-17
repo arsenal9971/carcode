@@ -2,13 +2,15 @@ from distutils.core import setup
 import sys
 import os
 
+# If we want debian package, build it and exit
 if 'bdist_deb' in sys.argv:
     print "Building debian package with debuild"
     os.system("debuild -us -uc")
     print "Finished bulding package"
     sys.exit(0)
 
-setup(
+# Setup base 'setup' arguments as a dictionary
+setup_args = dict(
     name = "carcode",
     version = "0.1",
     description = "Learn Python programming using an animated car",
@@ -30,3 +32,15 @@ setup(
     },
     install_requires = ['pygame']
     )
+
+
+# If we want to use py2exe add the appropiate arguments
+# to setup
+if 'py2exe' in sys.argv:
+    print "Building Windows Executable"
+    setup_args['windows'] = ['carcode.py']
+    import py2exe
+
+# Run setup and unfold setup_args as arguments
+setup(**setup_args)
+
