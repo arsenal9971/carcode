@@ -66,7 +66,7 @@ class Blinker(Light):
             return self.cc
 
 class Car:
-    def __init__(self, screen, x_init = 0, y_init = 0, angle_init = 0.0,
+    def __init__(self, x_init = 0, y_init = 0, angle_init = 0.0,
                  running_init = True,
                  body_color = (131, 111, 255),  # SlateBlue1
                  tracer_color = (255, 0, 0),  # red
@@ -74,16 +74,9 @@ class Car:
                  tracer_width = 1,
                  show_rect = False
                  ):
-        #pygame.sprite.Sprite.__init__(self) # call Sprite initializer
-        #self.original_image = pygame.Surface((48, 25)).convert_alpha() # 48 wide, 25 high
-
-        #self.image = self.original_image.copy()
         self.body_color = body_color
         self.rect = pygame.Rect(x_init, y_init,0,0)
         self.rect.topleft = x_init, y_init
-
-        # remember the screen so we can get its height/width
-        self.screen = screen
 
         # the distance increment in the x and y directions
         self.dx, self.dy = 0.0, 0.0
@@ -112,16 +105,16 @@ class Car:
 
         # create the lights
         self.rear_brake = Light(brake_off_color, brake_on_color,
-                                pygame.Rect(0, 8, 3, 9))  # (left, top, width, height)
+                                pygame.Rect(-24, -4, 3, 9))  # (left, top, width, height)
         
         self.fl_turn = Blinker(turn_on_color, turn_off_color,
-                               pygame.Rect(0, 0, 8, 5))
+                               pygame.Rect(-24, -12, 8, 5))
         self.fr_turn = Blinker(turn_on_color, turn_off_color,
-                               pygame.Rect(0, 20, 8, 5))
+                               pygame.Rect(-24, 8, 8, 5))
         self.bl_turn = Blinker(turn_on_color, turn_off_color,
-                               pygame.Rect(40, 0, 8, 5))
+                               pygame.Rect(16, -12, 8, 5))
         self.br_turn = Blinker(turn_on_color, turn_off_color,
-                               pygame.Rect(40, 20, 8, 5))
+                               pygame.Rect(16, 8, 8, 5))
 
         # store all the lights in a list for easy processing
         self.lights = [self.rear_brake, self.fl_turn, self.fr_turn,
@@ -132,7 +125,6 @@ class Car:
         self.start_sound = helpers.load_sound('Carstart.wav')
         self.idle_sound = helpers.load_sound('car_idle.wav', volume = 0.05)
         # or: hotidle.wav
-
         # tracer
         self.tracer_color = tracer_color
         self.tracer_down = tracer_down
@@ -140,30 +132,17 @@ class Car:
         self.start, self.end = self.rect, self.rect
         
         # flags
-        self.ltime = time.time()
         self.show_rect = show_rect
         self.x = 0
         self.y = 0
-        glEnable(GL_TEXTURE_2D)
-        self.texture = glGenTextures(1)
         
-        self.img, rect = helpers.load_image("carcode-carsm.png")
-        data = pygame.image.tostring(self.img, "RGBA")
-
-        glBindTexture(GL_TEXTURE_2D, self.texture)
-        w = self.img.get_width()
-        h = self.img.get_height()
-        
-        # Bind data to texture
-        glPixelStorei(GL_UNPACK_ALIGNMENT,1)
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, data)
-        
+        #glEnable(GL_TEXTURE_2D)
         #Set texture parametes, wraping and filters
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP)
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP)
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
-        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL)
+        #glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP)
+        #glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP)
+        #glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
+        #glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
+        #glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL)
 
         if CAR_DEBUG: print 'Car __init__ finished'
 
@@ -181,6 +160,8 @@ class Car:
             # before playing the idling sound
             time.sleep(self.start_sound.get_length())
             self.idle_sound.play(-1)  # loop sound forever
+            for light in self.lights:
+                light.turn_on()
             
     def engine_off(self):
         if self.running:
@@ -249,62 +230,38 @@ class Car:
             self.br_turn.onoff_flip()
     
     def draw(self):
-        self.update()
-        glMatrixMode(GL_MODELVIEW)
+        glPushMatrix()
         glLoadIdentity()
         glTranslatef(360, 280, 0.0)
         glRotatef(-self.angle, 0.0, 0.0, 1.0)
-        #glTranslatef(-400, -300, 0.0)
-
-        glBindTexture(GL_TEXTURE_2D, self.texture)
         
-        glBegin(GL_QUADS)
-        #glColor3i(131, 111, 255)
-        glColor4f(0.0,0.0,0.0, 0.0)
-        glTexCoord2f(0.0, 0.0)
-        glVertex2i(-45, -20)
-        glTexCoord2f(1.0, 0.0)
-        glVertex2i(45, -20)
-        glTexCoord2f(1.0, 1.0)
-        glVertex2i(45, 20)
-        glTexCoord2f(0.0, 1.0)
-        glVertex2i(-45, 20)
-        glEnd()
-        #surface.fill((255,255,255), self.image.get_rect(topleft=self.rect.topleft))
+        glColor3ub(131, 111, 255)
+        glRecti(-24, -12, 24, 12)
+        
+        for light in self.lights:
+            r = light.rect
+            glColor3ub(*light.color())
+            glRecti(r.x, r.y, r.x + r.width, r.y+r.height)
+        glPopMatrix()
         
     def update(self):
-        # copy the original unrotated car body
-        #self.image = self.original_image.copy()
-        
-        # draw the lights
-        #for light in self.lights:
-        #    self.image.fill(light.color(), light.rect)
-	
-    	#self.image = pygame.transform.rotozoom(self.image, self.angle, 2.8)
-        
         # move to new position
         if self.moving():
             # remember starting position
             self.start = (self.x, self.y)
             
-            ctime = time.time() - self.ltime
             rad = radians(self.angle)
-            self.dx = self.speed * cos(rad) * ctime
-            self.dy = -self.speed * sin(rad) * ctime
+            self.dx = self.speed * cos(rad) 
+            self.dy = -self.speed * sin(rad)
             
-            self.y = (round(self.y + self.dy)) % self.screen.get_height()
-            self.x = (round(self.x + self.dx)) % self.screen.get_width()
+            self.y = self.y + self.dy
+            self.x = self.x + self.dx
 
             self.start = (self.x, self.y)
-            self.ltime = ctime
-            
-            # remember ending position
-            #self.end = self.rect
             
             self.speed *= self.decel  # deccelerate the car
         else:
             self.speed = 0
-
 
         if CAR_DEBUG:
             print '(speed = %s, moving = %s, forward_gear = %s, dx = %s, dy = %s, angle = %s)' % (self.speed,
@@ -313,52 +270,3 @@ class Car:
                                                                                                   self.dx,
                                                                                                   self.dy,
                                                                                                   self.angle)
-
-
-## class TraceCar(Car):
-##     def __init__(self, screen, x_init = 0, y_init = 0, angle_init = 0.0,
-##                  running_init = True,
-##                  body_color = (131, 111, 255),  # SlateBlue1
-##                  tracer_color = (255, 0, 0),    # red
-##                  tracer_down = True
-##                  ):
-##         Car.__init__(self, screen, x_init, y_init,   # call Car initializer
-##                      angle_init, running_init, body_color)
-##         self.tracer_color = tracer_color
-##         self.tracer_down = tracer_down
-##         self.start, self.end = self.rect, self.rect
-
-##     def update(self):
-##         # copy the original unrotated car body
-##         self.image = self.original_image.copy()
-        
-##         # draw the lights
-##         for light in self.lights:
-##             self.image.fill(light.color(), light.rect)
-	
-##         # rotate the car around the axel point
-## 	##self.image = pygame.transform.scale2x(self.image)
-##         self.image = pygame.transform.rotate(self.image, self.angle)
-## 	##self.image = pygame.transform.rotozoom(self.image, self.angle, 2.8)
-
-##         # move to new position
-##         if self.moving():
-##             # remember starting position
-##             self.start = self.rect.move(0, 0)  # better way to copy a rect?
-            
-##             # calculate new dx, dy values
-##             rad = radians(self.angle)
-##             self.dx = self.speed * cos(rad)
-##             self.dy = -self.speed * sin(rad)
-            
-##             self.rect.top = (round(self.rect.top + self.dy)) % self.screen.get_height()
-##             self.rect.left = (round(self.rect.left + self.dx)) % self.screen.get_width()
-
-##             # remember ending position
-##             self.end = self.rect.move(0, 0)  # better way to copy a rect?
-
-##             # deccelerate the car
-##             self.speed *= self.decel  
-##         else:
-##             self.speed = 0
-
