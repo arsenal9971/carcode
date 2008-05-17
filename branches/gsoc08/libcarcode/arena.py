@@ -6,27 +6,15 @@ from pygame.locals import *
 from OpenGL.GL import *
 
 import helpers
+from base import Road
 
 WHITE = (250, 250, 250)
-
-class Path:
-    def __init__(self):
-        self.x = 500
-        self.y = 200
-    def update(self):
-        pass
-    def draw(self):
-        glColor3f(0.4, 0.4, 0.4)
-        glRecti(self.x, self.y, self.x + 300, self.y + 100)
-        glColor3f(1.0, 1.0, 1.0)
-        glRecti(self.x, self.y+2, self.x + 300, self.y + 4)
-        glRecti(self.x, self.y+96, self.x + 300, self.y + 98)
         
 class Arena:
     def __init__(self, parent):
         self.parent = parent
         
-        self.entities = [Path()]
+        self.entities = []
         self.car = None
     
     def set_car(self, car):
@@ -55,7 +43,7 @@ class Arena:
         
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
-        glTranslatef(-self.car.x, -self.car.y, 0)
+        glTranslatef(360 -self.car.x, 280-self.car.y, 0)
         
         for entity in self.entities:
             entity.draw()
