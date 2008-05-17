@@ -7,8 +7,12 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
+import OpenGL.GL
+
 from arena import Arena
 from car import Car
+import base
+import level_proxy
 
 class CarcodeApp:
     ''' Carcode initialization and mainloop '''
@@ -43,10 +47,12 @@ class CarcodeApp:
 
     def init_mappings(self):
         self.mappings = {
-        'add_key': self.add_key,
-        'Arena': self.arena,
-        'Car': Car
+        'Arena': level_proxy.ArenaProxy(self.arena),
+        'Carcode': level_proxy.AppProxy(self),
+        'Road': base.Road
         }
+        for k in OpenGL.GL.__dict__.keys():
+            self.mappings[k] = OpenGL.GL.__dict__[k]
 
     def run_script(self, script):
         fd = file(script, 'r')
