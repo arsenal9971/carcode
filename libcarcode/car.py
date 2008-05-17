@@ -65,6 +65,16 @@ class Blinker(Light):
                 self.count = 0
             return self.cc
 
+class Sensor:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.pixel = (0,0,0)
+    def update():
+        glReadBuffer(GL_BACK)
+        pixels = glReadPixelsb(x, y, 1, 1, GL_RGB)
+        self.pixel = pixels[0][0]
+        
 class Car:
     def __init__(self, x_init = 0, y_init = 0, angle_init = 0.0,
                  running_init = True,
@@ -258,11 +268,3 @@ class Car:
             self.speed *= self.decel  # deccelerate the car
         else:
             self.speed = 0
-
-        if CAR_DEBUG:
-            print '(speed = %s, moving = %s, forward_gear = %s, dx = %s, dy = %s, angle = %s)' % (self.speed,
-                                                                                                  self.moving(),
-                                                                                                  self.forward_gear,
-                                                                                                  self.dx,
-                                                                                                  self.dy,
-                                                                                                  self.angle)
