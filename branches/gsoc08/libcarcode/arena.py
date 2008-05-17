@@ -9,15 +9,24 @@ import helpers
 
 WHITE = (250, 250, 250)
 
+class Path:
+    def __init__(self):
+        self.x = 500
+        self.y = 200
+    def update(self):
+        pass
+    def draw(self):
+        glColor3f(0.4, 0.4, 0.4)
+        glRecti(self.x, self.y, self.x + 300, self.y + 100)
+        glColor3f(1.0, 1.0, 1.0)
+        glRecti(self.x, self.y+2, self.x + 300, self.y + 4)
+        glRecti(self.x, self.y+96, self.x + 300, self.y + 98)
+        
 class Arena:
     def __init__(self, parent):
         self.parent = parent
         
-        #self.trace = pygame.Surface((width, height))
-        #self.trace.fill((32,32,32))
-        #self.trace.set_colorkey((32,32,32))
-        
-        self.entities = []
+        self.entities = [Path()]
         self.car = None
     
     def set_car(self, car):
@@ -35,9 +44,19 @@ class Arena:
     
     def add_entity(self, entity):
         self.entities.append(entity)
+    
+    def update(self):
+        for entity in self.entities:
+            entity.update()
+        self.car.update()
         
     def draw(self, surface):
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+        
+        glMatrixMode(GL_MODELVIEW)
+        glLoadIdentity()
+        glTranslatef(-self.car.x, -self.car.y, 0)
+        
         for entity in self.entities:
             entity.draw()
         #self.surface.blit(self.trace, self.trace.get_rect())
