@@ -11,7 +11,8 @@ import OpenGL.GL
 
 from arena import Arena
 from car import Car
-import base
+
+import base_entities
 import level_proxy
 
 class CarcodeApp:
@@ -49,7 +50,7 @@ class CarcodeApp:
         self.mappings = {
         'Arena': level_proxy.ArenaProxy(self.arena),
         'Carcode': level_proxy.AppProxy(self),
-        'Road': base.Road
+        'Road': base_entities.Road
         }
         for k in OpenGL.GL.__dict__.keys():
             self.mappings[k] = OpenGL.GL.__dict__[k]
