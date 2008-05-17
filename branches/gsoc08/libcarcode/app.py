@@ -4,6 +4,9 @@ import shelve
 import pygame
 from pygame.locals import *
 
+from OpenGL.GL import *
+from OpenGL.GLU import *
+
 from arena import Arena
 from car import Car
 
@@ -19,11 +22,20 @@ class CarcodeApp:
         pygame.key.set_repeat(50, 50)
         
         # Create screen surface and initialize key commands
-        self.screen = pygame.display.set_mode((width, height))
+        self.screen = pygame.display.set_mode((width, height), OPENGL | DOUBLEBUF)
+        
+        glClearColor(0.0, 0.0, 0.0, 1.0)
+        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+        
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        gluOrtho2D(0, width, height, 0);
+        glMatrixMode(GL_MODELVIEW);
+        
         self.key_commands = {K_q: self.quit}
         
         # Create the environment
-        self.arena = Arena(self, width, height)
+        self.arena = Arena(self)
         self.running = False
         
         self.init_mappings()
