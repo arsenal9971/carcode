@@ -3,19 +3,19 @@ import pygame, sys, os
 import car
 from pygame.locals import *
 
+from OpenGL.GL import *
+
 import helpers
 
 WHITE = (250, 250, 250)
 
 class Arena:
-    def __init__(self, parent, width, height):
+    def __init__(self, parent):
         self.parent = parent
-        self.surface = pygame.Surface((width, height))
-        self.surface.fill((0,0,0))
         
-        self.trace = pygame.Surface((width, height))
-        self.trace.fill((32,32,32))
-        self.trace.set_colorkey((32,32,32))
+        #self.trace = pygame.Surface((width, height))
+        #self.trace.fill((32,32,32))
+        #self.trace.set_colorkey((32,32,32))
         
         self.entities = []
         self.car = None
@@ -37,16 +37,16 @@ class Arena:
         self.entities.append(entity)
         
     def draw(self, surface):
-        self.surface.fill((0,0,0))
+        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
         for entity in self.entities:
-            entity.draw(self.surface)
-        self.surface.blit(self.trace, self.trace.get_rect())
-        c1 = list(self.car.rect.topleft)
-        self.car.draw(self.surface)
-        c2 = list(self.car.rect.topleft)
-        dx = c2[0] - c1[0]
-        dy = c2[1] - c1[1]
-        if (dx < 100 and dx > -100) and (dy < 100 and dy > -100):
-            if self.car.tracer_down:
-                pygame.draw.line(self.trace, self.car.tracer_color, c1, c2, 2)
-        surface.blit(self.surface, self.surface.get_rect())
+            entity.draw()
+        #self.surface.blit(self.trace, self.trace.get_rect())
+        #c1 = list(self.car.rect.topleft)
+        self.car.draw()
+        #c2 = list(self.car.rect.topleft)
+        #dx = c2[0] - c1[0]
+        #dy = c2[1] - c1[1]
+        #if (dx < 100 and dx > -100) and (dy < 100 and dy > -100):
+        #    if self.car.tracer_down:
+        #        pygame.draw.line(self.trace, self.car.tracer_color, c1, c2, 2)
+        #surface.blit(self.surface, self.surface.get_rect())
