@@ -7,6 +7,27 @@ CARCODE_PATH = os.path.dirname(sys.modules[__name__].__file__)
 IMAGE_PATH = os.path.join(CARCODE_PATH, 'media', 'images')
 SOUND_PATH = os.path.join(CARCODE_PATH, 'media', 'sound')
 
+
+def load_texture(filename):
+    # Generate a new Texture
+    texture = glGenTextures(1)
+    
+    # Load image data and convert to packet string
+    img, rect = load_image(fielname)
+    data = pygame.image.tostring(img, "RGBA")
+
+    # Set current context texture
+    glBindTexture(GL_TEXTURE_2D, self.texture)
+    
+    w = img.get_width()
+    h = img.get_height()
+        
+    # Bind data to texture
+    glPixelStorei(GL_UNPACK_ALIGNMENT,1)
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, data)
+    
+    return texture
+    
 def load_sound(filename, volume = 0.5):
     try:
         fullname = os.path.join(SOUND_PATH, filename)
