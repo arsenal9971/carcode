@@ -144,6 +144,27 @@ class Car:
         self.show_rect = show_rect
         self.x = 0
         self.y = 0
+        glEnable(GL_TEXTURE_2D)
+        self.texture = glGenTextures(1)
+        
+        self.img, rect = helpers.load_image("carcode-carsm.png")
+        data = pygame.image.tostring(self.img, "RGBA")
+
+        glBindTexture(GL_TEXTURE_2D, self.texture)
+        w = self.img.get_width()
+        h = self.img.get_height()
+        
+        # Bind data to texture
+        glPixelStorei(GL_UNPACK_ALIGNMENT,1)
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, data)
+        
+        #Set texture parametes, wraping and filters
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP)
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP)
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
+        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL)
+
         if CAR_DEBUG: print 'Car __init__ finished'
 
     def flip_engine(self):
@@ -234,12 +255,19 @@ class Car:
         glTranslatef(360, 280, 0.0)
         glRotatef(-self.angle, 0.0, 0.0, 1.0)
         #glTranslatef(-400, -300, 0.0)
+
+        glBindTexture(GL_TEXTURE_2D, self.texture)
+        
         glBegin(GL_QUADS)
         #glColor3i(131, 111, 255)
-        glColor3f(0.6,0.0,0.0)
+        glColor4f(0.0,0.0,0.0, 0.0)
+        glTexCoord2f(0.0, 0.0)
         glVertex2i(-45, -20)
+        glTexCoord2f(1.0, 0.0)
         glVertex2i(45, -20)
+        glTexCoord2f(1.0, 1.0)
         glVertex2i(45, 20)
+        glTexCoord2f(0.0, 1.0)
         glVertex2i(-45, 20)
         glEnd()
         #surface.fill((255,255,255), self.image.get_rect(topleft=self.rect.topleft))
