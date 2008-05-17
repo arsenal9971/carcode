@@ -183,6 +183,15 @@ class Car(pygame.sprite.Sprite):
             else:
                 self.speed += s
 
+    def flip_tracer(self):
+        self.tracer_down = not self.tracer_down
+    
+    def set_tracer_down(self):
+        self.tracer_down = True
+
+    def set_tracer_up(self):
+        self.tracer_down = False
+    
     def set_gear_reverse(self):
         self.forward_gear = False
 
@@ -216,7 +225,8 @@ class Car(pygame.sprite.Sprite):
     
     def draw(self, surface):
         self.update()
-        surface.blit(self.image, self.rect)
+        surface.blit(self.image, self.image.get_rect(topleft=self.rect.topleft))
+        #surface.fill((255,255,255), self.image.get_rect(topleft=self.rect.topleft))
         
     def update(self):
         # copy the original unrotated car body
