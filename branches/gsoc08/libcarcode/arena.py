@@ -5,9 +5,6 @@ from pygame.locals import *
 
 import helpers
 
-DEBUG_EVENTS = False
-DEBUG_ARENA = True
-
 WHITE = (250, 250, 250)
 
 class Arena:
@@ -34,6 +31,7 @@ class Arena:
         self.parent.add_key(K_h, car.honk)
         self.parent.add_key(K_z, car.blinker_left_flip)
         self.parent.add_key(K_c, car.blinker_right_flip)
+        self.parent.add_key(K_t, car.flip_tracer)
     
     def add_entity(self, entity):
         self.entities.append(entity)
@@ -43,11 +41,12 @@ class Arena:
         for entity in self.entities:
             entity.draw(self.surface)
         self.surface.blit(self.trace, self.trace.get_rect())
-        c1 = self.car.rect.center
+        c1 = list(self.car.rect.topleft)
         self.car.draw(self.surface)
-        c2 = self.car.rect.center
+        c2 = list(self.car.rect.topleft)
         dx = c2[0] - c1[0]
         dy = c2[1] - c1[1]
         if (dx < 100 and dx > -100) and (dy < 100 and dy > -100):
-            pygame.draw.line(self.trace, (0, 0, 255), c1, c2, 2)
+            if self.car.tracer_down:
+                pygame.draw.line(self.trace, self.car.tracer_color, c1, c2, 2)
         surface.blit(self.surface, self.surface.get_rect())
