@@ -93,15 +93,32 @@ class CarcodeApp:
             pygame.display.flip()
     
     def main_loop(self):
+        '''
+            Carcode Main loop, does updating, 
+            rendering and event processing.
+        '''
         self.running = True
-        self.events.append((0, time.time()))
+        #self.events.append((0, time.time()))
         while self.running:
+            ttime = time.time()
+            # Process Events
             for event in pygame.event.get():
                 if event.type == QUIT:
+                    # We got exit signal, we quit
                     self.quit()
                 elif event.type == KEYDOWN:
+                    # Check the command dictionary and execute event
                     if self.key_commands.has_key(event.key):
                         self.events.append((KEYDOWN, time.time(), event.key))
                         self.key_commands[event.key]()
+            # Update the Arena
+            self.arena.update()
+            
+            # Render
             self.arena.draw(self.screen)
+            
+            # Finally, flip display surface
             pygame.display.flip()
+            etime = time.time()
+            if (etime - ttime) < 0.05:
+                time.sleep(0.05 - (etime - ttime))
