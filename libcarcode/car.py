@@ -122,12 +122,10 @@ class Car:
         self.horn_sound = helpers.load_sound('carhornshort.wav')
         self.start_sound = helpers.load_sound('Carstart.wav')
         self.idle_sound = helpers.load_sound('car_idle.wav', volume = 0.05)
-        # or: hotidle.wav
-        # tracer
+        
         self.tracer_color = tracer_color
         self.tracer_down = tracer_down
         self.tracer_width = tracer_width
-        #self.start, self.end = self.rect, self.rect
         
         # flags
         self.show_rect = show_rect

@@ -89,8 +89,12 @@ class CarcodeApp:
                 cevent = self.events.pop(0)
                 ntime = ctime + (cevent[1] - itime)
                 itime = cevent[1]
+            self.arena.update()
             self.arena.draw(self.screen)
             pygame.display.flip()
+            etime = time.time()
+            if (etime - ctime) < 0.05:
+                time.sleep(0.05 - (etime - ctime))
     
     def main_loop(self):
         '''
@@ -98,7 +102,7 @@ class CarcodeApp:
             rendering and event processing.
         '''
         self.running = True
-        #self.events.append((0, time.time()))
+        self.events.append((0, time.time()))
         while self.running:
             ttime = time.time()
             # Process Events
