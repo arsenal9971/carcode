@@ -18,10 +18,12 @@ def setup_level(app):
     # Check if we have environment script
     if opts.level:
         # Run level script
+        car = Car()
+        app.arena.set_car(car)
         app.run_script(opts.level)
     else:
         # Setup default environment
-        car = Car(app.screen)
+        car = Car()
         app.arena.set_car(car)
 
 def main():
