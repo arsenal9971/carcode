@@ -75,8 +75,6 @@ class Car:
                  show_rect = False
                  ):
         self.body_color = body_color
-        self.rect = pygame.Rect(x_init, y_init,0,0)
-        self.rect.topleft = x_init, y_init
 
         # the distance increment in the x and y directions
         self.dx, self.dy = 0.0, 0.0
@@ -129,7 +127,7 @@ class Car:
         self.tracer_color = tracer_color
         self.tracer_down = tracer_down
         self.tracer_width = tracer_width
-        self.start, self.end = self.rect, self.rect
+        #self.start, self.end = self.rect, self.rect
         
         # flags
         self.show_rect = show_rect
@@ -257,7 +255,7 @@ class Car:
             self.y = self.y + self.dy
             self.x = self.x + self.dx
 
-            self.start = (self.x, self.y)
+            self.end = (self.x, self.y)
             
             self.speed *= self.decel  # deccelerate the car
         else:
