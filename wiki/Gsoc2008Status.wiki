@@ -1,0 +1,18 @@
+#summary Current status of Gsoc2008 branch
+
+== DONE ==
+ * Added common linux package building (RPM, DEB) via distutils
+ * Implemented level scrolling [http://clsdaniel.blogspot.com/2008/05/opengl-branch-merged.html (comments)]
+
+------------------------------------------------------------------------------
+
+== TODO ==
+ * Implement color trails
+ * Implement car control API
+ * Implement sensors to car API
+ * Implement event tracking
+ * Implement level creation format
+ * Create driving tests
+ * Add script editor
+ * Add packaging 
+ * Implement collision detection
