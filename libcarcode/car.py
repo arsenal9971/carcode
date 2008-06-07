@@ -70,7 +70,7 @@ class Sensor:
         self.x = x
         self.y = y
         self.pixel = (0,0,0)
-    def update():
+    def update(self):
         glReadBuffer(GL_BACK)
         pixels = glReadPixelsb(x, y, 1, 1, GL_RGB)
         self.pixel = pixels[0][0]
@@ -141,6 +141,8 @@ class Car:
         self.show_rect = show_rect
         self.x = 0
         self.y = 0
+        
+        self.sensors = []
         
         #glEnable(GL_TEXTURE_2D)
         #Set texture parametes, wraping and filters
@@ -236,6 +238,8 @@ class Car:
             self.br_turn.onoff_flip()
     
     def draw(self):
+        for sensor in self.sensors:
+            sensor.update()
         glPushMatrix()
         glLoadIdentity()
         glTranslatef(360, 280, 0.0)
