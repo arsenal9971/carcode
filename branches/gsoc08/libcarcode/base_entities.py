@@ -1,6 +1,23 @@
 from math import atan, sin, cos, radians, sqrt
 from OpenGL.GL import *
 
+class Box:
+	def __init__(self, x, y, height, width, color):
+		self.x = x
+                self.y = y
+                self.height = height
+                self.width = width
+                self.color = color
+	def update(self):
+		pass
+	def draw(self):
+                glPushMatrix()
+                glTranslatef(self.x, self.y, 0.0)
+		glColor3ub(*self.color)
+		glRecti(0, 0, self.width, self.height)
+                glPopMatrix()
+                
+                
 class Road:
     def __init__(self, road_points, width=50):
         self.road_points = road_points

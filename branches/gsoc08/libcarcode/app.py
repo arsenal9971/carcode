@@ -15,6 +15,7 @@ from sensors import Sensor, ColorSensor
 
 import base_entities
 import level_proxy
+import events
 
 class CarcodeApp:
     ''' Carcode initialization and mainloop '''
@@ -52,8 +53,10 @@ class CarcodeApp:
         'Arena': level_proxy.ArenaProxy(self.arena),
         'Carcode': level_proxy.AppProxy(self),
         'Road': base_entities.Road,
+        'Box': base_entities.Box,
         'Sensor': Sensor,
-        'ColorSensor': ColorSensor
+        'ColorSensor': ColorSensor,
+        'EventDispatcher': events.EventDispatcher
         }
         for k in OpenGL.GL.__dict__.keys():
             self.mappings[k] = OpenGL.GL.__dict__[k]
