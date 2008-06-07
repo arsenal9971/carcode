@@ -42,7 +42,7 @@ class Arena:
         
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
-        glTranslatef(360 -self.car.x, 280-self.car.y, 0)
+        glTranslatef(400 -self.car.x, 300-self.car.y, 0)
         
         for entity in self.entities:
             entity.draw()
