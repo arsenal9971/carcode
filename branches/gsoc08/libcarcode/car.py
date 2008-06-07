@@ -143,7 +143,10 @@ class Car:
         #glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL)
 
         if CAR_DEBUG: print 'Car __init__ finished'
-
+    
+    def add_sensor(self, sensor):
+        self.sensors.append(sensor)
+        
     def flip_engine(self):
         if self.running:
             self.engine_off()
