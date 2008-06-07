@@ -1,9 +1,11 @@
 
 class ArenaProxy:
     def __init__(self, arena):
-        self.arena = arena
+        self.__arena__ = arena
     def add_entity(self, entity):
-        self.arena.add_entity(entity)
+        self.__arena__.add_entity(entity)
+    def get_car(self):
+        return self.__arena__.car
 
 class AppProxy:
     def __init__(self, app):
