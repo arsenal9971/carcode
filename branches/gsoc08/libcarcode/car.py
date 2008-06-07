@@ -1,5 +1,5 @@
 import os, time
-from math import sin, cos, radians
+from math import sin, cos, radians, sqrt
 
 import pygame
 from OpenGL.GL import *
@@ -67,13 +67,37 @@ class Blinker(Light):
 
 class Sensor:
     def __init__(self, x, y):
-        self.x = x
-        self.y = y
+        self.offx = x
+        self.offy = y
         self.pixel = (0,0,0)
-    def update(self):
+        if x == 0 and y == 0:
+            self.angle = 0
+            self.length = 0
+        else:
+            if x == 0:
+                self.angle = radians(90)
+                self.length = y
+            else:
+                self.angle = float(y)/x
+                self.length = sqrt((x*x) + (y*y))
+        
+    def update(self, angle):
+        rad = radians(angle) + self.angle
+        x = 400 + int(self.length * cos(rad))
+        y = 300 - int(self.length * -sin(rad))
         glReadBuffer(GL_BACK)
         pixels = glReadPixelsb(x, y, 1, 1, GL_RGB)
         self.pixel = pixels[0][0]
+    def draw(self, angle):
+        rad = radians(angle) + self.angle
+        x = self.length * cos(rad)
+        y = self.length * -sin(rad)
+        glPushMatrix()
+        glLoadIdentity()
+        glTranslatef(400 + x, 300 + y, 0.0)
+        glColor3ub(255,255,255)
+        glRecti(-2, -2, 2, 2)
+        glPopMatrix()
         
 class Car:
     def __init__(self, x_init = 0, y_init = 0, angle_init = 0.0,
@@ -239,10 +263,10 @@ class Car:
     
     def draw(self):
         for sensor in self.sensors:
-            sensor.update()
+            sensor.update(self.angle)
         glPushMatrix()
         glLoadIdentity()
-        glTranslatef(360, 280, 0.0)
+        glTranslatef(400, 300, 0.0)
         glRotatef(-self.angle, 0.0, 0.0, 1.0)
         
         glColor3ub(131, 111, 255)
@@ -253,6 +277,8 @@ class Car:
             glColor3ub(*light.color())
             glRecti(r.x, r.y, r.x + r.width, r.y+r.height)
         glPopMatrix()
+        for sensor in self.sensors:
+            sensor.draw(self.angle)
         
     def update(self):
         # move to new position
