@@ -6,7 +6,6 @@ from pygame.locals import *
 from OpenGL.GL import *
 
 import helpers
-from base import Road
 
 WHITE = (250, 250, 250)
         
