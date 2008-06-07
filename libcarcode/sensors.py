@@ -1,7 +1,8 @@
 from math import sin, cos, radians, sqrt
 from OpenGL.GL import *
 import struct
-        
+from events import EventDispatcher
+
 class Sensor:
     ''' Sensor class
     Reads pixel data from backbuffer in a given position,
