@@ -6,6 +6,7 @@ from pygame.locals import *
 from OpenGL.GL import *
 
 import helpers
+from collision import pyLine
 
 WHITE = (250, 250, 250)
         
@@ -15,6 +16,7 @@ class Arena:
         
         self.entities = []
         self.car = None
+        self.lines = []
     
     def set_car(self, car):
         self.car = car
@@ -46,13 +48,20 @@ class Arena:
         
         for entity in self.entities:
             entity.draw()
-        #self.surface.blit(self.trace, self.trace.get_rect())
-        #c1 = list(self.car.rect.topleft)
+        
+        if self.car.moving():
+            line = pyLine(self.car.start, self.car.end)
+            print len(self.lines)
+            if len(self.lines) == 0:
+                self.lines.append(line)
+            else:
+                last = self.lines[-1]
+                if last == line:
+                    last += line
+                else:
+                    self.lines.append(line)
+        
+        for line in self.lines:
+            line.draw()
         self.car.draw()
-        #c2 = list(self.car.rect.topleft)
-        #dx = c2[0] - c1[0]
-        #dy = c2[1] - c1[1]
-        #if (dx < 100 and dx > -100) and (dy < 100 and dy > -100):
-        #    if self.car.tracer_down:
-        #        pygame.draw.line(self.trace, self.car.tracer_color, c1, c2, 2)
-        #surface.blit(self.surface, self.surface.get_rect())
+        
