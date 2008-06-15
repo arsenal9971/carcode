@@ -3,7 +3,7 @@ from math import sin, cos, radians, sqrt
 
 import pygame
 from OpenGL.GL import *
-
+from collision import pyLine
 import helpers
 
 CAR_DEBUG = False
@@ -133,7 +133,7 @@ class Car:
         self.y = 0
         
         self.sensors = []
-        
+        self.lines = []
         #glEnable(GL_TEXTURE_2D)
         #Set texture parametes, wraping and filters
         #glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP)
@@ -233,6 +233,27 @@ class Car:
     def draw(self):
         for sensor in self.sensors:
             sensor.update(self.angle)
+            
+        if self.tracer_down:
+            if self.moving():
+                line = pyLine(self.start, self.end)
+                if len(self.lines) == 0:
+                    self.lines.append(line)
+                else:
+                    last = self.lines[-1]
+                    if last == line:
+                        last += line
+                    else:
+                        self.lines.append(line)
+        
+        if len(self.lines) > 0:
+            glBegin(GL_LINES)
+            glColor3ub(*self.tracer_color)
+            for line in self.lines:
+                glVertex2f(line.x1, line.y1)
+                glVertex2f(line.x2, line.y2)
+            glEnd()
+            
         glPushMatrix()
         glLoadIdentity()
         glTranslatef(400, 300, 0.0)
