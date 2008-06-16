@@ -16,7 +16,9 @@ from sensors import Sensor, ColorSensor
 import base_entities
 import level_proxy
 import events
+from console import Console
 
+        
 class CarcodeApp:
     ''' Carcode initialization and mainloop '''
     def __init__(self, width, height):
@@ -45,8 +47,9 @@ class CarcodeApp:
         self.arena = Arena(self)
         self.running = False
         
-        self.init_mappings()
         self.events = []
+        self.console = Console()
+        self.init_mappings()
 
     def init_mappings(self):
         self.mappings = {
@@ -56,6 +59,7 @@ class CarcodeApp:
         'Box': base_entities.Box,
         'Sensor': Sensor,
         'ColorSensor': ColorSensor,
+        'Console': self.console,
         'EventDispatcher': events.EventDispatcher
         }
         for k in OpenGL.GL.__dict__.keys():
@@ -133,7 +137,7 @@ class CarcodeApp:
             
             # Render
             self.arena.draw(self.screen)
-            
+            self.console.draw(self.screen)
             # Finally, flip display surface
             pygame.display.flip()
             etime = time.time()

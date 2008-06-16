@@ -8,11 +8,11 @@
 
 def onSensor(sensor):
     if sensor.pixel:
-        print 'Got to finish line!'
+        Console.write('Got to finish line!')
     
 def onOffroad(sensor):
     if sensor.pixel:
-        print 'You got off the road!'
+        Console.write( 'You got off the road!')
         
 
 Arena.add_entity(Box(-30, -25, 50, 810, (100,100,100)))
