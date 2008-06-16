@@ -137,7 +137,10 @@ class CarcodeApp:
             
             # Render
             self.arena.draw(self.screen)
-            self.console.draw(self.screen)
+            
+            # Render console
+            self.console.draw()
+            
             # Finally, flip display surface
             pygame.display.flip()
             etime = time.time()

@@ -3,11 +3,19 @@ from OpenGL.GLU import *
 from OpenGL.GLUT import glutBitmapCharacter, GLUT_BITMAP_8_BY_13
 
 class Console:
-    def __init__(self):
-        self.maxlines = 3
+    def __init__(self, maxlines = 3):
+        self.maxlines = maxlines
         self.lines = []
         
-    def draw(self, screen):
+    def clear(self):
+        try:
+            while True:
+                l = self.lines.pop()
+                del l
+        except IndexError:
+            return None
+            
+    def draw(self):
         glPushMatrix()
         glLoadIdentity()
         y = 12
