@@ -57,6 +57,7 @@ class CarcodeApp:
         'Carcode': level_proxy.AppProxy(self),
         'Road': base_entities.Road,
         'Box': base_entities.Box,
+        'Text': base_entities.Text,
         'Sensor': Sensor,
         'ColorSensor': ColorSensor,
         'Console': self.console,
