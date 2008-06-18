@@ -53,6 +53,16 @@ class BoundingRegion:
     def inLine(self, v1, v2):
         pass
 
+class BoudingCircle(BoundingRegion):
+    def __init__(x, y, radius):
+        BoudingRegion.__init__(self, x, y)
+        self.radius = radius
+    def inVector(self, v):
+        d = sqrt((v[0] * self.x) + (v[1] * self.y))
+        if self.radius > d:
+            return True
+        return False
+    
 class BoundingBox(BoundingRegion):
     def __init__(self, x, y, height, width):
         BoudingRegion.__init__(self, x, y)
