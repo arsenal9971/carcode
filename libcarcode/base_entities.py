@@ -1,5 +1,6 @@
 from math import atan, sin, cos, radians, sqrt
 from OpenGL.GL import *
+from OpenGL.GLUT import glutBitmapCharacter, GLUT_BITMAP_8_BY_13
 
 class Box:
     def __init__(self, x, y, height, width, color):
@@ -17,7 +18,25 @@ class Box:
         glRecti(0, 0, self.width, self.height)
         glPopMatrix()
 
-
+class Text:
+    def __init__(self, x, y, text, color):
+        self.x = x
+        self.y = y
+        self.color = color
+        self.text = text
+        
+    def update(self):
+        pass
+    
+    def draw(self):
+        glPushMatrix()
+        glRasterPos2i(self.x, self.y)
+        glRotatef(1.2, 1.0, 0.0, 0.0)
+        glColor3ub(*self.color)
+        for c in self.text:
+            glutBitmapCharacter(GLUT_BITMAP_8_BY_13, ord(c))
+        glPopMatrix()
+    
 class Road:
     def __init__(self, road_points, width=50):
         self.road_points = road_points
