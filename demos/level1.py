@@ -8,6 +8,7 @@
 
 def onSensor(sensor):
     if sensor.pixel:
+        Console.clear()
         Console.write('Got to finish line!')
     
 def onOffroad(sensor):

@@ -13,7 +13,7 @@ class Console:
                 l = self.lines.pop()
                 del l
         except IndexError:
-            return None
+            pass
             
     def draw(self):
         glPushMatrix()
@@ -28,6 +28,6 @@ class Console:
             
     def write(self, string):
         if len(self.lines) == self.maxlines:
-            line = self.lines.pop()
+            line = self.lines.pop(0)
             del line
         self.lines.append(string)
