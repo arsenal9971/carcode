@@ -132,7 +132,7 @@ class Car:
         self.x = 0
         self.y = 0
         
-        self.sensors = []
+        self.sensors = {}
         self.lines = []
         self.script = None
         
@@ -153,8 +153,8 @@ class Car:
         self.script = cs
         fd.close()
         
-    def add_sensor(self, sensor):
-        self.sensors.append(sensor)
+    def add_sensor(self, name, sensor):
+        self.sensors[name] = sensor
         
     def flip_engine(self):
         if self.running:
@@ -240,7 +240,7 @@ class Car:
             self.br_turn.onoff_flip()
     
     def draw(self):
-        for sensor in self.sensors:
+        for sensor in self.sensors.values():
             sensor.update(self.angle)
             
         if self.tracer_down:
