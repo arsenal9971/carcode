@@ -134,6 +134,8 @@ class Car:
         
         self.sensors = []
         self.lines = []
+        self.script = None
+        
         #glEnable(GL_TEXTURE_2D)
         #Set texture parametes, wraping and filters
         #glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP)
@@ -144,6 +146,13 @@ class Car:
 
         if CAR_DEBUG: print 'Car __init__ finished'
     
+    def set_script(self, script):
+        cs = {}
+        fd = open(script, 'r')
+        exec fd in cs
+        self.script = cs
+        fd.close()
+        
     def add_sensor(self, sensor):
         self.sensors.append(sensor)
         
@@ -286,3 +295,6 @@ class Car:
             self.speed *= self.decel  # deccelerate the car
         else:
             self.speed = 0
+            
+        if self.script:
+            self.script['main'](self)
