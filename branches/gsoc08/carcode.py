@@ -25,6 +25,8 @@ def setup_level(app):
         # Setup default environment
         car = Car()
         app.arena.set_car(car)
+    if opts.script:
+        car.set_script(opts.script)
 
 def main():
     app = CarcodeApp(800, 600)
