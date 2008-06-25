@@ -1,14 +1,22 @@
 from math import atan, sin, cos, radians, sqrt
 from OpenGL.GL import *
 from OpenGL.GLUT import glutBitmapCharacter, GLUT_BITMAP_8_BY_13
+from collision import BoundingBox
+
+DEBUG = False
 
 class Box:
-    def __init__(self, x, y, height, width, color):
+    def __init__(self, x, y, height, width, color, col=True):
         self.x = x
         self.y = y
         self.height = height
         self.width = width
         self.color = color
+        
+        self.collisionable = col
+        self.bbox = BoundingBox(x + (width/2) , y + (height/2), height, width)
+        self.bbox.update()
+        
     def update(self):
         pass
     def draw(self):
@@ -17,6 +25,8 @@ class Box:
         glColor3ub(*self.color)
         glRecti(0, 0, self.width, self.height)
         glPopMatrix()
+        if DEBUG:
+            self.bbox.draw()
 
 class Text:
     def __init__(self, x, y, text, color):
@@ -24,6 +34,7 @@ class Text:
         self.y = y
         self.color = color
         self.text = text
+        self.collisionable = False
         
     def update(self):
         pass

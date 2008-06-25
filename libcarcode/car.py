@@ -3,11 +3,10 @@ from math import sin, cos, radians, sqrt
 
 import pygame
 from OpenGL.GL import *
-from collision import pyLine
+from collision import pyLine, BoundingBox
 import helpers
 
-CAR_DEBUG = False
-TRACER_CAR_DEBUG = True
+DEBUG = False
 
 class Light(object):
     """ A car light.
@@ -135,6 +134,7 @@ class Car:
         self.sensors = {}
         self.lines = []
         self.script = None
+        self.bbox = BoundingBox(0, 0, 24, 48)
         
         #glEnable(GL_TEXTURE_2D)
         #Set texture parametes, wraping and filters
@@ -143,8 +143,6 @@ class Car:
         #glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
         #glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
         #glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL)
-
-        if CAR_DEBUG: print 'Car __init__ finished'
     
     def set_script(self, script):
         self.script = script
@@ -273,6 +271,9 @@ class Car:
             glRecti(r.x, r.y, r.x + r.width, r.y+r.height)
         glPopMatrix()
         
+        if DEBUG:
+            self.bbox.draw()
+        
     def update(self):
         # move to new position
         if self.moving():
@@ -291,6 +292,10 @@ class Car:
             self.speed *= self.decel  # deccelerate the car
         else:
             self.speed = 0
-            
+        self.bbox.x = self.x
+        self.bbox.y = self.y
+        self.bbox.angle = self.angle
+        self.bbox.update()
+        
         if self.script:
             self.script.call('main', self)

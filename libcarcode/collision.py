@@ -1,4 +1,5 @@
 from OpenGL.GL import *
+from math import sin, cos, degrees, radians, sqrt, pi, atan
 
 class pyLine:
     def __init__(self, *args):
@@ -45,9 +46,68 @@ class pyLine:
         return "pyLine(%i, %i, %i, %i)" % (self.x1, self.y1, self.x2, self.y2)
     
 class BoundingRegion:
-    def __init__(offsetx, offsety):
+    def __init__(self, offsetx, offsety, angle=0.0):
         self.x = offsetx
         self.y = offsety
+        self.angle = angle
+        self.points = []
+        self.np = []
+    
+    def update(self):
+        rad = radians(-self.angle)
+        
+        c = cos(rad)
+        s = sin(rad)
+            
+        self.np = [(((point[0] * c) - (point[1] * s)),
+            ((point[0] * s) + (point[1] * c))) for point in self.points]
+            
+    def get_sa(self):
+        xh = self.np[0][0]
+        xl = self.np[0][0]
+        yh = self.np[0][1]
+        yl = self.np[0][1]
+        
+        for point in self.np:
+            if point[0] > xh:
+                xh = point[0]
+            if point[0] < xl:
+                xl = point[0]
+            if point[1] > yh:
+                yh = point[1]
+            if point[1] < yl:
+                yl = point[1]
+        return ((xl + self.x, xh + self.x), (yl + self.y, yh + self.y))
+            
+    def draw(self):
+        glBegin(GL_LINE_STRIP)
+        glColor3f(1.0,1.0,1.0)
+        for point in self.np:
+            glVertex2f(point[0]+self.x,point[1]+self.y)
+        glVertex2f(self.np[0][0]+self.x,self.np[0][1]+self.y)
+        glEnd()
+        
+    def collide(self, region):
+        sx, sy = self.get_sa()
+        rx, ry = region.get_sa()
+        if rx[1] < sx[0] or rx[0] > sx[1]:
+            return False
+        if ry[1] < sy[0] or ry[0] > sy[1]:
+            return False
+        return True
+    
+    def contains(self, region):
+        sx, sy = self.get_sa()
+        rx, ry = region.get_sa()
+        if rx[0] < sx[0] or rx[0] > sx[1]:
+            return False
+        if rx[1] < sx[0] or rx[1] > sx[1]:
+            return False
+        if ry[0] < sy[0] or ry[0] > sy[1]:
+            return False
+        if ry[1] < sy[0] or ry[1] > sy[1]:
+            return False
+        return True
     def inVector(self, v):
         pass
     def inLine(self, v1, v2):
@@ -65,7 +125,10 @@ class BoudingCircle(BoundingRegion):
     
 class BoundingBox(BoundingRegion):
     def __init__(self, x, y, height, width):
-        BoudingRegion.__init__(self, x, y)
+        BoundingRegion.__init__(self, 0, 0)
+        hw = width/2.0
+        hh = height/2.0
+        self.points = [(x - hw, y + hh), (x + hw, y + hh), (x + hw, y - hh), (x - hw, y - hh)]
         self.height = height
         self.width = width
         
