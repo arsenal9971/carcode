@@ -18,6 +18,7 @@ import level_proxy
 import events
 from console import Console
 from script import Script
+from collision import BoundingBox
 
         
 class CarcodeApp:
@@ -75,6 +76,7 @@ class CarcodeApp:
         'Road': base_entities.Road,
         'Box': base_entities.Box,
         'Text': base_entities.Text,
+        'BoundingBox': BoundingBox,
         'Sensor': Sensor,
         'ColorSensor': ColorSensor,
         'Console': self.console,
