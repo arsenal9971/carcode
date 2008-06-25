@@ -5,14 +5,14 @@
  * Implemented level scrolling [http://clsdaniel.blogspot.com/2008/05/opengl-branch-merged.html (comments)]
  * Implement color trails (r89)
  * Implement sensors (r77)
+ * Implement collision detection (r104)
+ * Implement car control API (r101)
+ * Implement sensors to car API (r102)
+ * Implement level creation format (r71, r103)
 
 ------------------------------------------------------------------------------
 
 == TODO ==
- * Implement car control API
- * Implement sensors to car API
  * Implement event tracking
- * Implement level creation format
  * Create driving tests
  * Add script editor
- * Implement collision detection
