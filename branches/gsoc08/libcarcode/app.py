@@ -17,6 +17,7 @@ import base_entities
 import level_proxy
 import events
 from console import Console
+from script import Script
 
         
 class CarcodeApp:
@@ -44,12 +45,28 @@ class CarcodeApp:
         self.key_commands = {K_q: self.quit}
         
         # Create the environment
-        self.arena = Arena(self)
+        self.arena = Arena()
         self.running = False
         
         self.events = []
         self.console = Console()
         self.init_mappings()
+        
+        car = Car()
+        
+        self.add_key(K_s, car.flip_engine)
+        self.add_key(K_g, car.flip_gear)
+        self.add_key(K_UP, car.accelerate)
+        self.add_key(K_LEFT, car.steer_left)
+        self.add_key(K_RIGHT, car.steer_right)
+        self.add_key(K_DOWN, car.brake)
+        self.add_key(K_h, car.honk)
+        self.add_key(K_z, car.blinker_left_flip)
+        self.add_key(K_c, car.blinker_right_flip)
+        self.add_key(K_t, car.flip_tracer)
+        
+        self.arena.set_car(car)
+        self.car = car
 
     def init_mappings(self):
         self.mappings = {
@@ -66,11 +83,11 @@ class CarcodeApp:
         for k in OpenGL.GL.__dict__.keys():
             self.mappings[k] = OpenGL.GL.__dict__[k]
 
-    def run_script(self, script):
-        fd = file(script, 'r')
-        #fd.open()
-        exec(fd, self.mappings)
-        fd.close()
+    def load_level(self, script):
+        self.levelscript = Script(script, self.mappings, autoload=True)
+    
+    def load_script(self, script):
+        self.car.set_script(Script(script, autoload=True))
     
     def quit(self):
         self.running = False

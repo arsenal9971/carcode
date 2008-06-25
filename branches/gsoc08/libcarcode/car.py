@@ -147,11 +147,7 @@ class Car:
         if CAR_DEBUG: print 'Car __init__ finished'
     
     def set_script(self, script):
-        cs = {}
-        fd = open(script, 'r')
-        exec fd in cs
-        self.script = cs
-        fd.close()
+        self.script = script
         
     def add_sensor(self, name, sensor):
         self.sensors[name] = sensor
@@ -297,4 +293,4 @@ class Car:
             self.speed = 0
             
         if self.script:
-            self.script['main'](self)
+            self.script.call('main', self)
