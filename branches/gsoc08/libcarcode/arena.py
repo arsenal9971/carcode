@@ -6,6 +6,7 @@ from pygame.locals import *
 from OpenGL.GL import *
 
 import helpers
+from events import EventDispatcher
 
 WHITE = (250, 250, 250)
         
@@ -14,6 +15,7 @@ class Arena:
         self.entities = []
         self.lines = []
         self.segments = []
+        self.on_collision = EventDispatcher()
     
     def set_car(self, car):
         self.car = car
@@ -25,6 +27,10 @@ class Arena:
         for entity in self.entities:
             entity.update()
         self.car.update()
+        for entity in self.entities:
+            if entity.collisionable:
+                if self.car.bbox.collide(entity.bbox):
+                    self.on_collision.dispatch(entity)
         
     def draw(self, surface):
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)

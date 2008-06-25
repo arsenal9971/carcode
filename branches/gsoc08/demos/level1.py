@@ -22,12 +22,12 @@ Arena.add_entity(Box(780, -25, 50, 25, (0,0,255)))
 car = Arena.get_car()
 
 sensor = ColorSensor(24, 0, (0, 0, 255))
-sensor.events.subscribe('Sensor', onSensor)
+sensor.on_update.subscribe(onSensor)
 
 blacksensor1 = ColorSensor(24, 12, (0, 0, 0))
 blacksensor2 = ColorSensor(24, -12, (0, 0, 0))
-blacksensor1.events.subscribe('Sensor', onOffroad)
-blacksensor2.events.subscribe('Sensor', onOffroad)
+blacksensor1.on_update.subscribe(onOffroad)
+blacksensor2.on_update.subscribe(onOffroad)
 
 car.add_sensor("blacksensor1", blacksensor1)
 car.add_sensor("blacksensor2", blacksensor2)

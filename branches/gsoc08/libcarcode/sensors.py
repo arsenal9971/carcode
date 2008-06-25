@@ -22,7 +22,7 @@ class Sensor:
             else:
                 self.angle = float(y)/x
                 self.length = sqrt((x*x) + (y*y))
-        self.events = EventDispatcher()
+        self.on_update = EventDispatcher()
         
     def update(self, angle):
         rad = radians(angle) + self.angle
@@ -31,7 +31,7 @@ class Sensor:
         glReadBuffer(GL_BACK)
         pixels = glReadPixelsub(x, y, 1, 1, GL_RGB)
         self.pixel = struct.unpack('BBB', pixels[0][0])
-        self.events.dispatch('Sensor', self)
+        self.on_update.dispatch(self)
     
     def read_data(self):
         return self.pixel
@@ -58,13 +58,13 @@ class ColorSensor(Sensor):
     
     def update(self, angle):
         # Disable event dispatching to override superclass events
-        self.events.disable()
+        self.on_update.disable()
         
         # Let superclass read pixel data
         Sensor.update(self, angle)
         
         # Reenable event dispatching
-        self.events.enable()
+        self.on_update.enable()
         
         # Compare both color tuples by xor'ing each value
         # then sum the results.
@@ -75,4 +75,4 @@ class ColorSensor(Sensor):
             self.pixel = False
         else:
             self.pixel = True
-        self.events.dispatch('Sensor', self)
+        self.on_update.dispatch(self)

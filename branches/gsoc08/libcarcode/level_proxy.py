@@ -2,6 +2,7 @@
 class ArenaProxy:
     def __init__(self, arena):
         self.__arena__ = arena
+        self.on_collision = arena.on_collision
     def add_entity(self, entity):
         self.__arena__.add_entity(entity)
     def get_car(self):

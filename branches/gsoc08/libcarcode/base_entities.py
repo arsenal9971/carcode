@@ -6,7 +6,7 @@ from collision import BoundingBox
 DEBUG = False
 
 class Box:
-    def __init__(self, x, y, height, width, color, col=True):
+    def __init__(self, x, y, height, width, color, col=False):
         self.x = x
         self.y = y
         self.height = height
