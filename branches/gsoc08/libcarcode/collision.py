@@ -51,7 +51,6 @@ class BoundingRegion:
         self.y = offsety
         self.angle = angle
         self.points = []
-        self.np = []
     
     def update(self):
         rad = radians(-self.angle)
@@ -59,32 +58,45 @@ class BoundingRegion:
         c = cos(rad)
         s = sin(rad)
             
-        self.np = [(((point[0] * c) - (point[1] * s)),
-            ((point[0] * s) + (point[1] * c))) for point in self.points]
+        x = (self.points[0][0] * c) - (self.points[0][1] * s)
+        y = (self.points[0][0] * s) + (self.points[0][1] * c)
+        
+        self.xh = x
+        self.xl = x
+        self.yh = y
+        self.yl = y
+        
+        for point in self.points:
+            x = (point[0] * c) - (point[1] * s)
+            y = (point[0] * s) + (point[1] * c)
+            
+            if x > self.xh:
+                self.xh = x
+            if x < self.xl:
+                self.xl = x
+            if y > self.yh:
+                self.yh = y
+            if y < self.yl:
+                self.yl = y
             
     def get_sa(self):
-        xh = self.np[0][0]
-        xl = self.np[0][0]
-        yh = self.np[0][1]
-        yl = self.np[0][1]
-        
-        for point in self.np:
-            if point[0] > xh:
-                xh = point[0]
-            if point[0] < xl:
-                xl = point[0]
-            if point[1] > yh:
-                yh = point[1]
-            if point[1] < yl:
-                yl = point[1]
-        return ((xl + self.x, xh + self.x), (yl + self.y, yh + self.y))
+        return ((self.xl + self.x, self.xh + self.x), (self.yl + self.y, self.yh + self.y))
             
     def draw(self):
+        rad = radians(-self.angle)
+        
+        c = cos(rad)
+        s = sin(rad)
+        
         glBegin(GL_LINE_STRIP)
         glColor3f(1.0,1.0,1.0)
-        for point in self.np:
-            glVertex2f(point[0]+self.x,point[1]+self.y)
-        glVertex2f(self.np[0][0]+self.x,self.np[0][1]+self.y)
+        for point in self.points:
+            x = (point[0] * c) - (point[1] * s)
+            y = (point[0] * s) + (point[1] * c)
+            glVertex2f(x+self.x,y+self.y)
+        x = (self.points[0][0] * c) - (self.points[0][1] * s)
+        y = (self.points[0][0] * s) + (self.points[0][1] * c)
+        glVertex2f(x+self.x,y+self.y)
         glEnd()
         
     def collide(self, region):
@@ -131,6 +143,7 @@ class BoundingBox(BoundingRegion):
         self.points = [(x - hw, y + hh), (x + hw, y + hh), (x + hw, y - hh), (x - hw, y - hh)]
         self.height = height
         self.width = width
+        self.update()
         
     def inVector(self, v):
         if v[0] >= self.x and vx <= (self.x + width):
