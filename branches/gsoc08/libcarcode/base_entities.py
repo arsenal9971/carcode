@@ -42,7 +42,6 @@ class Text:
     def draw(self):
         glPushMatrix()
         glRasterPos2i(self.x, self.y)
-        glRotatef(1.2, 1.0, 0.0, 0.0)
         glColor3ub(*self.color)
         for c in self.text:
             glutBitmapCharacter(GLUT_BITMAP_8_BY_13, ord(c))
