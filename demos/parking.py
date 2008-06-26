@@ -8,6 +8,7 @@ DEBUG = False
 
 def onCollision(entity):
     if entity.bbox.contains(car.bbox):
+        Console.clear()
         Console.write('Parked ok!')
         
 class ParkPlace:
