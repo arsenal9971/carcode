@@ -4,6 +4,7 @@ from math import sin, cos, radians, sqrt
 import pygame
 from OpenGL.GL import *
 from collision import pyLine, BoundingBox
+from events import EventDispatcher
 import helpers
 
 DEBUG = False
@@ -136,6 +137,12 @@ class Car:
         self.script = None
         self.bbox = BoundingBox(0, 0, 24, 48)
         
+        self.__engine_flips__ = 0
+        self.__gear_flips__ = 0
+        self.__honk_count__ = 0
+        
+        self.on_honk = EventDispatcher()
+        
         #glEnable(GL_TEXTURE_2D)
         #Set texture parametes, wraping and filters
         #glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP)
@@ -151,6 +158,7 @@ class Car:
         self.sensors[name] = sensor
         
     def flip_engine(self):
+        self.__engine_flips__ += 1
         if self.running:
             self.engine_off()
         else:
@@ -209,10 +217,13 @@ class Car:
         self.forward_gear = True
 
     def flip_gear(self):
+        self.__gear_flips__ += 1
         self.forward_gear = not self.forward_gear
 
     def honk(self):
+        self.__honk_count__ += 1
         self.horn_sound.play()
+        self.on_honk.dispatch(self)
     
     def steer_left(self, deg = 7.0):
         if self.running and self.moving(): self.angle = round(self.angle + deg) % 360
