@@ -116,6 +116,9 @@ class CarcodeApp:
                     # We got exit signal, we quit
                     self.quit()
                 elif event.type == KEYDOWN:
+                    if self.paused:
+                        if event.key != K_q and event.key != K_p:
+                            break
                     # Check the command dictionary and execute event
                     if self.key_commands.has_key(event.key):
                         self.key_commands[event.key]()
