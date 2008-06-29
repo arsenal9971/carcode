@@ -49,7 +49,6 @@ class CarcodeApp:
         self.arena = Arena()
         self.running = False
         
-        self.events = []
         self.console = Console()
         self.init_mappings()
         
@@ -93,45 +92,10 @@ class CarcodeApp:
     
     def quit(self):
         self.running = False
-        self.events.append((QUIT, time.time()))
-        d = shelve.open("game1.test")
-        d['events'] = self.events
-        d.close()
     
     def add_key(self, key, func):
         self.key_commands[key] = func
     
-    def rerun(self):
-        d = shelve.open("game1.test")
-        self.events = d['events']
-        d.close()
-        self.running = True
-        cevent = self.events.pop(0)
-        print cevent
-        if cevent[0] == 0:
-            itime = cevent[1]
-        else:
-            print 'Malformed event log'
-            return 0
-        ntime = time.time() + (cevent[1] - itime)
-        while self.running:
-            ctime = time.time()
-            if ctime >= ntime:
-                if cevent[0] == KEYDOWN:
-                    eventkey = cevent[2]
-                    if self.key_commands.has_key(eventkey):
-                        self.key_commands[eventkey]()
-                elif cevent[0] == QUIT:
-                    return 0
-                cevent = self.events.pop(0)
-                ntime = ctime + (cevent[1] - itime)
-                itime = cevent[1]
-            self.arena.update()
-            self.arena.draw(self.screen)
-            pygame.display.flip()
-            etime = time.time()
-            if (etime - ctime) < 0.05:
-                time.sleep(0.05 - (etime - ctime))
     
     def main_loop(self):
         '''
@@ -139,7 +103,6 @@ class CarcodeApp:
             rendering and event processing.
         '''
         self.running = True
-        self.events.append((0, time.time()))
         while self.running:
             ttime = time.time()
             # Process Events
@@ -150,7 +113,6 @@ class CarcodeApp:
                 elif event.type == KEYDOWN:
                     # Check the command dictionary and execute event
                     if self.key_commands.has_key(event.key):
-                        self.events.append((KEYDOWN, time.time(), event.key))
                         self.key_commands[event.key]()
             # Update the Arena
             self.arena.update()
