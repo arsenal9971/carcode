@@ -19,7 +19,7 @@ Running Carcode
 You can tell carcode to load a give level file with the option -l,
 as shown in the example we load a file under the demo directory:
 
- python carcode.py -l demo/level1.py
+ python carcode.py -l demos/level1.py
 
 You can set a script to handle the car logic with the option -s,
 as show in the example:
@@ -28,7 +28,7 @@ as show in the example:
 
 A full example of loading a level and logic:
 
- python carcode.py -l demo/level1.py -s mylogic.py
+ python carcode.py -l demos/level1.py -s mylogic.py
 
 Lengthy car scripts or with tight loops can degrade overall
 performance.
@@ -70,6 +70,15 @@ directory:
 
 WINDOWS NOTES
 =====================================================================
+
+GLUT
+
+Installing pyOpenGL 2.0 sometimes misses a few DLLS, if carcode is
+giving you an error about missing GLUT32.DLL download it from:
+
+http://www.xmission.com/~nate/glut.html
+
+Copy the glut32.dll to your system32 folder or to the carcode folder.
 
 Py2exe
 
