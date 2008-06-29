@@ -64,9 +64,11 @@ class CarcodeApp:
         self.add_key(K_z, car.blinker_left_flip)
         self.add_key(K_c, car.blinker_right_flip)
         self.add_key(K_t, car.flip_tracer)
-        
+        self.add_key(K_p, self.pause)
+		
         self.arena.set_car(car)
         self.car = car
+        self.paused = False
 
     def init_mappings(self):
         self.mappings = {
@@ -89,7 +91,10 @@ class CarcodeApp:
     
     def load_script(self, script):
         self.car.set_script(Script(script, autoload=True))
-    
+		
+    def pause(self):
+        self.paused = not self.paused
+		
     def quit(self):
         self.running = False
     
@@ -115,7 +120,8 @@ class CarcodeApp:
                     if self.key_commands.has_key(event.key):
                         self.key_commands[event.key]()
             # Update the Arena
-            self.arena.update()
+            if not self.paused:
+                self.arena.update()
             
             # Render
             self.arena.draw(self.screen)
