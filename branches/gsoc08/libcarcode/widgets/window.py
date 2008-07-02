@@ -26,11 +26,12 @@ class Window:
     def draw(self):
         glPushMatrix()
         glTranslatef(self.pos[0], self.pos[1], 0)
+        
         if len(self.color) == 3:
             glColor3f(*self.color)
         else:
             glColor4f(*self.color)
-        glRecti(0, 0, self.size[0], self.size[1])
+        glRecti(0, 0, self.size[0], self.size[1]+15)
         
         if self.focus:
             glColor3ub(0, 0, 200)
@@ -40,19 +41,24 @@ class Window:
         
         self.label.draw()
         
-        glTranslatef(2, 17, 0)
+        glTranslatef(0, 15, 0)
+        
         for entity in self.entities:
             entity.draw()
+            
         glPopMatrix()
+        
     def events(self, event):
         if event.type == MOUSEBUTTONUP and not self.modal:
             inX = lambda x: x >= self.pos[0] and x <= self.pos[0]+self.size[0]
             inY = lambda y: y >= self.pos[1] and y <= self.pos[1]+self.size[1]
+            
             if inX(event.pos[0]) and inY(event.pos[1]):
                 self.focus = True
             else:
                 self.focus = False
                 return False
+            
         if self.focus:
             if event.type == MOUSEBUTTONUP or event.type == MOUSEBUTTONDOWN:
                 nevent = Dummy()
@@ -60,9 +66,12 @@ class Window:
                 nevent.pos = (event.pos[0] - self.pos[0] - 2, event.pos[1] - self.pos[1] - 17)
             else:
                 nevent = event
+                
             for entity in self.entities:
                 if entity.events(nevent):
                     return True
+                
         if self.modal:
             return True
+        
         return False
