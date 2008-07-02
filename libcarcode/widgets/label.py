@@ -3,8 +3,10 @@ from OpenGL.GLUT import glutBitmapCharacter, GLUT_BITMAP_8_BY_13
 
 from pygame.locals import *
 
+from constants import *
+
 class Label:
-    def __init__(self, text, pos, color):
+    def __init__(self, text, pos = (0,0), color = COLOR_WHITE):
         self.text = text
         self.pos = list(pos)
         self.color = color
@@ -25,8 +27,8 @@ class Label:
             glColor3f(*self.color)
         else:
             glColor4f(*self.color)
-            
-        glRasterPos3i(0, 0, 0)
+        
+        glRasterPos3i(0, 10, 0)
         for c in self.text:
             glutBitmapCharacter(GLUT_BITMAP_8_BY_13, ord(c))
             
