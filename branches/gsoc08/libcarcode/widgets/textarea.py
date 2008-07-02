@@ -5,7 +5,7 @@ from pygame.locals import *
 
 from constants import *
 from events import EventDispatcher
-from label import Label
+from utils import Clipper
 
 TXTKEYS = {
         K_SPACE: ' ',
@@ -120,6 +120,8 @@ class TextArea:
         glRecti(0, 0, self.size[0], self.size[1])
         glColor3f(0,0,0)
         glRecti(1, 1, self.size[0]-1, self.size[1]-1)
+        clip = Clipper()
+        clip.begin((1, 1, self.size[0]-1, self.size[1]-1))
         glPushMatrix()
         glTranslatef(2, 13, 0)
         glColor4f(*COLOR_WHITE)
@@ -135,4 +137,5 @@ class TextArea:
             x = (self.xcursor*8) + 2
             y = (self.ycursor*13) + 2
             glRecti(x, y, x+4, y+13)
+        clip.end()
         glPopMatrix()
