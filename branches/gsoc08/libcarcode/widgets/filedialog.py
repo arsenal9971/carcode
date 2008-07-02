@@ -16,9 +16,9 @@ from window import Window
 class FileDialog(Window):
     def __init__(self, title, pos, size, callback, match="*"):
         Window.__init__(self, title, pos, size, color=(0.2,0.2,0.2))
-        print pos, size
         self.size = size
         self.modal = True
+        self.centered = True
         self.callback = callback
         self.cwd = os.getcwd()
         self.match = match
