@@ -20,6 +20,9 @@ class Label:
     def events(self, event):
         return False
     
+    def resize(self, size):
+        pass
+    
     def draw(self):
         glPushMatrix()
         glTranslatef(self.pos[0], self.pos[1], 0)
