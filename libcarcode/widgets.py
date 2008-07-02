@@ -31,6 +31,54 @@ class HUD:
         glPopMatrix()
     def add_entity(self, entity):
         self.entities.append(entity)
+
+class Window:
+    def __init__(self, label, pos, size, color, modal = False):
+        self.label = Label(label, (4,12), COLOR_WHITE)
+        self.pos = pos
+        self.size = size
+        self.color = color
+        self.entities = []
+        self.focus = True
+        self.modal = modal
+        
+    def add_entity(self, entity):
+        self.entities.append(entity)
+        
+    def draw(self):
+        glPushMatrix()
+        glTranslatef(self.pos[0], self.pos[1], 0)
+        glColor3ub(*self.color)
+        glRecti(0, 0, self.size[1], self.size[0])
+        
+        if self.focus:
+            glColor3ub(0, 0, 200)
+        else:
+            glColor3ub(100, 100, 100)
+        glRecti(0, 0, self.size[1], 15)
+        
+        self.label.draw()
+        
+        glTranslatef(2, 17, 0)
+        for entity in self.entities:
+            entity.draw()
+        glPopMatrix()
+    def events(self, event):
+        if event.type == MOUSEBUTTONUP and not self.modal:
+            inX = lambda x: x >= self.pos[0] and x <= self.pos[0]+self.size[1]
+            inY = lambda y: y >= self.pos[1] and y <= self.pos[1]+self.size[0]
+            if inX(event.pos[0]) and inY(event.pos[1]):
+                self.focus = True
+            else:
+                self.focus = False
+                return False
+        if self.focus:
+            for entity in self.entities:
+                if entity.events(event):
+                    return True
+        if self.modal:
+            return True
+        return False
         
 class Label:
     def __init__(self, text, pos, color):
