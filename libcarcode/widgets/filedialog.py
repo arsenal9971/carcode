@@ -15,17 +15,19 @@ from window import Window
 
 class FileDialog(Window):
     def __init__(self, title, pos, size, callback, match="*"):
-        Window.__init__(self, title, pos, size, (0.2,0.2,0.2))
+        Window.__init__(self, title, pos, size, color=(0.2,0.2,0.2))
+        print pos, size
+        self.size = size
         self.modal = True
         self.callback = callback
         self.cwd = os.getcwd()
         self.match = match
-        self.flist = ListBox((5,5), (size[0]-10, size[1]-50), (0.2,0.2,0.2))
+        self.flist = ListBox((5+30,5), (size[0]-10, size[1]-50), (0.2,0.2,0.2))
         btnW = (self.size[0] / 2) - 30
         btnX = (self.size[0] / 4) - (btnW /2)
         self.btnCancel = Button(Label("Cancel"),(btnX, size[1]-40), (btnW, 30), (0.5,0.5,0.5))
         btnX = (self.size[0] / 2) + (self.size[0] / 4) - (btnW /2)
-        self.btnOk = Button(Label("Ok"),(btnX, size[1]-40), (btnW, 30), (0.5,0.5,0.5))
+        self.btnOk = Button(Label("Ok"),(btnX+40, size[1]-40), (btnW, 30), (0.5,0.5,0.5))
         
         self.add_entity(self.flist)
         self.add_entity(self.btnCancel)

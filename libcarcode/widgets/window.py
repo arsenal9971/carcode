@@ -6,9 +6,7 @@ from pygame.locals import *
 from constants import *
 from events import EventDispatcher
 from label import Label
-
-class Dummy:
-    pass
+from utils import Clipper, mangle_event
 
 class Window:
     def __init__(self, label, pos, size, color, modal = False):
@@ -50,27 +48,31 @@ class Window:
         glRecti(0, 0, self.size[0], self.size[1])
         
         # Enable stencil test for clipping
-        glClear(GL_STENCIL_BUFFER_BIT)
-        glEnable(GL_STENCIL_TEST)
+        #glClear(GL_STENCIL_BUFFER_BIT)
+        #glEnable(GL_STENCIL_TEST)
         
         # Draw window region in stencil buffer
-        glColorMask(GL_FALSE,GL_FALSE,GL_FALSE,GL_FALSE)
-        glStencilOp(GL_REPLACE,GL_REPLACE,GL_REPLACE)
-        glStencilFunc(GL_ALWAYS,1,1)
+        #glColorMask(GL_FALSE,GL_FALSE,GL_FALSE,GL_FALSE)
+        #glStencilOp(GL_REPLACE,GL_REPLACE,GL_REPLACE)
+        #glStencilFunc(GL_ALWAYS,1,1)
         
-        glRecti(0, 0, self.size[0], self.size[1])
+        clip = Clipper()
+        #glColor4f(0.0, 1.0, 0.0, 0.5)
+        #glRecti(0, 0, self.size[0], self.size[1])
+        clip.begin((0, 0, self.size[0], self.size[1]))
         
         # Draw entities testing against stencil for visible parts,
         # everything inside stencil will be draw.
-        glColorMask(GL_TRUE,GL_TRUE,GL_TRUE,GL_TRUE)
-        glStencilFunc(GL_EQUAL,1,1)
-        glStencilOp(GL_KEEP,GL_KEEP,GL_KEEP)
+        #glColorMask(GL_TRUE,GL_TRUE,GL_TRUE,GL_TRUE)
+        #glStencilFunc(GL_EQUAL,1,1)
+        #glStencilOp(GL_KEEP,GL_KEEP,GL_KEEP)
         
         for entity in self.entities:
             entity.draw()
         
         # Disable stencil tests
-        glDisable(GL_STENCIL_TEST)
+        #glDisable(GL_STENCIL_TEST)
+        clip.end()
         
         # Restore transformation matrix
         glPopMatrix()
@@ -87,13 +89,8 @@ class Window:
                 return False
             
         if self.focus:
-            if event.type == MOUSEBUTTONUP or event.type == MOUSEBUTTONDOWN:
-                nevent = Dummy()
-                nevent.type = event.type
-                nevent.pos = (event.pos[0] - self.pos[0] - 2, event.pos[1] - self.pos[1] - 17)
-            else:
-                nevent = event
-                
+            nevent = mangle_event(event, (self.pos[0], self.pos[1]+17))
+            
             for entity in self.entities:
                 if entity.events(nevent):
                     return True
