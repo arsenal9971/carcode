@@ -5,7 +5,7 @@ from pygame.locals import *
 
 from constants import *
 from events import EventDispatcher
-from label import Label
+from utils import Clipper
 
 TXTKEYS = {
         K_SPACE: ' '
@@ -34,25 +34,40 @@ class TextBox:
         return self.text
     
     def events(self, event):
-        if event.type == KEYDOWN and self.focus:
-            return True
         if event.type == KEYUP and self.focus:
+            return True
+        if event.type == KEYDOWN and self.focus:
+            clen = len(self.text)
             if event.key == K_BACKSPACE:
-                # TODO: Add cursor movement
-                if len(self.text) > 0:
-                    self.text = self.text[0:-1]
-                    
-            # TODO: Handle numlock, there is no way to determine current state
-            #       of numlock, thus changing caps when K_NUMLOCK is pressed 
-            #       is useless.
-            caps = False
-            if event.mod & KMOD_SHIFT:
-                caps = not caps
-            if TXTKEYS.has_key(event.key):
-                if caps:
-                    self.text += chr(event.key).upper()
-                else:
-                    self.text += chr(event.key)
+                if clen > 0 and self.cursor > 0:
+                    if self.cursor == clen:
+                        self.text = self.text[0:-1]
+                    else:
+                        self.text = self.text[0:self.cursor-1] + self.text[self.cursor:clen]
+                    self.cursor -= 1
+            elif event.key == K_DELETE:
+                if self.cursor < clen and clen > 0:
+                    self.text = self.text[0:self.cursor] + self.text[self.cursor+1:clen]
+            elif event.key == K_LEFT:
+                if self.cursor > 0:
+                    self.cursor -= 1
+            elif event.key == K_RIGHT:
+                if self.cursor < clen:
+                    self.cursor += 1
+            elif event.key == K_UP:
+                pass
+            elif event.key == K_DOWN:
+                pass
+            elif event.key == K_RETURN or event.key == K_KP_ENTER:
+                pass
+            else:
+                try:
+                    char = event.unicode.encode('latin-1')
+                    if char:
+                        self.text += char
+                        self.cursor += 1
+                except:
+                    pass
             return True
             
         if event.type == MOUSEBUTTONUP:
@@ -74,13 +89,17 @@ class TextBox:
         glRecti(0, 0, self.size[0], self.size[1])
         glColor3f(0,0,0)
         glRecti(1, 1, self.size[0]-1, self.size[1]-1)
+        clip = Clipper()
+        clip.begin((1, 1, self.size[0]-1, self.size[1]-1))
+        glPushMatrix()
         glTranslatef(2, 13, 0)
         glColor4f(*COLOR_WHITE)
         glRasterPos3i(0, 0, 0)
         for c in self.text:
             glutBitmapCharacter(GLUT_BITMAP_8_BY_13, ord(c))
+        glPopMatrix()
         if self.focus:
-            glTranslatef(0, -13, 0)
-            x = 2 + (len(self.text) * 8)
-            glRecti(x, 2, x+4, self.size[1]-2)
+            x = (self.cursor*8) + 2
+            glRecti(x, 0, x+4, 13)
+        clip.end()
         glPopMatrix()
