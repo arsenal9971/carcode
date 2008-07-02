@@ -21,6 +21,21 @@ from script import Script
 from collision import BoundingBox
 import widgets
 
+class MainWindow(widgets.Window):
+    def __init__(self):
+        widgets.Window.__init__(self, "Carcode", (290,140), (220, 320), (0.2,0.2,0.2, 0.5))
+        self.btnQuit = widgets.Button(widgets.Label("Quit"), (0,0), (10,10), (0.2,0.2,0.2))
+        self.btnLoad = widgets.Button(widgets.Label("Load Level"), (0,0), (10,10), (0.2,0.2,0.2))
+        self.btnScript = widgets.Button(widgets.Label("Load Car Script"), (0,0), (10,10), (0.2,0.2,0.2))
+        
+        self.vp = widgets.VerticalPack(pos=(10,10), size=(200, 300))
+        self.vp.add_entity(self.btnLoad)
+        self.vp.add_entity(self.btnScript)
+        self.vp.add_entity(self.btnQuit)
+        
+        self.add_entity(self.vp)
+        #self.modal = True
+        
         
 class CarcodeApp:
     ''' Carcode initialization and mainloop '''
@@ -31,7 +46,7 @@ class CarcodeApp:
         # Initialize pygame
         pygame.init()
         
-        pygame.key.set_repeat(50, 50)
+        pygame.key.set_repeat(200, 50)
         
         pygame.display.gl_set_attribute(GL_STENCIL_SIZE, 1)
         
@@ -73,10 +88,14 @@ class CarcodeApp:
 		
         self.arena.set_car(car)
         self.car = car
-        self.paused = False
+        self.paused = True
         self.hud = widgets.HUD((width, height))
         
         self.quit_dialog = widgets.Dialog("Really quit carcode?", self.quit_app)
+        
+        self.mw = MainWindow()
+        self.mw.btnQuit.onClick.subscribe(self.quit)
+        #self.hud.add_entity(self.mw)
         
         self.init_mappings()
 
@@ -113,13 +132,13 @@ class CarcodeApp:
         else:
             self.paused = False
         
-    def quit(self):
+    def quit(self, obj = None):
         self.paused = True
+        self.mw.modal = False
         self.hud.add_entity(self.quit_dialog)
     
     def add_key(self, key, func):
         self.key_commands[key] = func
-    
     
     def main_loop(self):
         '''
@@ -127,8 +146,10 @@ class CarcodeApp:
             rendering and event processing.
         '''
         self.running = True
+        
+        ttime = time.time() + 0.05
+        
         while self.running:
-            ttime = time.time()
             # Process Events
             for event in pygame.event.get():
                 if self.hud.events(event):
@@ -143,10 +164,6 @@ class CarcodeApp:
                     # Check the command dictionary and execute event
                     if self.key_commands.has_key(event.key):
                         self.key_commands[event.key]()
-            # Update the Arena
-            if not self.paused:
-                self.arena.update()
-            
             # Render
             self.arena.draw(self.screen)
             
@@ -156,6 +173,14 @@ class CarcodeApp:
             
             # Finally, flip display surface
             pygame.display.flip()
+            
             etime = time.time()
-            if (etime - ttime) < 0.05:
-                time.sleep(0.05 - (etime - ttime))
+            
+            # Try to keep update code running
+            # at 24fps without sleeping, we lose
+            # events when sleeping.
+            if etime >= ttime:
+                # Update the Arena
+                if not self.paused:
+                    self.arena.update()
+                ttime = time.time() + 0.05
