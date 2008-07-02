@@ -25,6 +25,13 @@ class TextBox:
         self.text = ""
         self.focus = False
         self.cursor = 0
+        
+    def set_text(self, text):
+        self.text = text
+        
+    def get_text(self):
+        return self.text
+    
     def events(self, event):
         if event.type == KEYDOWN and self.focus:
             return True
