@@ -11,16 +11,22 @@ from window import Window
 
 class Dialog(Window):
     def __init__(self, label, callback):
-        height = 80
-        width = 180
-        label = Label(label, (0, 17), COLOR_WHITE)
-        self.btnYes = Button("Yes", (15, 35), (60, 20), (0.2,0.2,0.2))
-        self.btnNo = Button("No", (95, 35), (60, 20), (0.2,0.2,0.2))
+        label = Label(label, (10, 17), COLOR_WHITE)
+        height = 65
+        width = label.size[0] + 20
+        bWidth = (width / 2) - 10
+        self.btnYes = Button("Yes", (5, 35), (bWidth, 20), (0.2,0.2,0.2))
+        self.btnNo = Button("No", (bWidth + 15, 35), (bWidth, 20), (0.2,0.2,0.2))
         self.btnYes.onClick.subscribe(self.answared)
         self.btnNo.onClick.subscribe(self.answared)
         
         self.callback = callback
-        Window.__init__(self, "Dialog", (270, 220), (width, height), (0.5,0.5,0.5,0.5))
+        
+        posX = 400 - (width /2)
+        posY = 300 - (height /2)
+        
+        Window.__init__(self, "Dialog", (posX, posY), (width, height), (0.5,0.5,0.5,0.8))
+        
         self.modal = True
         self.add_entity(label)
         self.add_entity(self.btnYes)
