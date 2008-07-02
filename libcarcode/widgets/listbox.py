@@ -75,12 +75,12 @@ class ListBox:
         glStencilFunc(GL_EQUAL,1,1)
         glStencilOp(GL_KEEP,GL_KEEP,GL_KEEP)
         
-        glTranslatef(2, 13, 0)
+        glTranslatef(2, 0, 0)
         i = 0
         for item in self.items:
             if i == self.selected:
                 glColor4f(0.5,0,0, 0.5)
-                glRecti(0, item.pos[1]-11, self.size[0]-3, item.pos[1]+1)
+                glRecti(0, item.pos[1], self.size[0]-3, item.pos[1]+13)
             if i == self.maxrows:
                 break;
             item.draw()
