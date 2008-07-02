@@ -4,7 +4,8 @@ from OpenGL.GLUT import glutBitmapCharacter, GLUT_BITMAP_8_BY_13
 from pygame.locals import *
 from events import EventDispatcher
 
-COLOR_WHITE = (255,255,255)
+COLOR_WHITE = (1.0,1.0,1.0,1.0)
+
 TXTKEYS = {
         K_SPACE: ' '
         }
@@ -48,7 +49,10 @@ class Window:
     def draw(self):
         glPushMatrix()
         glTranslatef(self.pos[0], self.pos[1], 0)
-        glColor3ub(*self.color)
+        if len(self.color) == 3:
+            glColor3f(*self.color)
+        else:
+            glColor4f(*self.color)
         glRecti(0, 0, self.size[1], self.size[0])
         
         if self.focus:
@@ -90,7 +94,10 @@ class Label:
     def draw(self):
         glPushMatrix()
         glTranslatef(self.pos[0], self.pos[1], 0)
-        glColor3ub(*self.color)
+        if len(self.color) == 3:
+            glColor3f(*self.color)
+        else:
+            glColor4f(*self.color)
         glRasterPos3i(0, 0, 0)
         for c in self.text:
             glutBitmapCharacter(GLUT_BITMAP_8_BY_13, ord(c))
@@ -116,7 +123,10 @@ class Button:
     def draw(self):
         glPushMatrix()
         glTranslatef(self.pos[0], self.pos[1], 0)
-        glColor3ub(*self.color)
+        if len(self.color) == 3:
+            glColor3f(*self.color)
+        else:
+            glColor4f(*self.color)
         glRecti(0, 0, self.size[1], self.size[0])
         self.label.draw()
         glPopMatrix()
@@ -163,12 +173,15 @@ class Textbox:
     def draw(self):
         glPushMatrix()
         glTranslatef(self.pos[0], self.pos[1], 0)
-        glColor3ub(*self.color)
+        if len(self.color) == 3:
+            glColor3f(*self.color)
+        else:
+            glColor4f(*self.color)
         glRecti(0, 0, self.size[1], self.size[0])
-        glColor3ub(0,0,0)
+        glColor3f(0,0,0)
         glRecti(1, 1, self.size[1]-1, self.size[0]-1)
         glTranslatef(2, 13, 0)
-        glColor3ub(*COLOR_WHITE)
+        glColor4f(*COLOR_WHITE)
         glRasterPos3i(0, 0, 0)
         for c in self.text:
             glutBitmapCharacter(GLUT_BITMAP_8_BY_13, ord(c))
@@ -225,15 +238,18 @@ class List:
     def draw(self):
         glPushMatrix()
         glTranslatef(self.pos[0], self.pos[1], 0)
-        glColor3ub(*self.color)
+        if len(self.color) == 3:
+            glColor3f(*self.color)
+        else:
+            glColor4f(*self.color)
         glRecti(0, 0, self.size[1], self.size[0])
-        glColor3ub(0,0,0)
+        glColor3f(0,0,0)
         glRecti(1, 1, self.size[1]-1, self.size[0]-1)
         glTranslatef(2, 13, 0)
         i = 0
         for item in self.items:
             if i == self.selected:
-                glColor3ub(100,0,0)
+                glColor3f(0.5,0,0)
                 glRecti(0, item.pos[1]-11, self.size[1]-2, item.pos[1]+1)
             item.draw()
             i += 1
