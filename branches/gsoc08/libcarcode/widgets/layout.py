@@ -1,6 +1,6 @@
 
 class VerticalPack:
-    def __init__(self, pos, size, padding =10, margin =10):
+    def __init__(self, pos, size, padding = 1, margin = 1):
         self.pos = pos
         self.size = size
         self.entities = []
@@ -35,7 +35,7 @@ class VerticalPack:
             
 
 class HorizontalPack:
-    def __init__(self, pos, size, padding =10, margin =10):
+    def __init__(self, pos, size, padding = 1, margin = 1):
         self.pos = pos
         self.size = size
         self.entities = []
@@ -45,8 +45,8 @@ class HorizontalPack:
         
     def refresh(self):
         ecount = len(self.entities)
-        eW = self.size[0] - (self.margin * 2) - ((ecount -1) * self.padding)) / ecount
-        eH = (self.size[1] - (self.margin * 2) 
+        eW = (self.size[0] - (self.margin * 2) - ((ecount -1) * self.padding)) / ecount
+        eH = self.size[1] - (self.margin * 2) 
         eX = self.margin + self.pos[0]
         eY = self.margin + self.pos[1]
         for entity in self.entities:
