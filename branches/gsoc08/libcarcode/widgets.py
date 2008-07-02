@@ -34,7 +34,10 @@ class HUD:
             entity.draw()
         glPopMatrix()
     def add_entity(self, entity):
+        entity.parent = self
         self.entities.append(entity)
+    def remove_entity(self, entity):
+        self.entities.remove(entity)
 
 class Window:
     def __init__(self, label, pos, size, color, modal = False):
@@ -92,7 +95,31 @@ class Window:
         if self.modal:
             return True
         return False
+
+class Dialog(Window):
+    def __init__(self, label, callback):
+        height = 80
+        width = 180
+        label = Label(label, (0, 17), COLOR_WHITE)
+        self.btnYes = Button("Yes", (15, 35), (20, 60), (0.2,0.2,0.2))
+        self.btnNo = Button("No", (95, 35), (20, 60), (0.2,0.2,0.2))
+        self.btnYes.onClick.subscribe(self.answared)
+        self.btnNo.onClick.subscribe(self.answared)
         
+        self.callback = callback
+        Window.__init__(self, "Dialog", (270, 220), (height, width), (0.5,0.5,0.5,0.5))
+        self.modal = True
+        self.add_entity(label)
+        self.add_entity(self.btnYes)
+        self.add_entity(self.btnNo)
+            
+    def answared(self, button):
+        if button == self.btnYes:
+            self.callback("Yes")
+        else:
+            self.callback("No")
+        self.parent.remove_entity(self)
+            
 class Label:
     def __init__(self, text, pos, color):
         self.text = text
@@ -123,7 +150,6 @@ class Button:
         self.onClick = EventDispatcher()
     def events(self, event):
         if event.type == MOUSEBUTTONUP:
-            print event.pos
             inX = lambda x: x >= self.pos[0] and x <= self.pos[0]+self.size[1]
             inY = lambda y: y >= self.pos[1] and y <= self.pos[1]+self.size[0]
             if inX(event.pos[0]) and inY(event.pos[1]):
