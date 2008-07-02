@@ -11,12 +11,13 @@ from window import Window
 
 class Dialog(Window):
     def __init__(self, label, callback):
-        label = Label(label, (10, 17), COLOR_WHITE)
+        label = Label(label, pos=(10,10))
         height = 65
         width = label.size[0] + 20
         bWidth = (width / 2) - 10
-        self.btnYes = Button("Yes", (5, 35), (bWidth, 20), (0.2,0.2,0.2))
-        self.btnNo = Button("No", (bWidth + 15, 35), (bWidth, 20), (0.2,0.2,0.2))
+        
+        self.btnYes = Button(Label("Yes"), (5, 35), (bWidth, 20), (0.2,0.2,0.2))
+        self.btnNo = Button(Label("No"), (bWidth + 15, 35), (bWidth, 20), (0.2,0.2,0.2))
         self.btnYes.onClick.subscribe(self.answared)
         self.btnNo.onClick.subscribe(self.answared)
         
