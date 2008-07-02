@@ -20,6 +20,12 @@ class Button:
         self.size = size
         self.onClick = EventDispatcher()
         self.visible = True
+    
+    def resize(self, size):
+        self.size = size
+        lx = (size[0] / 2) - (self.contents.size[0] / 2)
+        ly = (size[1] / 2) - (self.contents.size[1] / 2)
+        self.contents.pos = [lx, ly]
         
     def events(self, event):
         if event.type == MOUSEBUTTONUP:
