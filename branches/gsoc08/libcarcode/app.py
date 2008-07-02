@@ -1,5 +1,5 @@
 import time 
-import shelve
+import os
 
 import pygame
 from pygame.locals import *
@@ -27,14 +27,35 @@ class MainWindow(widgets.Window):
         self.btnQuit = widgets.Button(widgets.Label("Quit"), (0,0), (10,10), (0.2,0.2,0.2))
         self.btnLoad = widgets.Button(widgets.Label("Load Level"), (0,0), (10,10), (0.2,0.2,0.2))
         self.btnScript = widgets.Button(widgets.Label("Load Car Script"), (0,0), (10,10), (0.2,0.2,0.2))
+        self.btnStart = widgets.Button(widgets.Label("Start Carcode"), (0,0), (10,10), (0.2,0.2,0.2))
         
-        self.vp = widgets.VerticalPack(pos=(10,10), size=(200, 300))
+        self.btnLoad.onClick.subscribe(self.OnLoad)
+        self.btnScript.onClick.subscribe(self.OnScript)
+        
+        self.vp = widgets.VerticalPack(pos=(10,10), size=(200, 300), padding=10)
+        self.vp.add_entity(self.btnStart)
         self.vp.add_entity(self.btnLoad)
         self.vp.add_entity(self.btnScript)
         self.vp.add_entity(self.btnQuit)
         
         self.add_entity(self.vp)
-        #self.modal = True
+        self.modal = True
+        self.level = ""
+        self.script = ""
+        
+    def cbLoad(self, filename):
+        self.level = filename
+        
+    def OnLoad(self, button):
+        fdialog = widgets.FileDialog("Open Level", (100, 100), (320, 240), callback=self.cbLoad)
+        self.parent.add_entity(fdialog)
+        
+    def cbScript(self, filename):
+        self.script = filename
+        
+    def OnScript(self, button):
+        fdialog = widgets.FileDialog("Open Script", (100, 100), (320, 240), callback=self.cbScript)
+        self.parent.add_entity(fdialog)
         
         
 class CarcodeApp:
@@ -95,7 +116,8 @@ class CarcodeApp:
         
         self.mw = MainWindow()
         self.mw.btnQuit.onClick.subscribe(self.quit)
-        #self.hud.add_entity(self.mw)
+        self.mw.btnStart.onClick.subscribe(self.start)
+        self.hud.add_entity(self.mw)
         
         self.init_mappings()
 
@@ -123,6 +145,14 @@ class CarcodeApp:
     def load_script(self, script):
         self.car.set_script(Script(script, autoload=True))
 		
+    def start(self, button):
+        if self.mw.level:
+            self.load_level(self.mw.level)
+        if self.mw.script:
+            self.load_script(self.mw.script)
+        self.hud.remove_entity(self.mw)
+        self.paused = False
+        
     def pause(self):
         self.paused = not self.paused
 		
@@ -165,14 +195,14 @@ class CarcodeApp:
                     if self.key_commands.has_key(event.key):
                         self.key_commands[event.key]()
             # Render
-            self.arena.draw(self.screen)
+            #self.arena.draw(self.screen)
             
             # Render console
             #self.console.draw()
-            self.hud.draw()
+            #self.hud.draw()
             
             # Finally, flip display surface
-            pygame.display.flip()
+            #pygame.display.flip()
             
             etime = time.time()
             
@@ -183,4 +213,15 @@ class CarcodeApp:
                 # Update the Arena
                 if not self.paused:
                     self.arena.update()
+                    
+                # Render
+                self.arena.draw(self.screen)
+            
+                # Render console
+                #self.console.draw()
+                self.hud.draw()
+            
+                # Finally, flip display surface
+                pygame.display.flip()
+                
                 ttime = time.time() + 0.05
