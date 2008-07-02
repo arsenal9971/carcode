@@ -7,6 +7,7 @@ from button import Button
 from constants import *
 from events import EventDispatcher
 from label import Label
+from utils import Clipper, mangle_event
 
 def Quad(v1, v2):
     glBegin(GL_LINE_STRIP)
@@ -16,9 +17,6 @@ def Quad(v1, v2):
     glVertex2f(v1[0], v2[1])
     glVertex2f(v1[0], v1[1])
     glEnd()
-    
-class Dummy:
-    pass
 
 class Arrow:
     def __init__(self, size, orientation):
@@ -68,9 +66,9 @@ class ListBox:
         if event.type == MOUSEBUTTONUP:
             inX = lambda x: x >= self.pos[0] and x <= self.pos[0]+self.size[0]
             inY = lambda y: y >= self.pos[1] and y <= self.pos[1]+self.size[1]
-            nevent = Dummy()
-            nevent.type = event.type
-            nevent.pos = [event.pos[0]-self.pos[0],event.pos[1]-self.pos[1]]
+            
+            nevent = mangle_event(event, self.pos)
+            
             if inX(event.pos[0]) and inY(event.pos[1]):
                 if self.arrowup.events(nevent) or self.arrowdown.events(nevent):
                     return True
@@ -134,15 +132,8 @@ class ListBox:
         
         Quad((self.size[0]-13, 0), (self.size[0],self.size[1]-1))
         
-        glClear(GL_STENCIL_BUFFER_BIT)
-        glEnable(GL_STENCIL_TEST)
-        glColorMask(GL_FALSE,GL_FALSE,GL_FALSE,GL_FALSE)
-        glStencilOp(GL_REPLACE,GL_REPLACE,GL_REPLACE)
-        glStencilFunc(GL_ALWAYS,1,1)
-        glRecti(1, 1, self.size[0]-14, self.size[1]-1)
-        glColorMask(GL_TRUE,GL_TRUE,GL_TRUE,GL_TRUE)
-        glStencilFunc(GL_EQUAL,1,1)
-        glStencilOp(GL_KEEP,GL_KEEP,GL_KEEP)
+        clip = Clipper()
+        clip.begin((1, 1, self.size[0]-14, self.size[1]-1))
         
         glTranslatef(2, -(self.startitem * 13), 0)
         i = self.startitem
@@ -156,5 +147,6 @@ class ListBox:
                 glRecti(0, item.pos[1], self.size[0]-3, item.pos[1]+13)
             item.draw()
             i += 1
-        glDisable(GL_STENCIL_TEST)
+            
+        clip.end()
         glPopMatrix()
