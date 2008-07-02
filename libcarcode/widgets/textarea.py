@@ -40,45 +40,65 @@ class TextArea:
             return self.ycursor
         
     def events(self, event):
-        if event.type == KEYDOWN and self.focus:
-            return True
         if event.type == KEYUP and self.focus:
+            return True
+        if event.type == KEYDOWN and self.focus:
+            cline = self.text[self.ycursor]
+            clen = len(cline)
             if event.key == K_BACKSPACE:
-                # TODO: Add cursor movement
-                if len(self.text[self.ycursor]) > 0:
-                    self.text[self.ycursor] = self.text[self.ycursor][0:-1]
+                if clen > 0:
+                    if self.xcursor == clen:
+                        self.text[self.ycursor] = cline[0:-1]
+                    else:
+                        self.text[self.ycursor] = cline[0:self.xcursor-1] + cline[self.xcursor:clen]
                     self.xcursor -= 1
-            if event.key == K_UP:
+                else:
+                    if len(self.text) > 0 and self.ycursor > 0:
+                        del self.text[self.ycursor]
+                        self.ycursor -= 1
+                        self.xcursor = len(self.text[self.ycursor])
+            elif event.key == K_DELETE:
+                if self.xcursor < clen:
+                    self.text[self.ycursor] = cline[0:self.xcursor] + cline[self.xcursor+1:clen]
+            elif event.key == K_LEFT:
+                if self.xcursor > 0:
+                    self.xcursor -= 1
+            elif event.key == K_RIGHT:
+                if self.xcursor < len(self.text[self.ycursor]):
+                    self.xcursor += 1
+            elif event.key == K_UP:
                 if self.ycursor > 0:
                     self.ycursor -= 1
-                    #if len(self.text.[ycursor]) < self.xcursor:
-                    self.xcursor = len(self.text[ycursor])
+                    if len(self.text[self.ycursor]) < self.xcursor:
+                        self.xcursor = len(self.text[self.ycursor])
                 return True
-            if event.key == K_DOWN:
-                if self.ycursor < len(self.text):
+            elif event.key == K_DOWN:
+                if self.ycursor < len(self.text)-1:
                     self.ycursor += 1
-                    #if len(self.text.[ycursor]) < self.xcursor:
-                    self.xcursor = len(self.text[ycursor])
+                    if len(self.text[self.ycursor]) < self.xcursor:
+                        self.xcursor = len(self.text[self.ycursor])
                 return True
-            if event.key == K_RETURN or event.key == K_KP_ENTER:
-                if self.ycursor == len(self.text) -1:
-                    self.text.append("")
-                    self.ycursor += 1
-                    self.xcursor = 0
-                    
-            # TODO: Handle numlock, there is no way to determine current state
-            #       of numlock, thus changing caps when K_NUMLOCK is pressed 
-            #       is useless.
-            caps = False
-            if event.mod & KMOD_SHIFT:
-                caps = not caps
-            if TXTKEYS.has_key(event.key):
-                #line = self.text[ycursor]
-                if caps:
-                    self.text[self.ycursor] += chr(event.key).upper()
+            elif event.key == K_RETURN or event.key == K_KP_ENTER:
+                if self.xcursor == clen:
+                    itext = ""
                 else:
-                    self.text[self.ycursor] += chr(event.key)
-                self.xcursor += 1
+                    itext = cline[self.xcursor:clen]
+                    self.text[self.ycursor] = cline[0:self.xcursor]
+                self.ycursor += 1
+                self.xcursor = 0
+                if self.ycursor < len(self.text) -1:
+                    self.text.append(itext)
+                else:
+                    self.text.insert(self.ycursor, itext)
+            else:
+                try:
+                    char = event.unicode.encode('latin-1')
+                    l = len(self.text[self.ycursor])
+                    if char:
+                        self.text[self.ycursor] = self.text[self.ycursor][0:self.xcursor] + char + self.text[self.ycursor][self.xcursor:l]
+                        self.xcursor += 1
+                except:
+                    pass
             return True
             
         if event.type == MOUSEBUTTONUP:
