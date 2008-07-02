@@ -1,8 +1,9 @@
 from OpenGL.GL import *
 
 class HUD:
-    def __init__(self):
+    def __init__(self, size):
         self.entities = []
+        self.size = size
     def events(self, event):
         for entity in self.entities:
             if entity.events(event):
