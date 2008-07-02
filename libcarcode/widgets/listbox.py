@@ -18,6 +18,7 @@ class ListBox:
         self.maxrows = self.size[1] / 14
         self.selected = -1
         self.onSelected = EventDispatcher()
+        self.visible = True
     def events(self, event):
         if event.type == MOUSEBUTTONUP:
             inX = lambda x: x >= self.pos[0] and x <= self.pos[0]+self.size[0]
