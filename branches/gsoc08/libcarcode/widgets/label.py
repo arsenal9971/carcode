@@ -11,6 +11,7 @@ class Label:
         self.pos = list(pos)
         self.color = color
         self.size = [len(text) * 8, 13]
+        self.visible = True
     
     def set_text(self, text):
         self.text = text

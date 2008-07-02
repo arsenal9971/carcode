@@ -19,6 +19,7 @@ class Button:
         self.pos = pos
         self.size = size
         self.onClick = EventDispatcher()
+        self.visible = True
         
     def events(self, event):
         if event.type == MOUSEBUTTONUP:

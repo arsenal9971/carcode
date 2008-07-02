@@ -6,14 +6,16 @@ class HUD:
         self.size = size
     def events(self, event):
         for entity in self.entities:
-            if entity.events(event):
-                return True
+            if entity.visible:
+                if entity.events(event):
+                    return True
         return False
     def draw(self):
         glPushMatrix()
         glLoadIdentity()
         for entity in self.entities:
-            entity.draw()
+            if entity.visible:
+                entity.draw()
         glPopMatrix()
     def add_entity(self, entity):
         entity.parent = self

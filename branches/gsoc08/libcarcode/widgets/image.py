@@ -24,6 +24,7 @@ class Image:
         glEnd()
         glEndList()
         del img
+        self.visible = True
     def __del__(self):
         try:
             glDeleteLists(self.l, 1)

@@ -25,6 +25,7 @@ class TextBox:
         self.text = ""
         self.focus = False
         self.cursor = 0
+        self.visible = True
         
     def set_text(self, text):
         self.text = text

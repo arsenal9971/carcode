@@ -19,6 +19,7 @@ class Window:
         self.entities = []
         self.focus = True
         self.modal = modal
+        self.visible = True
         
     def add_entity(self, entity):
         self.entities.append(entity)
