@@ -26,13 +26,13 @@ class ListBox:
             if inX(event.pos[0]) and inY(event.pos[1]):
                 y = event.pos[1] - self.pos[1]
                 self.selected = (y / 13)
-                if self.selected > len(self.items):
+                if self.selected >= len(self.items):
                     self.selected = -1
                 else:
                     self.onSelected.dispatch(self)
-                print "Selected ", self.selected
                 return True
         return False
+                
     def update(self):
         i = 0
         for item in self.items:
@@ -55,6 +55,9 @@ class ListBox:
             self.update()
             return True
         return False
+    def empty(self):
+        self.items = []
+        
     def draw(self):
         glPushMatrix()
         glTranslatef(self.pos[0], self.pos[1], 0)
