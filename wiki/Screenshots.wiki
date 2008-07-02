@@ -1,0 +1,17 @@
+#summary Carcode screenshots
+
+= Latest development screenshots =
+
+[http://img68.imageshack.us/my.php?image=ccmainmenumc0.png http://img68.imageshack.us/img68/3720/ccmainmenumc0.th.png]
+
+Carcode main menu
+
+
+[http://img370.imageshack.us/my.php?image=ccfiledialogrh2.png http://img370.imageshack.us/img370/4927/ccfiledialogrh2.th.png]
+
+Carcode File Dialog to open script files
+
+
+[http://img368.imageshack.us/my.php?image=ccshotzi8.png http://img368.imageshack.us/img368/3285/ccshotzi8.th.png]
+
+Tracer lines
