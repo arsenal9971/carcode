@@ -3,6 +3,7 @@ from OpenGL.GL import *
 from OpenGL.GLUT import glutBitmapCharacter, GLUT_BITMAP_8_BY_13
 from pygame.locals import *
 from events import EventDispatcher
+import helpers
 
 COLOR_WHITE = (1.0,1.0,1.0,1.0)
 
@@ -226,6 +227,34 @@ class Textbox:
             x = 2 + (len(self.text) * 8)
             glRecti(x, 2, x+4, self.size[0]-2)
         glPopMatrix()
+        
+class Image:
+    def __init__(self, pos, filename):
+        self.pos = pos
+        img, rect = helpers.load_image(filename)
+        w, h = img.get_size()
+        self.l = glGenLists(1)
+        glNewList(self.l, GL_COMPILE)
+        glBegin(GL_POINTS)
+        for x in xrange(w):
+            for y in xrange(h):
+                d = img.get_at((x, y))
+                glColor4ub(*d)
+                glVertex2i(x, y)
+        glEnd()
+        glEndList()
+        del img
+        del rect
+    def __del__(self):
+        glDeleteLists(self.l, 1)
+    def events(self, event):
+        return False
+    def draw(self):
+        glPushMatrix()
+        glTranslatef(self.pos[0], self.pos[1], 0)
+        glCallList(self.l)
+        glPopMatrix()
+
 class List:
     def __init__(self, pos, size, color):
         self.pos = list(pos)
