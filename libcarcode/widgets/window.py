@@ -12,7 +12,7 @@ class Dummy:
 
 class Window:
     def __init__(self, label, pos, size, color, modal = False):
-        self.label = Label(label, (4,12), COLOR_WHITE)
+        self.label = Label(label, pos=(2,2))
         self.pos = pos
         self.size = size
         self.color = color
