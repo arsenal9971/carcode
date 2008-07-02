@@ -46,8 +46,6 @@ class ListBox:
         self.size = list(size)
         self.color = color
         self.items = []
-        if self.size[1] % 14:
-            self.size[1] = self.size[1] + 14 - (self.size[1] % 14)
         self.maxrows = self.size[1] / 14
         self.selected = -1
         self.onSelected = EventDispatcher()
@@ -80,13 +78,10 @@ class ListBox:
                     return True
                 y = event.pos[1] - self.pos[1]
                 self.selected = (y / 13)
-                print self.selected, len(self.items), self.maxrows
                 if self.selected >= len(self.items) or self.selected == self.maxrows:
-                    print "Not selected"
                     self.selected = -1
                 else:
                     self.selected += self.startitem
-                    print "Selected", self.selected
                     self.onSelected.dispatch(self)
                 return True
         return False
@@ -157,7 +152,6 @@ class ListBox:
         for item in self.items[self.startitem:e]:
             #print "rendering item", i, self.selected
             if i == self.selected:
-                print 'Rendering Selected', i
                 glColor4f(0.5,0,0, 0.5)
                 glRecti(0, item.pos[1], self.size[0]-3, item.pos[1]+13)
             item.draw()
