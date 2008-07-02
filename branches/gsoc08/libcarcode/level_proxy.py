@@ -13,3 +13,5 @@ class AppProxy:
         self.__app__ = app
     def add_key(self, key, action):
         self.__app__.add_key(key, action)
+    def quit(self):
+        self.__app__.quit()
