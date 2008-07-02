@@ -74,7 +74,7 @@ class CarcodeApp:
         self.arena.set_car(car)
         self.car = car
         self.paused = False
-        self.hud = widgets.HUD()
+        self.hud = widgets.HUD((width, height))
         
         self.init_mappings()
 
