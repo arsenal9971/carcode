@@ -19,6 +19,13 @@ class HUD:
         glPopMatrix()
     def add_entity(self, entity):
         entity.parent = self
+        try: 
+            if entity.centered:
+                x = (self.size[0] / 2) - (entity.size[0] / 2)
+                y = (self.size[1] / 2) - (entity.size[1] / 2)
+                entity.pos = [x, y]
+        except:
+            pass
         self.entities.append(entity)
     def remove_entity(self, entity):
         self.entities.remove(entity)
