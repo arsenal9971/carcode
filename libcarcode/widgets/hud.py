@@ -5,7 +5,7 @@ class HUD:
         self.entities = []
         self.size = size
     def events(self, event):
-        for entity in self.entities:
+        for entity in reversed(self.entities):
             if entity.visible:
                 if entity.events(event):
                     return True
