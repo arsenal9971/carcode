@@ -15,6 +15,9 @@ for x in xrange(ord('a'), ord('z')+1):
     
 for x in xrange(ord('0'), ord('9')+1):
     TXTKEYS[x] = chr(x)
+
+class Dummy:
+    pass
         
 class HUD:
     def __init__(self):
@@ -77,8 +80,14 @@ class Window:
                 self.focus = False
                 return False
         if self.focus:
+            if event.type == MOUSEBUTTONUP or event.type == MOUSEBUTTONDOWN:
+                nevent = Dummy()
+                nevent.type = event.type
+                nevent.pos = (event.pos[0] - self.pos[0] - 2, event.pos[1] - self.pos[1] - 17)
+            else:
+                nevent = event
             for entity in self.entities:
-                if entity.events(event):
+                if entity.events(nevent):
                     return True
         if self.modal:
             return True
@@ -114,6 +123,7 @@ class Button:
         self.onClick = EventDispatcher()
     def events(self, event):
         if event.type == MOUSEBUTTONUP:
+            print event.pos
             inX = lambda x: x >= self.pos[0] and x <= self.pos[0]+self.size[1]
             inY = lambda y: y >= self.pos[1] and y <= self.pos[1]+self.size[0]
             if inX(event.pos[0]) and inY(event.pos[1]):
