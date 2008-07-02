@@ -15,10 +15,14 @@ class VerticalPack:
         eX = self.margin + self.pos[0]
         eY = self.margin + self.pos[1]
         for entity in self.entities:
-            entity.resize((eW, eH))
             entity.pos = [eX, eY]
+            entity.resize((eW, eH))
             eY += eH + self.padding
             
+    def resize(self, size):
+        self.size = size
+        self.refresh()
+        
     def add_entity(self, obj):
         self.entities.append(obj)
         self.refresh()
@@ -50,10 +54,14 @@ class HorizontalPack:
         eX = self.margin + self.pos[0]
         eY = self.margin + self.pos[1]
         for entity in self.entities:
-            entity.resize((eW, eH))
             entity.pos = [eX, eY]
+            entity.resize((eW, eH))
             eX += eW + self.padding
-            
+    
+    def resize(self, size):
+        self.size = size
+        self.refresh()
+        
     def add_entity(self, obj):
         self.entities.append(obj)
         self.refresh()
