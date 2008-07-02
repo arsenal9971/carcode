@@ -76,6 +76,8 @@ class CarcodeApp:
         self.paused = False
         self.hud = widgets.HUD((width, height))
         
+        self.quit_dialog = widgets.Dialog("Really quit carcode?", self.quit_app)
+        
         self.init_mappings()
 
     def init_mappings(self):
@@ -105,8 +107,15 @@ class CarcodeApp:
     def pause(self):
         self.paused = not self.paused
 		
+    def quit_app(self, ans):
+        if ans == "Yes":
+            self.running = False
+        else:
+            self.paused = False
+        
     def quit(self):
-        self.running = False
+        self.paused = True
+        self.hud.add_entity(self.quit_dialog)
     
     def add_key(self, key, func):
         self.key_commands[key] = func
