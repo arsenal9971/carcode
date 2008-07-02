@@ -247,18 +247,6 @@ class Car:
     def draw(self):
         for sensor in self.sensors.values():
             sensor.update(self.angle)
-            
-        if self.tracer_down:
-            if self.moving():
-                line = pyLine(self.start, self.end)
-                if len(self.lines) == 0:
-                    self.lines.append(line)
-                else:
-                    last = self.lines[-1]
-                    if last == line:
-                        last += line
-                    else:
-                        self.lines.append(line)
         
         if len(self.lines) > 0:
             glBegin(GL_LINES)
@@ -301,6 +289,17 @@ class Car:
             self.end = (self.x, self.y)
             
             self.speed *= self.decel  # deccelerate the car
+            
+            if self.tracer_down:
+                line = pyLine(self.start, self.end)
+                if len(self.lines) == 0:
+                    self.lines.append(line)
+                else:
+                    last = self.lines[-1]
+                    if last == line:
+                        last += line
+                    else:
+                        self.lines.append(line)
         else:
             self.speed = 0
         self.bbox.x = self.x
