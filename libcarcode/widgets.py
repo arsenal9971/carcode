@@ -264,6 +264,7 @@ class List:
         self.items = []
         if self.size[1] % 14:
             self.size[1] = self.size[1] + 14 - (self.size[1] % 14)
+        self.maxrows = self.size[1] / 14
         self.selected = -1
         self.onSelected = EventDispatcher()
     def events(self, event):
@@ -312,12 +313,26 @@ class List:
         glRecti(0, 0, self.size[0], self.size[1])
         glColor3f(0,0,0)
         glRecti(1, 1, self.size[0]-1, self.size[1]-1)
+        
+        glClear(GL_STENCIL_BUFFER_BIT)
+        glEnable(GL_STENCIL_TEST)
+        glColorMask(GL_FALSE,GL_FALSE,GL_FALSE,GL_FALSE)
+        glStencilOp(GL_REPLACE,GL_REPLACE,GL_REPLACE)
+        glStencilFunc(GL_ALWAYS,1,1)
+        glRecti(1, 1, self.size[0]-1, self.size[1]-1)
+        glColorMask(GL_TRUE,GL_TRUE,GL_TRUE,GL_TRUE)
+        glStencilFunc(GL_EQUAL,1,1)
+        glStencilOp(GL_KEEP,GL_KEEP,GL_KEEP)
+        
         glTranslatef(2, 13, 0)
         i = 0
         for item in self.items:
             if i == self.selected:
                 glColor4f(0.5,0,0, 0.5)
                 glRecti(0, item.pos[1]-11, self.size[0]-3, item.pos[1]+1)
+            if i == self.maxrows:
+                break;
             item.draw()
             i += 1
+        glDisable(GL_STENCIL_TEST)
         glPopMatrix()

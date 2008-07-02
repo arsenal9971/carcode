@@ -33,6 +33,8 @@ class CarcodeApp:
         
         pygame.key.set_repeat(50, 50)
         
+        pygame.display.gl_set_attribute(GL_STENCIL_SIZE, 1)
+        
         # Create screen surface and initialize key commands
         self.screen = pygame.display.set_mode((width, height), OPENGL | DOUBLEBUF)
         
