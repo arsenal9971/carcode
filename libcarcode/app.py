@@ -19,6 +19,7 @@ import events
 from console import Console
 from script import Script
 from collision import BoundingBox
+import widgets
 
         
 class CarcodeApp:
@@ -50,7 +51,6 @@ class CarcodeApp:
         self.running = False
         
         self.console = Console()
-        self.init_mappings()
         
         car = Car()
         
@@ -69,6 +69,9 @@ class CarcodeApp:
         self.arena.set_car(car)
         self.car = car
         self.paused = False
+        self.hud = widgets.HUD()
+        
+        self.init_mappings()
 
     def init_mappings(self):
         self.mappings = {
@@ -81,6 +84,8 @@ class CarcodeApp:
         'Sensor': Sensor,
         'ColorSensor': ColorSensor,
         'Console': self.console,
+        'widgets': widgets,
+        'HUD': self.hud,
         'EventDispatcher': events.EventDispatcher
         }
         for k in OpenGL.GL.__dict__.keys():
@@ -112,6 +117,8 @@ class CarcodeApp:
             ttime = time.time()
             # Process Events
             for event in pygame.event.get():
+                if self.hud.events(event):
+                    break
                 if event.type == QUIT:
                     # We got exit signal, we quit
                     self.quit()
@@ -130,7 +137,8 @@ class CarcodeApp:
             self.arena.draw(self.screen)
             
             # Render console
-            self.console.draw()
+            #self.console.draw()
+            self.hud.draw()
             
             # Finally, flip display surface
             pygame.display.flip()
