@@ -60,13 +60,13 @@ class Window:
             glColor3f(*self.color)
         else:
             glColor4f(*self.color)
-        glRecti(0, 0, self.size[1], self.size[0])
+        glRecti(0, 0, self.size[0], self.size[1])
         
         if self.focus:
             glColor3ub(0, 0, 200)
         else:
             glColor3ub(100, 100, 100)
-        glRecti(0, 0, self.size[1], 15)
+        glRecti(0, 0, self.size[0], 15)
         
         self.label.draw()
         
@@ -76,8 +76,8 @@ class Window:
         glPopMatrix()
     def events(self, event):
         if event.type == MOUSEBUTTONUP and not self.modal:
-            inX = lambda x: x >= self.pos[0] and x <= self.pos[0]+self.size[1]
-            inY = lambda y: y >= self.pos[1] and y <= self.pos[1]+self.size[0]
+            inX = lambda x: x >= self.pos[0] and x <= self.pos[0]+self.size[0]
+            inY = lambda y: y >= self.pos[1] and y <= self.pos[1]+self.size[1]
             if inX(event.pos[0]) and inY(event.pos[1]):
                 self.focus = True
             else:
@@ -102,13 +102,13 @@ class Dialog(Window):
         height = 80
         width = 180
         label = Label(label, (0, 17), COLOR_WHITE)
-        self.btnYes = Button("Yes", (15, 35), (20, 60), (0.2,0.2,0.2))
-        self.btnNo = Button("No", (95, 35), (20, 60), (0.2,0.2,0.2))
+        self.btnYes = Button("Yes", (15, 35), (60, 20), (0.2,0.2,0.2))
+        self.btnNo = Button("No", (95, 35), (60, 20), (0.2,0.2,0.2))
         self.btnYes.onClick.subscribe(self.answared)
         self.btnNo.onClick.subscribe(self.answared)
         
         self.callback = callback
-        Window.__init__(self, "Dialog", (270, 220), (height, width), (0.5,0.5,0.5,0.5))
+        Window.__init__(self, "Dialog", (270, 220), (width, height), (0.5,0.5,0.5,0.5))
         self.modal = True
         self.add_entity(label)
         self.add_entity(self.btnYes)
@@ -142,8 +142,8 @@ class Label:
 
 class Button:
     def __init__(self, text, pos, size, color):
-        ly = (size[0] / 2) + 4
-        lx = (size[1] - (len(text) * 8)) / 2
+        ly = (size[1] / 2) + 4
+        lx = (size[0] - (len(text) * 8)) / 2
         self.label = Label(text, (lx, ly), COLOR_WHITE)
         self.color = color
         self.pos = pos
@@ -151,8 +151,8 @@ class Button:
         self.onClick = EventDispatcher()
     def events(self, event):
         if event.type == MOUSEBUTTONUP:
-            inX = lambda x: x >= self.pos[0] and x <= self.pos[0]+self.size[1]
-            inY = lambda y: y >= self.pos[1] and y <= self.pos[1]+self.size[0]
+            inX = lambda x: x >= self.pos[0] and x <= self.pos[0]+self.size[0]
+            inY = lambda y: y >= self.pos[1] and y <= self.pos[1]+self.size[1]
             if inX(event.pos[0]) and inY(event.pos[1]):
                 self.onClick.dispatch(self)
                 return True
@@ -164,7 +164,7 @@ class Button:
             glColor3f(*self.color)
         else:
             glColor4f(*self.color)
-        glRecti(0, 0, self.size[1], self.size[0])
+        glRecti(0, 0, self.size[0], self.size[1])
         self.label.draw()
         glPopMatrix()
 
@@ -199,8 +199,8 @@ class Textbox:
             return True
             
         if event.type == MOUSEBUTTONUP:
-            inX = lambda x: x >= self.pos[0] and x <= self.pos[0]+self.size[1]
-            inY = lambda y: y >= self.pos[1] and y <= self.pos[1]+self.size[0]
+            inX = lambda x: x >= self.pos[0] and x <= self.pos[0]+self.size[0]
+            inY = lambda y: y >= self.pos[1] and y <= self.pos[1]+self.size[1]
             if inX(event.pos[0]) and inY(event.pos[1]):
                 self.focus = True
                 return True
@@ -214,9 +214,9 @@ class Textbox:
             glColor3f(*self.color)
         else:
             glColor4f(*self.color)
-        glRecti(0, 0, self.size[1], self.size[0])
+        glRecti(0, 0, self.size[0], self.size[1])
         glColor3f(0,0,0)
-        glRecti(1, 1, self.size[1]-1, self.size[0]-1)
+        glRecti(1, 1, self.size[0]-1, self.size[1]-1)
         glTranslatef(2, 13, 0)
         glColor4f(*COLOR_WHITE)
         glRasterPos3i(0, 0, 0)
@@ -233,6 +233,7 @@ class Image:
         self.pos = pos
         img, rect = helpers.load_image(filename)
         w, h = img.get_size()
+        self.size = (w, h)
         self.l = glGenLists(1)
         glNewList(self.l, GL_COMPILE)
         glBegin(GL_POINTS)
@@ -261,14 +262,14 @@ class List:
         self.size = list(size)
         self.color = color
         self.items = []
-        if self.size[0] % 14:
-            self.size[0] = self.size[0] + 14 - (self.size[0] % 14)
+        if self.size[1] % 14:
+            self.size[1] = self.size[1] + 14 - (self.size[1] % 14)
         self.selected = -1
         self.onSelected = EventDispatcher()
     def events(self, event):
         if event.type == MOUSEBUTTONUP:
-            inX = lambda x: x >= self.pos[0] and x <= self.pos[0]+self.size[1]
-            inY = lambda y: y >= self.pos[1] and y <= self.pos[1]+self.size[0]
+            inX = lambda x: x >= self.pos[0] and x <= self.pos[0]+self.size[0]
+            inY = lambda y: y >= self.pos[1] and y <= self.pos[1]+self.size[1]
             if inX(event.pos[0]) and inY(event.pos[1]):
                 y = event.pos[1] - self.pos[1]
                 self.selected = (y / 13)
@@ -276,6 +277,7 @@ class List:
                     self.selected = -1
                 else:
                     self.onSelected.dispatch(self)
+                print "Selected ", self.selected
                 return True
         return False
     def update(self):
@@ -307,15 +309,15 @@ class List:
             glColor3f(*self.color)
         else:
             glColor4f(*self.color)
-        glRecti(0, 0, self.size[1], self.size[0])
+        glRecti(0, 0, self.size[0], self.size[1])
         glColor3f(0,0,0)
-        glRecti(1, 1, self.size[1]-1, self.size[0]-1)
+        glRecti(1, 1, self.size[0]-1, self.size[1]-1)
         glTranslatef(2, 13, 0)
         i = 0
         for item in self.items:
             if i == self.selected:
-                glColor3f(0.5,0,0)
-                glRecti(0, item.pos[1]-11, self.size[1]-2, item.pos[1]+1)
+                glColor4f(0.5,0,0, 0.5)
+                glRecti(0, item.pos[1]-11, self.size[0]-3, item.pos[1]+1)
             item.draw()
             i += 1
         glPopMatrix()
