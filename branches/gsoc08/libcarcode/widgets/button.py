@@ -8,6 +8,8 @@ from events import EventDispatcher
 from label import Label
 
 class Button:
+    """Button widget class"""
+    
     def __init__(self, contents, pos, size, color):
         lx = (size[0] / 2) - (contents.size[0] / 2)
         ly = (size[1] / 2) - (contents.size[1] / 2)
@@ -22,6 +24,10 @@ class Button:
         self.visible = True
     
     def resize(self, size):
+        """Changes the size of the widget
+        
+            size - a tuple with (width, height)
+        """
         self.size = size
         lx = (size[0] / 2) - (self.contents.size[0] / 2)
         ly = (size[1] / 2) - (self.contents.size[1] / 2)

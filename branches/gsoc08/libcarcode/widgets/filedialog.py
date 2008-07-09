@@ -14,7 +14,17 @@ from listbox import ListBox
 from window import Window
 
 class FileDialog(Window):
+    """Simple file dialog for navigating filesystem and choosing files"""
+    
     def __init__(self, title, pos, size, callback, match="*"):
+        """FileDialog
+        
+            title - string with dialog title
+            pos - tuple with dialog position (x, y)
+            size - tuple with dialog size (width, height)
+            callback - callable to be used when user finishes
+            match - filename filter
+        """
         Window.__init__(self, title, pos, size, color=(0.2,0.2,0.2))
         self.size = size
         self.modal = True

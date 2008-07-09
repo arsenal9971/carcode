@@ -1,5 +1,8 @@
 
 class VerticalPack:
+    """Vertical widget packing
+        Aligns and resizes a list of widgets in a vertical fashion.
+    """
     def __init__(self, pos, size, padding = 1, margin = 1):
         self.pos = pos
         self.size = size
@@ -39,6 +42,9 @@ class VerticalPack:
             
 
 class HorizontalPack:
+    """Horizontal widget packing
+        Aligns and resizes a list of widgets in a horizontal fashion.
+    """
     def __init__(self, pos, size, padding = 1, margin = 1):
         self.pos = pos
         self.size = size
