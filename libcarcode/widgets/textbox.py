@@ -18,7 +18,14 @@ for x in xrange(ord('0'), ord('9')+1):
     TXTKEYS[x] = chr(x)
     
 class TextBox:
+    """ Simple text line editing widget """
     def __init__(self, pos, size, color):
+        """TextBox
+            
+            @param pos tuple with widget position (x, y)
+            @param size tuple with widget size (width, height)
+            @param color tuple with font color (r, g, b, a)
+        """
         self.pos = list(pos)
         self.size = list(size)
         self.color = color
@@ -28,9 +35,17 @@ class TextBox:
         self.visible = True
         
     def set_text(self, text):
+        """ Set the widget text
+        
+            @param text string to edit, will not handle multiline strings
+        """
         self.text = text
         
     def get_text(self):
+        """ Gets the widget text 
+            
+            @return string with current widget text
+        """
         return self.text
     
     def events(self, event):

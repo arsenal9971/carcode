@@ -15,7 +15,14 @@ for x in xrange(K_EXCLAIM, ord('z')+1):
     TXTKEYS[x] = chr(x)
 
 class TextArea:
+    """ Multiline text editing widget """
     def __init__(self, pos, size, color):
+        """TextBox
+            
+            @param pos tuple with widget position (x, y)
+            @param size tuple with widget size (width, height)
+            @param color tuple with font color (r, g, b, a)
+        """
         self.pos = list(pos)
         self.size = list(size)
         self.color = color
@@ -28,9 +35,17 @@ class TextArea:
         self.visible = True
         
     def set_text(self, text):
+        """ Set the widget text
+        
+            @param text string to edit
+        """
         self.text = text.split('\n')
         
     def get_text(self):
+        """ Gets the widget text 
+            
+            @return string with current widget text
+        """
         ret = ''
         for line in self.text:
             ret += line + '\n'
