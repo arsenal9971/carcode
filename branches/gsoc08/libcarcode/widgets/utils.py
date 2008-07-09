@@ -9,12 +9,19 @@ class Dummy:
 colors = [(1.0, 0.0, 0.0, 0.5), (0.0, 1.0, 0.0, 0.8), (0.0, 0.0, 1.0, 0.9)]
 
 class Clipper:
-    
+    """ Region clipping manager object 
+    Uses Stencil Buffer and manages multiple
+    superimposing regions, uses singleton-like
+    pattern from ASPN cookbook:
+        http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52558
+    """
     class __Clipper2:
         def __init__(self):
             self.regions = 0
                 
         def begin(self, region):
+            # If we have 0 clipping regions clean stencil buffer
+            # and set the stencil function to always modify the buffer.
             if self.regions == 0:
                 glClear(GL_STENCIL_BUFFER_BIT)
                 glEnable(GL_STENCIL_TEST)
@@ -48,17 +55,28 @@ class Clipper:
     __singleton = None
     
     def __init__(self):
+        # Check if we have singleton instance, if not initialize one.
         if Clipper.__singleton is None:
             Clipper.__singleton = Clipper.__Clipper2()
         self.__singleton = Clipper.__singleton
-        #self.__dict__['_Clipper__singleton'] = Clipper.__singleton
-    def begin(self, *args):
-        self.__singleton.begin(*args)
-    def end(self):
-        self.__singleton.end()
-    
         
+    def begin(self, *args):
+        """Begin cliping region defined by a rectangle
+        
+            x1
+            y1
+            x2
+            y2
+        """
+        self.__singleton.begin(*args)
+        
+    def end(self):
+        """ End cliping region """
+        self.__singleton.end()
+
+
 def mangle_event(event, obj_pos):
+    """ Mangle mouse events data with object offsets """
     if event.type == MOUSEBUTTONUP or event.type == MOUSEBUTTONDOWN:
         nevent = Dummy()
         nevent.type = event.type
