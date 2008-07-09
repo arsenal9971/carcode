@@ -39,7 +39,14 @@ class Arrow:
         glPopMatrix()
         
 class ListBox:
+    """ Simple text item list """
     def __init__(self, pos, size, color):
+        """ ListBox
+        
+            @param pos tuple with widget position (x, y)
+            @param size tuple with widget size (width, height)
+            @param color tuple with font color (r, g, b, a)
+        """
         self.pos = list(pos)
         self.size = list(size)
         self.color = color
@@ -58,6 +65,7 @@ class ListBox:
     def scrollup(self, btn):
         if self.startitem > 0:
             self.startitem -= 1;
+            
     def scrolldown(self, btn):
         if self.startitem < self.maxoffset:
             self.startitem += 1;
@@ -93,15 +101,27 @@ class ListBox:
         self.selected = -1
         
     def add_list(self, items):
+        """ Add a list with items
+        
+            @param items list with strings to add
+        """
         for item in items:
             self.items.append(Label(item, (0,0), COLOR_WHITE))
         self.update()
             
     def add_item(self, item):
+        """ Add a item to the list
+        
+            @param item string to add
+        """
         self.items.append(Label(item, (0,0), COLOR_WHITE))
         self.update()
         
     def remove_item(self, n):
+        """ Remove an item from the list
+        
+            @param n index of the item starting from 0
+        """
         if n < len(self.items) and n >= 0:
             item = self.items[n]
             del item
@@ -111,6 +131,7 @@ class ListBox:
         return False
     
     def empty(self):
+        """ Empty the item list """
         self.items = []
         self.maxoffset = 0
         self.startitem = 0
