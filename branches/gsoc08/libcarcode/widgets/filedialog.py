@@ -10,6 +10,7 @@ from button import Button
 from constants import *
 from events import EventDispatcher
 from label import Label
+from layout import VerticalPack,  HorizontalPack
 from listbox import ListBox
 from window import Window
 
@@ -32,23 +33,27 @@ class FileDialog(Window):
         self.callback = callback
         self.cwd = os.getcwd()
         self.match = match
-        self.flist = ListBox((5,5), (size[0]-10, size[1]-50), (0.2,0.2,0.2))
-        btnW = (self.size[0] / 2) - 30
-        btnX = (self.size[0] / 4) - (btnW /2)
-        self.btnCancel = Button(Label("Cancel"),(btnX, size[1]-40), (btnW, 30), (0.5,0.5,0.5))
-        btnX = (self.size[0] / 2) + (self.size[0] / 4) - (btnW /2)
-        self.btnOk = Button(Label("Ok"),(btnX, size[1]-40), (btnW, 30), (0.5,0.5,0.5))
         
-        self.add_entity(self.flist)
-        self.add_entity(self.btnCancel)
-        self.add_entity(self.btnOk)
-        
-        self.file_list = []
-        self.update()
-        self.flist.onSelected.subscribe(self.Select)
         self.filename = ""
+        self.file_list = []
+        
+        self.flist = ListBox((5,5), (size[0]-10, size[1]-50), (0.2,0.2,0.2))
+        
+        self.btnCancel = Button(Label("Cancel"),(0, 0), (10, 10), (0.5,0.5,0.5))
+        self.btnOk = Button(Label("Ok"),(0, 0), (10, 10), (0.5,0.5,0.5))
+        
+        self.flist.onSelected.subscribe(self.Select)
         self.btnOk.onClick.subscribe(self.btnClick)
         self.btnCancel.onClick.subscribe(self.btnClick)
+        
+        self.btnPack = HorizontalPack(pos=(0,  size[1]-40),  size=(size[0],  35),  margin=5,  padding=20)
+        self.btnPack.add_entity(self.btnCancel)
+        self.btnPack.add_entity(self.btnOk)
+        
+        self.add_entity(self.flist)
+        self.add_entity(self.btnPack)
+        
+        self.update()
     
     def btnClick(self, btn):
         if btn == self.btnCancel:
@@ -64,20 +69,28 @@ class FileDialog(Window):
             self.filename = ""
         else:
             self.filename = self.file_list[self.flist.selected][1]
+            
+    # TODO: Add windows specific drive list
     def get_filelist(self):
+        # Try to get glob as iterator, if not available as a list
         try:
             files = glob.iglob(os.path.join(self.cwd, '*'))
         except:
             files = glob.glob(os.path.join(self.cwd, '*'))
+            
         self.file_list = []
         dirs = []
         sfiles = []
+        
+        # Iterate glob and separate files from directories
         for fullpath in files:
             fname = os.path.split(fullpath)[1]
             if os.path.isdir(fullpath):
                 dirs.append((fname, fullpath, True))
             else:
                 sfiles.append((fname, fullpath, False))
+                
+        # Touple aware comparision function for list sorting
         def pcmp(x, y):
             a = x[0]
             b = y[0]
@@ -86,9 +99,15 @@ class FileDialog(Window):
             if a > b:
                 return 1
             return -1
+        
+        # Sort filenames
         dirs.sort(pcmp)
         sfiles.sort(pcmp)
+        
+        # Add directories first then files
         self.file_list = dirs + sfiles
+        
+        # If we aren't on root directory add parent directory as double dot (..)
         if os.path.split(self.cwd)[1] != '':
             self.file_list.insert(0, ("..", os.path.split(self.cwd)[0], True))
             
