@@ -29,7 +29,7 @@ class Clipper:
                 func = (GL_ALWAYS,1,1)
             else:
                 op = (GL_KEEP, GL_KEEP,GL_INCR)
-                func = (GL_EQUAL,1,1)
+                func = (GL_EQUAL,self.regions,self.regions)
             
             glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE)
             
