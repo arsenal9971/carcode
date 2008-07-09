@@ -1,18 +1,29 @@
 class EventDispatcher:
+    """ Simple event dispatcher class with multiple subscriber support """
     def __init__(self):
         self.enabled = True
         self.__callbacks__ = []
         
     def subscribe(self, func):
+        """ Subscribe to receive event callbacks 
+        
+            @param func function to callback
+        """
         self.__callbacks__.append(func)
         
     def enable(self):
+        """ Enable event dispatching """
         self.enabled = True
         
     def disable(self):
+        """ Disable event dispatching """
         self.enabled = False
         
     def dispatch(self, *args):
+        """ Dispatch the event to all subscribers
+            
+            @param *args optional arguments to send to callback functions
+        """
         if not self.enabled:
             return 0
         for handler in self.__callbacks__:
