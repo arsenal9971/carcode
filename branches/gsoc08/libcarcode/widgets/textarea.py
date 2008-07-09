@@ -28,10 +28,13 @@ class TextArea:
         self.visible = True
         
     def set_text(self, text):
-        self.text = text
+        self.text = text.split('\n')
         
     def get_text(self):
-        return self.text
+        ret = ''
+        for line in self.text:
+            ret += line + '\n'
+        return ret
     
     def row(self):
         if len(self.text) == 1:
