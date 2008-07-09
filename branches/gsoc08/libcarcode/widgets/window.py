@@ -9,7 +9,16 @@ from label import Label
 from utils import Clipper, mangle_event
 
 class Window:
+    """ Toplevel window container """
     def __init__(self, label, pos, size, color, modal = False):
+        """Window
+        
+            @param label string for the window title header
+            @param pos tuple with widget position (x, y)
+            @param size tuple with widget size (width, height)
+            @param color tuple with background color (r, g, b, a)
+            @param modal window modal
+        """
         self.label = Label(label, pos=(2,2))
         self.pos = pos
         self.size = size
@@ -20,6 +29,10 @@ class Window:
         self.visible = True
         
     def add_entity(self, entity):
+        """ Add a widget to the window
+            
+            @param entity object which implements the widget protocol
+        """
         self.entities.append(entity)
         
     def draw(self):
