@@ -6,7 +6,17 @@ from pygame.locals import *
 from constants import *
 
 class Label:
+    """Label widget
+        Simple widget to display text, cannot be resized and its size is
+        determined according to the text and font.
+    """
     def __init__(self, text, pos = (0,0), color = COLOR_WHITE):
+        """Label
+        
+            text - string to be display
+            pos - touple position (x, y)
+            color - touple of 4 floats (0.0-1.0) describing font color (r, g, b, a)
+        """
         self.text = text
         self.pos = list(pos)
         self.color = color
@@ -14,6 +24,7 @@ class Label:
         self.visible = True
     
     def set_text(self, text):
+        """Sets the label text"""
         self.text = text
         self.size = [len(text) * 8, 13]
         

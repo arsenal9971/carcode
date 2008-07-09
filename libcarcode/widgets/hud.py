@@ -1,15 +1,24 @@
 from OpenGL.GL import *
 
 class HUD:
+    """Head up display
+    This class controls event passing and rendering of widgets added to it.
+    """
     def __init__(self, size):
+        """HUD
+        
+            size - tuple with screen size (width, height)
+        """
         self.entities = []
         self.size = size
+        
     def events(self, event):
         for entity in reversed(self.entities):
             if entity.visible:
                 if entity.events(event):
                     return True
         return False
+        
     def draw(self):
         glPushMatrix()
         glLoadIdentity()
@@ -17,7 +26,12 @@ class HUD:
             if entity.visible:
                 entity.draw()
         glPopMatrix()
+        
     def add_entity(self, entity):
+        """Adds a widget to the HUD object which will manage it
+        
+            entity - object implementing the widget protocol
+        """
         entity.parent = self
         try: 
             if entity.centered:
@@ -27,5 +41,7 @@ class HUD:
         except:
             pass
         self.entities.append(entity)
+        
     def remove_entity(self, entity):
+        """Removes a widget from the HUD list"""
         self.entities.remove(entity)
