@@ -13,9 +13,9 @@ class Label:
     def __init__(self, text, pos = (0,0), color = COLOR_WHITE):
         """Label
         
-            text - string to be display
-            pos - touple position (x, y)
-            color - touple of 4 floats (0.0-1.0) describing font color (r, g, b, a)
+            @param text string to be display
+            @param pos touple position (x, y)
+            @param color touple of 4 floats (0.0-1.0) describing font color (r, g, b, a)
         """
         self.text = text
         self.pos = list(pos)

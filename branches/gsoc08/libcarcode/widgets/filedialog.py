@@ -20,11 +20,11 @@ class FileDialog(Window):
     def __init__(self, title, pos, size, callback, match="*"):
         """FileDialog
         
-            title - string with dialog title
-            pos - tuple with dialog position (x, y)
-            size - tuple with dialog size (width, height)
-            callback - callable to be used when user finishes
-            match - filename filter
+            @param title string with dialog title
+            @param pos tuple with dialog position (x, y)
+            @param size tuple with dialog size (width, height)
+            @param callback callable to be used when user finishes
+            @param match filename filter
         """
         Window.__init__(self, title, pos, size, color=(0.2,0.2,0.2))
         self.size = size

@@ -7,7 +7,7 @@ class HUD:
     def __init__(self, size):
         """HUD
         
-            size - tuple with screen size (width, height)
+            @param size tuple with screen size (width, height)
         """
         self.entities = []
         self.size = size
@@ -30,7 +30,7 @@ class HUD:
     def add_entity(self, entity):
         """Adds a widget to the HUD object which will manage it
         
-            entity - object implementing the widget protocol
+            @param entity object implementing the widget protocol
         """
         entity.parent = self
         try: 

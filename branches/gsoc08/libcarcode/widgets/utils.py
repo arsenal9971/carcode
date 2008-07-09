@@ -63,10 +63,10 @@ class Clipper:
     def begin(self, *args):
         """Begin cliping region defined by a rectangle
         
-            x1
-            y1
-            x2
-            y2
+            @param x1 Upper left rect vector X
+            @param y1 Upper left rect vector Y
+            @param x2 Bottom right rect vector X
+            @param y2 Bottom right rect vector Y
         """
         self.__singleton.begin(*args)
         
@@ -76,7 +76,11 @@ class Clipper:
 
 
 def mangle_event(event, obj_pos):
-    """ Mangle mouse events data with object offsets """
+    """ Mangle mouse events data with object offsets 
+    
+        @param event original event object from pygame
+        @param obj_pos tuple with object position to offset (x, y)
+    """
     if event.type == MOUSEBUTTONUP or event.type == MOUSEBUTTONDOWN:
         nevent = Dummy()
         nevent.type = event.type
