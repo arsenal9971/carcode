@@ -26,7 +26,7 @@ class Button:
     def resize(self, size):
         """Changes the size of the widget
         
-            size - a tuple with (width, height)
+            @param size tuple with size (width, height)
         """
         self.size = size
         lx = (size[0] / 2) - (self.contents.size[0] / 2)
