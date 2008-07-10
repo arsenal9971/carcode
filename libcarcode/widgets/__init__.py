@@ -1,7 +1,9 @@
 
 # Import constants and HUD
 from constants import *
+from events import EventDispatcher
 from hud import HUD
+import utils
 
 # Import widgets
 from button import Button
