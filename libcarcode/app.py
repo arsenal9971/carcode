@@ -66,9 +66,6 @@ class CarcodeApp:
         if not pygame.font: print 'Warning, fonts disabled'
         if not pygame.mixer: print 'Warning, sound disabled'
         
-        #Initialize GLUT, requiered in some platforms
-        glutInit(sys.argv)
-        
         # Initialize pygame
         pygame.init()
         
@@ -78,6 +75,9 @@ class CarcodeApp:
         
         # Create screen surface and initialize key commands
         self.screen = pygame.display.set_mode((width, height), OPENGL | DOUBLEBUF)
+        
+        #Initialize GLUT, requiered in some platforms
+        glutInit([])
         
         glEnable (GL_BLEND) 
         glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
