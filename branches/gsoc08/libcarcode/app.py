@@ -1,5 +1,6 @@
-import time 
 import os
+import sys
+import time 
 
 import pygame
 from pygame.locals import *
@@ -63,6 +64,9 @@ class CarcodeApp:
     def __init__(self, width, height):
         if not pygame.font: print 'Warning, fonts disabled'
         if not pygame.mixer: print 'Warning, sound disabled'
+        
+        #Initialize GLUT, requiered in some platforms
+        glutInit(sys.argv)
         
         # Initialize pygame
         pygame.init()
