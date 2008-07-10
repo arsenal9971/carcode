@@ -16,6 +16,14 @@ Software Requirements
 
 Running Carcode
 
+Run the carcode script file, from the shell this can be done with
+the following command:
+
+ python carcode.py
+ 
+ Carcode GUI gives you dialogs to load levels and scripts, but
+ we also offer command line options to do just that too.
+ 
 You can tell carcode to load a give level file with the option -l,
 as shown in the example we load a file under the demo directory:
 
@@ -70,6 +78,16 @@ directory:
 
 WINDOWS NOTES
 =====================================================================
+
+pyOpenGL
+
+Current version of pyOpenGL (3.0) depends on setuptools and is 
+incompatible with py2exe, we recomended to use v2.0 which is
+easyer to get working, faster and compatible with py2exe.
+
+For Python 2.5 you can download a custom pyOpenGL 2.0 package:
+
+http://thorbrian.com/pyopengl/builds.php
 
 GLUT
 
