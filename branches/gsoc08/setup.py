@@ -25,12 +25,11 @@ setup_args = dict(
     keywords = "python pygame education carcode",
     url = "http://code.google.com/p/carcode/",
     
-    packages = ['libcarcode', 'libcarcode.media', 'libcarcode.media.sound', 'libcarcode.media.images'],
+    packages = ['libcarcode',  'libcarcode.widgets', 'libcarcode.media', 'libcarcode.media.sound', 'libcarcode.media.images'],
     scripts = ['carcode.py'],
     package_data = {
         '': ['*.png', '*.wav']
-    },
-    install_requires = ['pygame']
+    }
     )
 
 
