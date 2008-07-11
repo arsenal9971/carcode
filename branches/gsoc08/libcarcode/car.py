@@ -5,6 +5,7 @@ import pygame
 from OpenGL.GL import *
 from collision import pyLine, BoundingBox
 from events import EventDispatcher
+from physics import ccEntity,  BoxGeometry
 import helpers
 
 DEBUG = False
@@ -65,7 +66,7 @@ class Blinker(Light):
                 self.count = 0
             return self.cc
         
-class Car:
+class Car(ccEntity):
     def __init__(self, x_init = 0, y_init = 0, angle_init = 0.0,
                  running_init = True,
                  body_color = (131, 111, 255),  # SlateBlue1
@@ -74,10 +75,12 @@ class Car:
                  tracer_width = 1,
                  show_rect = False
                  ):
+        ccEntity.__init__(self,  1)
         self.body_color = body_color
 
         # the distance increment in the x and y directions
         self.dx, self.dy = 0.0, 0.0
+        self.collisionable = True
 
         # current heading
         self.angle = angle_init
@@ -135,7 +138,8 @@ class Car:
         self.sensors = {}
         self.lines = []
         self.script = None
-        self.bbox = BoundingBox(0, 0, 24, 48)
+        
+        self.region = BoxGeometry(0, 0, 48,  24)
         
         self.__engine_flips__ = 0
         self.__gear_flips__ = 0
@@ -273,39 +277,39 @@ class Car:
         if DEBUG:
             self.bbox.draw()
         
-    def update(self):
+    #def update(self):
         # move to new position
-        if self.moving():
+        #if self.moving():
             # remember starting position
-            self.start = (self.x, self.y)
+            #self.start = (self.x, self.y)
             
-            rad = radians(self.angle)
-            self.dx = self.speed * cos(rad) 
-            self.dy = -self.speed * sin(rad)
+            #rad = radians(self.angle)
+            #self.dx = self.speed * cos(rad) 
+            #self.dy = -self.speed * sin(rad)
             
-            self.y = self.y + self.dy
-            self.x = self.x + self.dx
+            #self.y = self.y + self.dy
+            #self.x = self.x + self.dx
 
-            self.end = (self.x, self.y)
+            #self.end = (self.x, self.y)
             
-            self.speed *= self.decel  # deccelerate the car
+            #self.speed *= self.decel  # deccelerate the car
             
-            if self.tracer_down:
-                line = pyLine(self.start, self.end)
-                if len(self.lines) == 0:
-                    self.lines.append(line)
-                else:
-                    last = self.lines[-1]
-                    if last == line:
-                        last += line
-                    else:
-                        self.lines.append(line)
-        else:
-            self.speed = 0
-        self.bbox.x = self.x
-        self.bbox.y = self.y
-        self.bbox.angle = self.angle
-        self.bbox.update()
+            #if self.tracer_down:
+              #  line = pyLine(self.start, self.end)
+                #if len(self.lines) == 0:
+                  #  self.lines.append(line)
+                #else:
+                  #  last = self.lines[-1]
+                    #if last == line:
+                    #    last += line
+                    #else:
+                      #  self.lines.append(line)
+        #else:
+            #self.speed = 0
+        #self.bbox.x = self.x
+        #self.bbox.y = self.y
+        #self.bbox.angle = self.angle
+        #self.bbox.update()
         
-        if self.script:
-            self.script.call('main', self)
+        #if self.script:
+         #   self.script.call('main', self)
