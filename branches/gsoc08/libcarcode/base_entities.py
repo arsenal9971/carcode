@@ -2,31 +2,38 @@ from math import atan, sin, cos, radians, sqrt
 from OpenGL.GL import *
 from OpenGL.GLUT import glutBitmapCharacter, GLUT_BITMAP_8_BY_13
 from collision import BoundingBox
+from physics import ccEntity,  BoxGeometry
 
 DEBUG = False
 
-class Box:
-    def __init__(self, x, y, height, width, color, col=False):
-        self.x = x
-        self.y = y
-        self.height = height
-        self.width = width
+class Box(ccEntity):
+    def __init__(self, pos, size, color, col=False):
+        """Box
+        
+        @param pos tuple with box position (x, y)
+        @param size tuple with box size (width, height)
+        @param color tuple with box color (r, g, b, a)
+        @param col if object should detect collisions 
+        """
+        ccEntity.__init__(self,  pos = pos)
+        self.x = pos[0]
+        self.y = pos[1]
+        self.height = size[1] 
+        self.width = size[0] 
         self.color = color
-        
+        self.center = (size[0]/2.0,  size[1]/2.0)
         self.collisionable = col
-        self.bbox = BoundingBox(x + (width/2) , y + (height/2), height, width)
-        self.bbox.update()
+        self.region = BoxGeometry(size[0]/2.0,  size[1]/2.0,  self.width,  self.height)
         
-    def update(self):
-        pass
     def draw(self):
         glPushMatrix()
-        glTranslatef(self.x, self.y, 0.0)
-        glColor3ub(*self.color)
+        glTranslatef(self.pos[0], self.pos[1], 0.0)
+        if len(self.color) > 3:
+            glColor4f(*self.color)
+        else:
+            glColor3f(*self.color)
         glRecti(0, 0, self.width, self.height)
         glPopMatrix()
-        if DEBUG:
-            self.bbox.draw()
 
 class Text:
     def __init__(self, x, y, text, color):
