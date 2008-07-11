@@ -133,7 +133,6 @@ class PhysicsEngine:
                             found = True
                         elif e.collisionable:
                             ret = self.test_collision(entity,  e)
-                            print ret
                             if ret[0]:
                                 e.evt_collision.dispatch(e,  ret)
     
