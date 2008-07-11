@@ -1,5 +1,5 @@
 import time
-from math import cos,  sin,  radians
+from math import cos,  sin,  radians, sqrt
 
 from widgets.events import EventDispatcher
 
@@ -129,14 +129,42 @@ class PhysicsEngine:
                             found = True
                         elif e.collisionable:
                             ret = self.test_collision(entity,  e)
+                            print ret
                             if ret[0]:
                                 e.evt_collision.dispatch(e,  ret)
     
+    def get_extends_axis(self,  region,  axis):
+        """ Get the extends of a region in given axis
+        
+        @param region list of vectors defining the region 
+        @param axis unit vector indicating axis direction
+        @returns tuple indictating the minimum and maximum values in given axis
+        """
+        Amax = 0
+        Amin = 0
+        t = True
+        for vec in region:
+            dp = (vec[0] * axis[0]) + (vec[1] * axis[1])
+            x = dp * axis[0]  
+            y = dp * axis[1]
+            d = sqrt((x*x) + (y*y))
+            if t:
+                Amax = d
+                Amin = d
+                t = False
+            else:
+                if d > Amax:
+                    Amax = d
+                elif d < Amin:
+                    Amin = d
+        
+        return (Amin,  Amax)
+            
     def get_extends(self,  region):
         """ Get the extends of a region in x and y axis
         
         @param region list of vectors difining the region 
-        @returns pair of tuples with minumum and maximum values in each axis (x, y)
+        @returns pair of tuples with minimum and maximum values in each axis (x, y)
         """
         Xmax = region[0][0]
         Xmin = region[0][0]
@@ -189,5 +217,22 @@ class PhysicsEngine:
         else:
             if Ye2[1] < Ye1[0]:
                 return (False, False)
+                
+        d = sqrt((c1[0]*c2[0]) + (c1[1] * c2[1]))
+        x = (c1[0] - c2[0]) / d
+        y = (c1[1] - c2[1]) / d
         
-        return True,  Xin and Yin 
+        Ze1 = self.get_extends_axis(r1,  (x, y))
+        Ze2 = self.get_extends_axis(r2,  (x, y))
+        
+        Zin = False
+        if Ze2[0] > Ze1[0]:
+            if Ze2[0] > Ze1[1]:
+                return (False, False)
+            if Ze2[1] <=Ze1[1]:
+                Zin = True
+        else:
+            if Ze2[1] < Ze1[0]:
+                return (False, False)
+                
+        return True,  Xin and Yin and Zin
