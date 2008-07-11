@@ -9,17 +9,6 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-
-
-
-CFLAGS = -Wall -g
-
-ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
-	CFLAGS += -O0
-else
-	CFLAGS += -O2
-endif
-
 configure: configure-stamp
 configure-stamp:
 	dh_testdir
@@ -64,8 +53,8 @@ binary-arch: build install
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs 
-	dh_installdocs
-	dh_installexamples
+	dh_installdocs readme.txt
+	dh_installexamples demos/*.py
 #	dh_install
 #	dh_installmenu
 #	dh_installdebconf	
@@ -78,8 +67,6 @@ binary-arch: build install
 #	dh_installcron
 #	dh_installinfo
 	dh_installman
-	dh_link
-	dh_strip
 	dh_compress
 	dh_fixperms
 #	dh_perl
