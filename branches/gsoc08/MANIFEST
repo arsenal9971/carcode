@@ -51,6 +51,7 @@ libcarcode/widgets/constants.py
 libcarcode/widgets/utils.py
 libcarcode/widgets/listbox.py
 libcarcode/widgets/label.py
+libcarcode/widgets/console.py
 libcarcode/car.py
 libcarcode/base_entities.py
 libcarcode/events.py
