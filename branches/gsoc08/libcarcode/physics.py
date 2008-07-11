@@ -32,6 +32,8 @@ class ccEntity:
         self.center = center
         self.collisionable = False
         self.region = []
+        self.start = (0, 0)
+        self.end = (0, 0)
         
     def get_center(self):
         """ Get the entity center vector in current position 
@@ -114,8 +116,10 @@ class PhysicsEngine:
                     dx = entity.speed * cos(rad) 
                     dy = -entity.speed * sin(rad)
                     
+                    entity.start = (entity.pos[0], entity.pos[1])
                     entity.pos[0] +=  dx 
                     entity.pos[1] +=  dy 
+                    entity.end = (entity.pos[0], entity.pos[1])
                     
                     entity.speed *=  0.985
                     
