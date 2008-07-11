@@ -134,6 +134,10 @@ script from the shell with the following arguments:
 DEB
 --------------------------------------------------
 
+Demos are located in the following directory:
+
+/usr/share/doc/carcode/examples
+
 Our setup.py script has support for building DEB files for Debian or
 Ubuntu, you will need to have deb building tools installed such as
 debuild, run the script from the shell with the following arguments:
