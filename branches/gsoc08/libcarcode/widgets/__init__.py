@@ -7,6 +7,7 @@ import utils
 
 # Import widgets
 from button import Button
+from console import Console
 from dialog import Dialog
 from filedialog import FileDialog
 from image import Image

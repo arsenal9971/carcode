@@ -18,7 +18,6 @@ from sensors import Sensor, ColorSensor
 import base_entities
 import level_proxy
 import events
-from console import Console
 from script import Script
 from collision import BoundingBox
 import widgets
@@ -98,7 +97,7 @@ class CarcodeApp:
         self.arena = Arena(self.pe)
         self.running = False
         
-        self.console = Console()
+        self.console = widgets.Console((0,  545),  (800,  40),  3)
         
         car = Car()
         
@@ -125,6 +124,7 @@ class CarcodeApp:
         self.mw.btnQuit.onClick.subscribe(self.quit)
         self.mw.btnStart.onClick.subscribe(self.start)
         self.hud.add_entity(self.mw)
+        self.hud.add_entity(self.console)
         
         self.init_mappings()
 
