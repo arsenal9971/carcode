@@ -276,40 +276,17 @@ class Car(ccEntity):
         
         if DEBUG:
             self.bbox.draw()
-        
-    #def update(self):
-        # move to new position
-        #if self.moving():
-            # remember starting position
-            #self.start = (self.x, self.y)
-            
-            #rad = radians(self.angle)
-            #self.dx = self.speed * cos(rad) 
-            #self.dy = -self.speed * sin(rad)
-            
-            #self.y = self.y + self.dy
-            #self.x = self.x + self.dx
-
-            #self.end = (self.x, self.y)
-            
-            #self.speed *= self.decel  # deccelerate the car
-            
-            #if self.tracer_down:
-              #  line = pyLine(self.start, self.end)
-                #if len(self.lines) == 0:
-                  #  self.lines.append(line)
-                #else:
-                  #  last = self.lines[-1]
-                    #if last == line:
-                    #    last += line
-                    #else:
-                      #  self.lines.append(line)
-        #else:
-            #self.speed = 0
-        #self.bbox.x = self.x
-        #self.bbox.y = self.y
-        #self.bbox.angle = self.angle
-        #self.bbox.update()
-        
-        #if self.script:
-         #   self.script.call('main', self)
+    
+    def update(self):
+        if self.tracer_down and self.start != self.end:
+            line = pyLine(self.start, self.end)
+            if len(self.lines) == 0:
+                self.lines.append(line)
+            else:
+                last = self.lines[-1]
+                if last == line:
+                    last += line
+                else:
+                    self.lines.append(line)
+                        
+        ccEntity.update(self)
