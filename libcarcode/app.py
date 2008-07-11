@@ -22,6 +22,7 @@ from script import Script
 from collision import BoundingBox
 import widgets
 from physics import PhysicsEngine
+import physics
 
 class MainWindow(widgets.Window):
     def __init__(self):
@@ -141,6 +142,8 @@ class CarcodeApp:
         'Console': self.console,
         'widgets': widgets,
         'HUD': self.hud,
+        'ccEntity': physics.ccEntity, 
+        'BoxGeometry': physics.BoxGeometry, 
         'EventDispatcher': events.EventDispatcher
         }
         for k in OpenGL.GL.__dict__.keys():
