@@ -14,10 +14,9 @@ def onSensor(sensor):
 def onOffroad(sensor):
     if sensor.pixel:
         Console.write( 'You got off the road!')
-        
 
-Arena.add_entity(Box(-30, -25, 50, 810, (100,100,100)))
-Arena.add_entity(Box(780, -25, 50, 25, (0,0,255)))
+Arena.add_entity(Box((-30, -25),  (810,  50), (0.4,0.4,0.4)))
+Arena.add_entity(Box((780, -25),( 25, 50),  (0,0,1.0)))
 
 car = Arena.get_car()
 
