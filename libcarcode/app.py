@@ -22,6 +22,7 @@ from console import Console
 from script import Script
 from collision import BoundingBox
 import widgets
+from physics import PhysicsEngine
 
 class MainWindow(widgets.Window):
     def __init__(self):
@@ -93,7 +94,8 @@ class CarcodeApp:
         self.key_commands = {K_q: self.quit}
         
         # Create the environment
-        self.arena = Arena()
+        self.pe = PhysicsEngine()
+        self.arena = Arena(self.pe)
         self.running = False
         
         self.console = Console()
@@ -148,7 +150,7 @@ class CarcodeApp:
         self.levelscript = Script(script, self.mappings, autoload=True)
     
     def load_script(self, script):
-        self.car.set_script(Script(script, autoload=True))
+        self.car.attach_script(Script(script, autoload=True))
 		
     def start(self, button):
         if self.mw.level:
@@ -218,6 +220,7 @@ class CarcodeApp:
                 # Update the Arena
                 if not self.paused:
                     self.arena.update()
+                    self.pe.update()
                     
                 # Render
                 self.arena.draw(self.screen)
