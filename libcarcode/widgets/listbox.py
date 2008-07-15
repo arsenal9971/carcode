@@ -24,7 +24,7 @@ class Arrow:
         self.orientation = orientation
     def draw(self):
         glPushMatrix()
-        glScale(self.size[0], self.size[1], 1.0)
+        glScalef(self.size[0], self.size[1], 1.0)
         glBegin(GL_TRIANGLES)
         glColor4f(*COLOR_WHITE)
         if self.orientation == 1:
