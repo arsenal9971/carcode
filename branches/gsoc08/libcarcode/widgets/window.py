@@ -7,22 +7,21 @@ from constants import *
 from events import EventDispatcher
 from label import Label
 from utils import Clipper, mangle_event
+from widget import Widget
 
-class Window:
+class Window(Widget):
     """ Toplevel window container """
-    def __init__(self, label, pos, size, color, modal = False):
+    def __init__(self, label, modal= False,  *args,  **kargs):
         """Window
         
             @param label string for the window title header
+            @param modal window modal
             @param pos tuple with widget position (x, y)
             @param size tuple with widget size (width, height)
-            @param color tuple with background color (r, g, b, a)
-            @param modal window modal
         """
-        self.label = Label(label, pos=(2,2))
-        self.pos = pos
-        self.size = size
-        self.color = color
+        Widget.__init__(self,  *args,  **kargs)
+        
+        self.label = Label(label, pos=(2,2),  fontcolor=COLOR_WHITE)
         self.entities = []
         self.focus = True
         self.modal = modal
@@ -54,37 +53,15 @@ class Window:
         glTranslatef(0, 15, 0)
         
         # Draw window background
-        if len(self.color) == 3:
-            glColor3f(*self.color)
-        else:
-            glColor4f(*self.color)
+        glColor4f(*self.backcolor)
         glRecti(0, 0, self.size[0], self.size[1])
         
-        # Enable stencil test for clipping
-        #glClear(GL_STENCIL_BUFFER_BIT)
-        #glEnable(GL_STENCIL_TEST)
-        
-        # Draw window region in stencil buffer
-        #glColorMask(GL_FALSE,GL_FALSE,GL_FALSE,GL_FALSE)
-        #glStencilOp(GL_REPLACE,GL_REPLACE,GL_REPLACE)
-        #glStencilFunc(GL_ALWAYS,1,1)
-        
         clip = Clipper()
-        #glColor4f(0.0, 1.0, 0.0, 0.5)
-        #glRecti(0, 0, self.size[0], self.size[1])
         clip.begin((0, 0, self.size[0], self.size[1]))
-        
-        # Draw entities testing against stencil for visible parts,
-        # everything inside stencil will be draw.
-        #glColorMask(GL_TRUE,GL_TRUE,GL_TRUE,GL_TRUE)
-        #glStencilFunc(GL_EQUAL,1,1)
-        #glStencilOp(GL_KEEP,GL_KEEP,GL_KEEP)
         
         for entity in self.entities:
             entity.draw()
         
-        # Disable stencil tests
-        #glDisable(GL_STENCIL_TEST)
         clip.end()
         
         # Restore transformation matrix
