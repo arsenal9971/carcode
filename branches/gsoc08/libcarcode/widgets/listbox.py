@@ -8,6 +8,7 @@ from constants import *
 from events import EventDispatcher
 from label import Label
 from utils import Clipper, mangle_event
+from widget import Widget
 
 def Quad(v1, v2):
     glBegin(GL_LINE_STRIP)
@@ -38,25 +39,22 @@ class Arrow:
         glEnd()
         glPopMatrix()
         
-class ListBox:
+class ListBox(Widget):
     """ Simple text item list """
-    def __init__(self, pos, size, color):
+    def __init__(self, *args,  **kargs):
         """ ListBox
         
             @param pos tuple with widget position (x, y)
             @param size tuple with widget size (width, height)
-            @param color tuple with font color (r, g, b, a)
         """
-        self.pos = list(pos)
-        self.size = list(size)
-        self.color = color
+        Widget.__init__(self,  *args,  **kargs)
         self.items = []
         self.maxrows = self.size[1] / 14
         self.selected = -1
         self.onSelected = EventDispatcher()
         self.visible = True
-        self.arrowup = Button(Arrow((12,12), 1), (self.size[0]- 12 ,0), (12,12), COLOR_BLACK)
-        self.arrowdown = Button(Arrow((12,12), 0), (self.size[0]- 12 ,self.size[1]-12), (12,12), COLOR_BLACK)
+        self.arrowup = Button(Arrow((10,10), 1), (self.size[0]- 12 ,0), (12,12), backcolor=self.backcolor)
+        self.arrowdown = Button(Arrow((10,10), 0), (self.size[0]- 12 ,self.size[1]-12), (12,12), backcolor=self.backcolor)
         self.arrowup.onClick.subscribe(self.scrollup)
         self.arrowdown.onClick.subscribe(self.scrolldown)
         self.startitem = 0
@@ -106,7 +104,7 @@ class ListBox:
             @param items list with strings to add
         """
         for item in items:
-            self.items.append(Label(item, (0,0), COLOR_WHITE))
+            self.items.append(Label(item, (0,0), fontcolor=COLOR_WHITE))
         self.update()
             
     def add_item(self, item):
@@ -114,7 +112,7 @@ class ListBox:
         
             @param item string to add
         """
-        self.items.append(Label(item, (0,0), COLOR_WHITE))
+        self.items.append(Label(item, (0,0), fontcolor=COLOR_WHITE))
         self.update()
         
     def remove_item(self, n):
@@ -140,17 +138,17 @@ class ListBox:
     def draw(self):
         glPushMatrix()
         glTranslatef(self.pos[0], self.pos[1], 0)
-        if len(self.color) == 3:
-            glColor3f(*self.color)
-        else:
-            glColor4f(*self.color)
+        
+        glColor4f(*self.forecolor)
         glRecti(0, 0, self.size[0], self.size[1])
-        glColor3f(0,0,0)
+        
+        glColor4f(*self.backcolor)
         glRecti(1, 1, self.size[0]-1, self.size[1]-1)
         
         self.arrowup.draw()
         self.arrowdown.draw()
         
+        glColor4f(*self.forecolor)
         Quad((self.size[0]-13, 0), (self.size[0],self.size[1]-1))
         
         clip = Clipper()
