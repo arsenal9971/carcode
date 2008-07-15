@@ -14,12 +14,12 @@ class Widget:
         
         if len(args) > 0:
             try:
-                self.pos = args[0]
+                self.pos = list(args[0])
                 hasPos = True
             except:
                 pass
             try:
-                self.size = args[1]
+                self.size = list(args[1])
                 hasSize = True
             except:
                 pass
