@@ -12,9 +12,10 @@ from dialog import Dialog
 from filedialog import FileDialog
 from image import Image
 from label import Label
-from layout import VerticalPack, HorizontalPack
+from layout import Pack
 from listbox import ListBox
 from textarea import TextArea
 from textbox import TextBox
+from widget import Widget
 from window import Window
 
