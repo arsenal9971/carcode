@@ -87,14 +87,18 @@ class ScrollBar(Widget):
         @param maxval number for maximum value
         """
         self.maxval = maxval
+        if self.value > self.maxval:
+            self.value = self.maxval
     
     def scrollup(self, btn):
         if self.value > 0:
             self.value -= 1;
+            self.onScroll.dispatch(self,  self.value)
             
     def scrolldown(self, btn):
         if self.value < self.maxval:
             self.value += 1;
+            self.onScroll.dispatch(self,  self.value)
         
     def events(self, event):
         if event.type == MOUSEBUTTONUP:
@@ -123,10 +127,8 @@ class ScrollBar(Widget):
         
         #Quad((self.size[0]-13, 0), (self.size[0],self.size[1]-1))
         
-        glColor4f(*self.forecolor)
-        
-        by = 12 + (((self.maxy) / self.maxval) * self.value)
-        
-        glRecti(0, by, self.size[0], by + self.barh)
-        
+        if self.maxval > 0:
+            glColor4f(*self.forecolor)
+            by = 12 + (((self.maxy) / self.maxval) * self.value)
+            glRecti(0, by, self.size[0], by + self.barh)
         glPopMatrix()
