@@ -14,12 +14,12 @@ class Widget:
         
         if len(args) > 0:
             try:
-                self.pos = list(args[0])
+                self.pos = [int(x) for x in args[0]]
                 hasPos = True
             except:
                 pass
             try:
-                self.size = list(args[1])
+                self.size = [int(x) for x in args[1]]
                 hasSize = True
             except:
                 pass
@@ -46,10 +46,10 @@ class Widget:
             self.fontcolor = (1.0,  1.0,  1.0,  1.0)
         
         if kargs.has_key('pos') and not hasPos:
-            self.pos = list(kargs['pos'])
+            self.pos = [int(x) for x in kargs['pos']]
         
         if kargs.has_key('size') and not hasSize:
-            self.size = list(kargs['size'])
+            self.size = [int(x) for x in kargs['size']]
             
     def set_size(self,  size):
         """ Set the size of the widget
