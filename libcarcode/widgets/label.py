@@ -4,22 +4,22 @@ from OpenGL.GLUT import glutBitmapCharacter, GLUT_BITMAP_8_BY_13
 from pygame.locals import *
 
 from constants import *
+from widget import Widget
 
-class Label:
+class Label(Widget):
     """Label widget
         Simple widget to display text, cannot be resized and its size is
         determined according to the text and font.
     """
-    def __init__(self, text, pos = (0,0), color = COLOR_WHITE):
+    def __init__(self, text, *args,  **kargs):
         """Label
         
             @param text string to be display
             @param pos touple position (x, y)
-            @param color touple of 4 floats (0.0-1.0) describing font color (r, g, b, a)
         """
+        Widget.__init__(self,  *args,  **kargs)
+        
         self.text = text
-        self.pos = list(pos)
-        self.color = color
         self.size = [len(text) * 8, 13]
         self.visible = True
     
@@ -31,17 +31,15 @@ class Label:
     def events(self, event):
         return False
     
-    def resize(self, size):
+    def set_size(self,  size):
+        # Labels cannot be resized
         pass
-    
+        
     def draw(self):
         glPushMatrix()
         glTranslatef(self.pos[0], self.pos[1], 0)
         
-        if len(self.color) == 3:
-            glColor3f(*self.color)
-        else:
-            glColor4f(*self.color)
+        glColor4f(*self.fontcolor)
         
         glRasterPos3i(0, 10, 0)
         for c in self.text:
