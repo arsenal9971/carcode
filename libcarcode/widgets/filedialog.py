@@ -10,7 +10,7 @@ from button import Button
 from constants import *
 from events import EventDispatcher
 from label import Label
-from layout import VerticalPack,  HorizontalPack
+from layout import Pack
 from listbox import ListBox
 from window import Window
 
@@ -37,16 +37,16 @@ class FileDialog(Window):
         self.filename = ""
         self.file_list = []
         
-        self.flist = ListBox((5,5), (size[0]-10, size[1]-50), (0.2,0.2,0.2))
+        self.flist = ListBox((5,5), (size[0]-10, size[1]-50), backcolor=(0.2,0.2,0.2))
         
-        self.btnCancel = Button(Label("Cancel"),(0, 0), (10, 10), (0.5,0.5,0.5))
-        self.btnOk = Button(Label("Ok"),(0, 0), (10, 10), (0.5,0.5,0.5))
+        self.btnCancel = Button(Label("Cancel"),(0, 0), (10, 10), backcolor=(0.5,0.5,0.5))
+        self.btnOk = Button(Label("Ok"),(0, 0), (10, 10), backcolor=(0.5,0.5,0.5))
         
         self.flist.onSelected.subscribe(self.Select)
         self.btnOk.onClick.subscribe(self.btnClick)
         self.btnCancel.onClick.subscribe(self.btnClick)
         
-        self.btnPack = HorizontalPack(pos=(0,  size[1]-40),  size=(size[0],  35),  margin=5,  padding=20)
+        self.btnPack = Pack(orientation= HORIZONTAL,  padding=20, margin=5,  pos=(0,  size[1]-40),  size=(size[0],  35))
         self.btnPack.add_entity(self.btnCancel)
         self.btnPack.add_entity(self.btnOk)
         

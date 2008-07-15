@@ -16,8 +16,8 @@ class Dialog(Window):
         width = label.size[0] + 20
         bWidth = (width / 2) - 10
         
-        self.btnYes = Button(Label("Yes"), (5, 35), (bWidth, 20), (0.2,0.2,0.2))
-        self.btnNo = Button(Label("No"), (bWidth + 15, 35), (bWidth, 20), (0.2,0.2,0.2))
+        self.btnYes = Button(Label("Yes"), (5, 35), (bWidth, 20), backcolor=(0.2,0.2,0.2))
+        self.btnNo = Button(Label("No"), (bWidth + 15, 35), (bWidth, 20), backcolor=(0.2,0.2,0.2))
         self.btnYes.onClick.subscribe(self.answared)
         self.btnNo.onClick.subscribe(self.answared)
         
