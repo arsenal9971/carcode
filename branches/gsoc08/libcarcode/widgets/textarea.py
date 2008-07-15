@@ -5,7 +5,8 @@ from pygame.locals import *
 
 from constants import *
 from events import EventDispatcher
-from utils import Clipper
+from scrollbar import ScrollBar
+from utils import Clipper,  mangle_event
 from widget import Widget
 
 TXTKEYS = {
@@ -29,8 +30,9 @@ class TextArea(Widget):
         self.xcursor = 0
         self.ycursor = 0
         self.srow = 0
-        self.mrow = size[1] / 13
+        self.mrow = self.size[1] / 13
         self.visible = True
+        self.sb = ScrollBar(maxval=0,  pos=(self.size[0],  0),  size=(12,  self.size[1]),  backcolor=self.backcolor,  forecolor=self.forecolor)
         
     def set_size(self,  size):
         Widget.set_size(self,  size)
@@ -77,6 +79,10 @@ class TextArea(Widget):
                         del self.text[self.ycursor]
                         self.ycursor -= 1
                         self.xcursor = len(self.text[self.ycursor])
+                if len(self.text) > self.mrow:
+                    self.sb.set_maxvalue(len(self.text) - self.mrow)
+                else:
+                    self.sb.set_maxvalue(0)
             elif event.key == K_DELETE:
                 if self.xcursor < clen:
                     self.text[self.ycursor] = cline[0:self.xcursor] + cline[self.xcursor+1:clen]
@@ -110,6 +116,10 @@ class TextArea(Widget):
                     self.text.append(itext)
                 else:
                     self.text.insert(self.ycursor, itext)
+                if len(self.text) > self.mrow:
+                    self.sb.set_maxvalue(len(self.text) - self.mrow)
+                else:
+                    self.sb.set_maxvalue(0)
             else:
                 try:
                     char = event.unicode.encode('latin-1')
@@ -122,6 +132,10 @@ class TextArea(Widget):
             return True
             
         if event.type == MOUSEBUTTONUP:
+            nevent = mangle_event(event,  self.pos)
+            if self.sb.events(nevent):
+                return True
+                
             inX = lambda x: x >= self.pos[0] and x <= self.pos[0]+self.size[0]
             inY = lambda y: y >= self.pos[1] and y <= self.pos[1]+self.size[1]
             if inX(event.pos[0]) and inY(event.pos[1]):
@@ -151,7 +165,16 @@ class TextArea(Widget):
         
         glRasterPos3i(0, 0, 0)
         li = 0
-        for line in self.text:
+        
+        offset = self.sb.value
+        offend = offset
+        if len(self.text) > self.mrow:
+            offend = offset + self.mrow
+        else:
+            offend = len(self.text)
+        lines = self.text[offset:offend]
+        
+        for line in lines:
             for c in line:
                 glutBitmapCharacter(GLUT_BITMAP_8_BY_13, ord(c))
             li += 13
@@ -159,10 +182,12 @@ class TextArea(Widget):
             
         glPopMatrix()
         
+        #TODO: adjust cursor caret
         if self.focus:
             x = (self.xcursor*8) + 2
             y = (self.ycursor*13) + 2
             glRecti(x, y, x+4, y+13)
             
         clip.end()
+        self.sb.draw()
         glPopMatrix()
