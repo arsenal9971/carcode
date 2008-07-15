@@ -17,17 +17,16 @@ from window import Window
 class FileDialog(Window):
     """Simple file dialog for navigating filesystem and choosing files"""
     
-    def __init__(self, title, pos, size, callback, match="*"):
+    def __init__(self, title,  callback, match="*",  *args,  **kargs):
         """FileDialog
         
             @param title string with dialog title
-            @param pos tuple with dialog position (x, y)
-            @param size tuple with dialog size (width, height)
             @param callback callable to be used when user finishes
             @param match filename filter
+            @param pos tuple with dialog position (x, y)
+            @param size tuple with dialog size (width, height)
         """
-        Window.__init__(self, title, pos, size, color=(0.2,0.2,0.2))
-        self.size = size
+        Window.__init__(self, title, *args,  **kargs)
         self.modal = True
         self.centered = True
         self.callback = callback
@@ -37,7 +36,7 @@ class FileDialog(Window):
         self.filename = ""
         self.file_list = []
         
-        self.flist = ListBox((5,5), (size[0]-10, size[1]-50), backcolor=(0.2,0.2,0.2))
+        self.flist = ListBox((5,5), (self.size[0]-10, self.size[1]-50), backcolor=(0.2,0.2,0.2))
         
         self.btnCancel = Button(Label("Cancel"),(0, 0), (10, 10), backcolor=(0.5,0.5,0.5))
         self.btnOk = Button(Label("Ok"),(0, 0), (10, 10), backcolor=(0.5,0.5,0.5))
@@ -46,7 +45,7 @@ class FileDialog(Window):
         self.btnOk.onClick.subscribe(self.btnClick)
         self.btnCancel.onClick.subscribe(self.btnClick)
         
-        self.btnPack = Pack(orientation= HORIZONTAL,  padding=20, margin=5,  pos=(0,  size[1]-40),  size=(size[0],  35))
+        self.btnPack = Pack(orientation= HORIZONTAL,  padding=20, margin=5,  pos=(0,  self.size[1]-40),  size=(self.size[0],  35))
         self.btnPack.add_entity(self.btnCancel)
         self.btnPack.add_entity(self.btnOk)
         

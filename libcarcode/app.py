@@ -26,7 +26,7 @@ import physics
 
 class MainWindow(widgets.Window):
     def __init__(self):
-        widgets.Window.__init__(self, "Carcode", (290,140), (220, 320), (0.2,0.2,0.2, 0.5))
+        widgets.Window.__init__(self, "Carcode", pos=(290,140), size=(220, 320), backcolor=(0.2,0.2,0.2, 0.5))
         self.btnQuit = widgets.Button(widgets.Label("Quit"), (0,0), (10,10), backcolor=(0.2,0.2,0.2))
         self.btnLoad = widgets.Button(widgets.Label("Load Level"), (0,0), (10,10), backcolor=(0.2,0.2,0.2))
         self.btnScript = widgets.Button(widgets.Label("Load Car Script"), (0,0), (10,10), backcolor=(0.2,0.2,0.2))
@@ -50,14 +50,14 @@ class MainWindow(widgets.Window):
         self.level = filename
         
     def OnLoad(self, button):
-        fdialog = widgets.FileDialog("Open Level", (100, 100), (320, 240), callback=self.cbLoad)
+        fdialog = widgets.FileDialog("Open Level", pos=(100, 100), size=(320, 240), callback=self.cbLoad)
         self.parent.add_entity(fdialog)
         
     def cbScript(self, filename):
         self.script = filename
         
     def OnScript(self, button):
-        fdialog = widgets.FileDialog("Open Script", (100, 100), (320, 240), callback=self.cbScript)
+        fdialog = widgets.FileDialog("Open Script", pos=(100, 100), size=(320, 240), callback=self.cbScript)
         self.parent.add_entity(fdialog)
         
         

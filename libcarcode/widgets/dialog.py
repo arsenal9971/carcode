@@ -26,7 +26,7 @@ class Dialog(Window):
         posX = 400 - (width /2)
         posY = 300 - (height /2)
         
-        Window.__init__(self, "Dialog", (posX, posY), (width, height), (0.5,0.5,0.5,0.8))
+        Window.__init__(self, "Dialog", pos=(posX, posY), size=(width, height), backcolor=(0.5,0.5,0.5,0.8))
         
         self.modal = True
         self.add_entity(label)
