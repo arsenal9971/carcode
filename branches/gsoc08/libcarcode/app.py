@@ -27,15 +27,15 @@ import physics
 class MainWindow(widgets.Window):
     def __init__(self):
         widgets.Window.__init__(self, "Carcode", (290,140), (220, 320), (0.2,0.2,0.2, 0.5))
-        self.btnQuit = widgets.Button(widgets.Label("Quit"), (0,0), (10,10), (0.2,0.2,0.2))
-        self.btnLoad = widgets.Button(widgets.Label("Load Level"), (0,0), (10,10), (0.2,0.2,0.2))
-        self.btnScript = widgets.Button(widgets.Label("Load Car Script"), (0,0), (10,10), (0.2,0.2,0.2))
-        self.btnStart = widgets.Button(widgets.Label("Start Carcode"), (0,0), (10,10), (0.2,0.2,0.2))
+        self.btnQuit = widgets.Button(widgets.Label("Quit"), (0,0), (10,10), backcolor=(0.2,0.2,0.2))
+        self.btnLoad = widgets.Button(widgets.Label("Load Level"), (0,0), (10,10), backcolor=(0.2,0.2,0.2))
+        self.btnScript = widgets.Button(widgets.Label("Load Car Script"), (0,0), (10,10), backcolor=(0.2,0.2,0.2))
+        self.btnStart = widgets.Button(widgets.Label("Start Carcode"), (0,0), (10,10), backcolor=(0.2,0.2,0.2))
         
         self.btnLoad.onClick.subscribe(self.OnLoad)
         self.btnScript.onClick.subscribe(self.OnScript)
         
-        self.vp = widgets.VerticalPack(pos=(10,10), size=(200, 300), padding=10)
+        self.vp = widgets.Pack(orientation = widgets.VERTICAL,  padding=10,  pos=(10,10), size=(200, 300))
         self.vp.add_entity(self.btnStart)
         self.vp.add_entity(self.btnLoad)
         self.vp.add_entity(self.btnScript)
@@ -64,6 +64,12 @@ class MainWindow(widgets.Window):
 class CarcodeApp:
     ''' Carcode initialization and mainloop '''
     def __init__(self, width, height):
+        """ CarcodeApp
+        
+        @param width app window width
+        @param height app window height
+        """
+        
         if not pygame.font: print 'Warning, fonts disabled'
         if not pygame.mixer: print 'Warning, sound disabled'
         
@@ -150,9 +156,17 @@ class CarcodeApp:
             self.mappings[k] = OpenGL.GL.__dict__[k]
 
     def load_level(self, script):
+        """ Load a level script file
+        
+        @param script filename of the script
+        """
         self.levelscript = Script(script, self.mappings, autoload=True)
     
     def load_script(self, script):
+        """ Load a car script file
+        
+        @param script filename of the script
+        """
         self.car.attach_script(Script(script, autoload=True))
 		
     def start(self, button):
