@@ -6,6 +6,7 @@ from pygame.locals import *
 from constants import *
 from events import EventDispatcher
 from utils import Clipper
+from widget import Widget
 
 TXTKEYS = {
         K_SPACE: ' '
@@ -17,18 +18,15 @@ for x in xrange(ord('a'), ord('z')+1):
 for x in xrange(ord('0'), ord('9')+1):
     TXTKEYS[x] = chr(x)
     
-class TextBox:
+class TextBox(Widget):
     """ Simple text line editing widget """
-    def __init__(self, pos, size, color):
+    def __init__(self, *args,  **kargs):
         """TextBox
             
             @param pos tuple with widget position (x, y)
             @param size tuple with widget size (width, height)
-            @param color tuple with font color (r, g, b, a)
         """
-        self.pos = list(pos)
-        self.size = list(size)
-        self.color = color
+        Widget.__init__(self,  *args,  **kargs)
         self.text = ""
         self.focus = False
         self.cursor = 0
@@ -94,27 +92,34 @@ class TextBox:
             else:
                 self.focus = False
         return False
+        
     def draw(self):
         glPushMatrix()
         glTranslatef(self.pos[0], self.pos[1], 0)
-        if len(self.color) == 3:
-            glColor3f(*self.color)
-        else:
-            glColor4f(*self.color)
+        
+        glColor4f(*self.forecolor)
         glRecti(0, 0, self.size[0], self.size[1])
-        glColor3f(0,0,0)
+        
+        glColor4f(*self.backcolor)
         glRecti(1, 1, self.size[0]-1, self.size[1]-1)
+        
         clip = Clipper()
         clip.begin((1, 1, self.size[0]-1, self.size[1]-1))
+        
         glPushMatrix()
         glTranslatef(2, 13, 0)
-        glColor4f(*COLOR_WHITE)
+        
+        glColor4f(*self.fontcolor)
         glRasterPos3i(0, 0, 0)
+        
         for c in self.text:
             glutBitmapCharacter(GLUT_BITMAP_8_BY_13, ord(c))
+            
         glPopMatrix()
+        
         if self.focus:
             x = (self.cursor*8) + 2
             glRecti(x, 0, x+4, 13)
+            
         clip.end()
         glPopMatrix()
