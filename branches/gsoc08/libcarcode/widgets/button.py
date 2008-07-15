@@ -6,31 +6,40 @@ from pygame.locals import *
 from constants import *
 from events import EventDispatcher
 from label import Label
+from widget import Widget
 
-class Button:
+class Button(Widget):
     """Button widget class"""
     
-    def __init__(self, contents, pos, size, color):
-        lx = (size[0] / 2) - (contents.size[0] / 2)
-        ly = (size[1] / 2) - (contents.size[1] / 2)
+    def __init__(self, contents,  *args,  **kargs):
+        """Button
+        
+        @param contents widget to display inside button, most common Label
+        @param pos tuple with widget position (x, y)
+        @param size tuple with widget size (width, height)
+        """
+        Widget.__init__(self,  *args,  **kargs)
+        
+        lx = (self.size[0] / 2) - (contents.size[0] / 2)
+        ly = (self.size[1] / 2) - (contents.size[1] / 2)
         
         self.contents = contents
         self.contents.pos = [lx, ly]
         
         self.color = color
-        self.pos = pos
-        self.size = size
         self.onClick = EventDispatcher()
         self.visible = True
     
-    def resize(self, size):
+    def set_size(self, size):
         """Changes the size of the widget
         
             @param size tuple with size (width, height)
         """
-        self.size = size
+        Widget.set_size(self,  size)
+        
         lx = (size[0] / 2) - (self.contents.size[0] / 2)
         ly = (size[1] / 2) - (self.contents.size[1] / 2)
+        
         self.contents.pos = [lx, ly]
         
     def events(self, event):
@@ -48,10 +57,7 @@ class Button:
         glPushMatrix()
         glTranslatef(self.pos[0], self.pos[1], 0)
         
-        if len(self.color) == 3:
-            glColor3f(*self.color)
-        else:
-            glColor4f(*self.color)
+        glColor4f(*self.backcolor)
         glRecti(0, 0, self.size[0], self.size[1])
         
         self.contents.draw()
