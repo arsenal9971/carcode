@@ -33,9 +33,6 @@ def main():
     
     setup_level(app)
     app.main_loop()
-    if opts.monkey:
-        setup_level(app)
-        app.rerun()
 
 if __name__ == '__main__':
     main()
