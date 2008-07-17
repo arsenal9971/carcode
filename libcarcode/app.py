@@ -147,6 +147,7 @@ class CarcodeApp:
         self.state = 0
         self.condition = None
         self.scoreboard = []
+        self.levelscript = None
         
     def init_mappings(self):
         self.mappings = {
@@ -176,7 +177,9 @@ class CarcodeApp:
         
         @param script filename of the script
         """
-        self.levelscript = Script(script, self.mappings, autoload=True)
+        lscode = Script(script, self.mappings, autoload=True)
+        ls = lscode.get("LevelScript")
+        self.levelscript = ls()
     
     def load_script(self, script):
         """ Load a car script file
@@ -260,6 +263,8 @@ class CarcodeApp:
                             self.paused = True
                             for score in self.scoreboard:
                                 print score.name,  score.score()
+                    if self.levelscript:
+                        self.levelscript.update()
                     
                 # Render
                 self.arena.draw(self.screen)
