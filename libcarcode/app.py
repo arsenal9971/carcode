@@ -24,6 +24,16 @@ import widgets
 from physics import PhysicsEngine
 import physics
 
+class WinSplash(widgets.Window):
+    def __init____(self):
+        widgets.Window.__init__(self, "Carcode",  pos=(0, 0),  size=(320, 240 ),  backcolor=(0.2,0.2,0.2, 0.5))
+        self.logo = widgets.Image(os.path.join(helpers.IMAGE_PATH,  "carcode.png"),  pos=(4,  4))
+        self.version = widgets.Label(VERSION,  pos=(4,  self.logo.size[1] + 4))
+    
+    def events(self,  event):
+        if event.type == MOUSEBUTTONUP:
+            self.visible = False
+        
 class MainWindow(widgets.Window):
     def __init__(self):
         widgets.Window.__init__(self, "Carcode", pos=(290,140), size=(220, 320), backcolor=(0.2,0.2,0.2, 0.5))
@@ -119,7 +129,7 @@ class CarcodeApp:
         self.add_key(K_c, car.blinker_right_flip)
         self.add_key(K_t, car.flip_tracer)
         self.add_key(K_p, self.pause)
-		
+        
         self.arena.set_car(car)
         self.car = car
         self.paused = True
@@ -134,7 +144,10 @@ class CarcodeApp:
         self.hud.add_entity(self.console)
         
         self.init_mappings()
-
+        self.state = 0
+        self.condition = None
+        self.scoreboard = []
+        
     def init_mappings(self):
         self.mappings = {
         'Arena': level_proxy.ArenaProxy(self.arena),
@@ -150,7 +163,10 @@ class CarcodeApp:
         'HUD': self.hud,
         'ccEntity': physics.ccEntity, 
         'BoxGeometry': physics.BoxGeometry, 
-        'EventDispatcher': events.EventDispatcher
+        'EventDispatcher': widgets.EventDispatcher, 
+        'AND': events.AND, 
+        'OR': events.OR, 
+        'Score': events.Score
         }
         for k in OpenGL.GL.__dict__.keys():
             self.mappings[k] = OpenGL.GL.__dict__[k]
@@ -238,6 +254,12 @@ class CarcodeApp:
                 if not self.paused:
                     self.arena.update()
                     self.pe.update()
+                    if self.condition is not None:
+                        condition,  self.state = self.condition()
+                        if condition:
+                            self.paused = True
+                            for score in self.scoreboard:
+                                print score.name,  score.score()
                     
                 # Render
                 self.arena.draw(self.screen)
