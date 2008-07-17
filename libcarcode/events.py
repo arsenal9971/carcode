@@ -1,46 +1,85 @@
-class EventDispatcher:
-    def __init__(self):
-        self.enabled = True
-        self.__callbacks__ = []
+class AND:
+    """ Conditional AND for events """
+    def __init__(self,  con1,  st1,  con2,  st2):
+        """AND
         
-    def subscribe(self, func):
-        self.__callbacks__.append(func)
+        @param con1 function to evaluate condition, must return boolean
+        @param st1 state to set if con1 evaluates True
+        @param con2 function to evaluate condition, must return boolean
+        @param st2 state to set if con2 evaluates True
+        """
+        self.con1 = con1,  st1
+        self.con2 = con2,  st2
         
-    def enable(self):
-        self.enabled = True
+    def __call__(self):
+        func,  val = self.con1
+        st = 0
         
-    def disable(self):
-        self.enabled = False
-        
-    def dispatch(self, *args):
-        if not self.enabled:
-            return 0
-        for handler in self.__callbacks__:
-            handler(*args)
-        return 1
-        
-class MultiEventDispatcher:
-    def __init__(self):
-        self.__events__ = {}
-        self.enabled = True
-        
-    def subscribe(self, event, func):
-        if self.__events__.has_key(event):
-            self.__events__[event].append(func)
+        if func():
+            st = val
         else:
-            self.__events__[event] = [func]
+            return False,  st 
+            
+        func,  val = self.con1
+        if func():
+            st = val
+        else:
+            return False,  st 
         
-    def enable(self):
-        self.enabled = True
+        return True,  st
+
+class OR:
+    """ Conditional OR for events """
+    def __init__(self,  con1,  st1,  con2,  st2):
+        """AND
         
-    def disable(self):
-        self.enabled = False
+        @param con1 function to evaluate condition, must return boolean
+        @param st1 state to set if con1 evaluates True
+        @param con2 function to evaluate condition, must return boolean
+        @param st2 state to set if con2 evaluates True
+        """
+        self.con1 = con1,  st1
+        self.con2 = con2,  st2
         
-    def dispatch(self, event, *args):
-        if not self.enabled:
-            return 0
-        if not self.__events__.has_key(event):
-            return 0
-        for handler in self.__events__[event]:
-            handler(*args)
-        return 1
+    def __call__(self):
+        rt = False
+        
+        func,  val = self.con1
+        st = 0
+        
+        if func():
+            st = val
+            rt = True
+            
+        func,  val = self.con1
+        if func():
+            st = val
+            rt = True
+        
+        return rt,  st
+
+scores = ['C',  'B',  'A',  'S']
+
+class Score:
+    def __init__(self,  name, scorefunc,   evalfunc,  values):
+        """ Score
+        
+        @param name string with the name of the scole
+        @param scorefunc function that returns a score in numbers
+        @param evalfunc function to evaluate the relation between current score and score lists (<, >, ==, etc)
+        @param values tuple with 4 values to evaluate.
+        """
+        self.name = name
+        self.evalfunc = evalfunc
+        self.scorefunc = scorefunc
+        self.values = values
+        
+    def score(self):
+        val = self.scorefunc()
+        i = 0
+        for v in self.values:
+            if self.evalfunc(val,  v):
+                return scores[i]
+            i += 1
+            if i == 4:
+                return 'Out rank'
