@@ -15,3 +15,9 @@ class AppProxy:
         self.__app__.add_key(key, action)
     def quit(self):
         self.__app__.quit()
+    def set_conditions(self,  condition):
+        self.__app__.condition = condition
+    def get_state(self):
+        return self.__app__.state
+    def add_score(self,  score):
+        self.__app__.scoreboard.append(score)
