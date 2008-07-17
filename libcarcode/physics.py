@@ -222,6 +222,10 @@ class PhysicsEngine:
                 return (False, False)
                 
         d = sqrt((c1[0]*c2[0]) + (c1[1] * c2[1]))
+        
+        if d == 0:
+            return True,  False
+            
         x = (c1[0] - c2[0]) / d
         y = (c1[1] - c2[1]) / d
         
