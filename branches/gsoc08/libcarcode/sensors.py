@@ -1,7 +1,7 @@
 from math import sin, cos, radians, sqrt
 from OpenGL.GL import *
 import struct
-from events import EventDispatcher
+from widgets.events import EventDispatcher
 
 class Sensor:
     ''' Sensor class

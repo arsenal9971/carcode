@@ -4,7 +4,7 @@ from math import sin, cos, radians, sqrt
 import pygame
 from OpenGL.GL import *
 from collision import pyLine, BoundingBox
-from events import EventDispatcher
+from widgets.events import EventDispatcher
 from physics import ccEntity,  BoxGeometry
 import helpers
 
