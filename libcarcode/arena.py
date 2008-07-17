@@ -6,7 +6,7 @@ from pygame.locals import *
 from OpenGL.GL import *
 
 import helpers
-from events import EventDispatcher
+from widgets.events import EventDispatcher
 
 WHITE = (250, 250, 250)
         
