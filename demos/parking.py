@@ -6,18 +6,6 @@ WHITE = (255,255,255)
 car = Arena.get_car()
 DEBUG = False
 
-def onCollision(entity,  event):
-    if event[1]:
-        if abs(car.angle) > 2:
-            Console.clear()
-            Console.write('Now park the car horizontally!')
-        else:
-            Console.clear()
-            Console.write('Parked ok!')
-    else:
-        Console.clear()
-        Console.write("Park over the red zone")
-        
 class ParkPlace(ccEntity):
     def __init__(self, x, y, color=(0,0,0), col = False):
         ccEntity.__init__(self,  0)
@@ -42,15 +30,39 @@ class ParkPlace(ccEntity):
         
     def update(self):
         pass
+
+class LevelScript:
+    def __init__(self):
+        self.inParking = False
+        park = ParkPlace(100, 50, color=(200,0,0), col=True)
+        
+        Arena.add_entity(ParkPlace(100, 0))
+        Arena.add_entity(park)
+        Arena.add_entity(ParkPlace(100, 100))
+        Arena.add_entity(ParkPlace(100, 150))
+        
+        park.evt_collision.subscribe(self.onCollision)
+        Carcode.set_conditions(AND(lambda : self.inParking == True,  1,  lambda : abs(car.angle) < 2.5,  2 ))
+        
+        Console.write("Park over the red zone")
+        Carcode.add_score(Score("Engine Changes",  
+                                lambda : car.__engine_flips__,  lambda x, y :  x >= y, 
+                                    (5, 3,  1,  0)))
     
-park = ParkPlace(100, 50, color=(200,0,0), col=True)
-
-Arena.add_entity(ParkPlace(100, 0))
-Arena.add_entity(park)
-Arena.add_entity(ParkPlace(100, 100))
-Arena.add_entity(ParkPlace(100, 150))
-
-park.evt_collision.subscribe(onCollision)
-
-Console.write("Park over the red zone")
-
+    def update(self):
+        st = Carcode.get_state()
+        if st == 0:
+            Console.clear()
+            Console.write("Park over the red zone")
+        elif st == 1:
+            Console.clear()
+            Console.write('Now park the car horizontally!')
+        else:
+            Console.clear()
+            Console.write('Parked ok!')
+            
+    def onCollision(self,  entity,  event):
+        if event[1]:
+            self.inParking = True
+        else:
+            self.inParking = False
