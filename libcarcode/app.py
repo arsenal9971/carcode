@@ -23,20 +23,32 @@ from collision import BoundingBox
 import widgets
 from physics import PhysicsEngine
 import physics
+import helpers
 
-class WinSplash(widgets.Window):
-    def __init____(self):
-        widgets.Window.__init__(self, "Carcode",  pos=(0, 0),  size=(320, 240 ),  backcolor=(0.2,0.2,0.2, 0.5))
-        self.logo = widgets.Image(os.path.join(helpers.IMAGE_PATH,  "carcode.png"),  pos=(4,  4))
-        self.version = widgets.Label(VERSION,  pos=(4,  self.logo.size[1] + 4))
+VERSION = "Version: 3.0 Alpha 2"
+
+class RankingWindow(widgets.Window):
+    def __init__(self):
+        widgets.Window.__init__(self, "Scoreboard",  pos=(0, 0),  size=(240, 320),  backcolor=(0.2,0.2,0.2, 0.5))
+        self.centered = True
+        self.layout = widgets.Pack(orientation=widgets.VERTICAL,  margin=5,  pos=(0, 0),  size=(240,  320))
+        self.add_entity(self.layout)
+        self.visible = False
     
-    def events(self,  event):
-        if event.type == MOUSEBUTTONUP:
-            self.visible = False
+    def do_score(self,  scoreboard):
+        for score in scoreboard:
+            lblstr = "%s : %s" % (score.name,   score.score())
+            self.layout.add_entity(widgets.Label(lblstr,  pos=(0, 0),  size=(0, 0)))
+        self.visible = True
         
 class MainWindow(widgets.Window):
     def __init__(self):
-        widgets.Window.__init__(self, "Carcode", pos=(290,140), size=(220, 320), backcolor=(0.2,0.2,0.2, 0.5))
+        widgets.Window.__init__(self, "Carcode", pos=(0,0), size=(300, 330), backcolor=(0.2,0.2,0.2, 0.5))
+        self.centered = True
+        
+        self.logo = widgets.Image(os.path.join(helpers.IMAGE_PATH,  "carcode.png"),  pos=(4,  4))
+        self.version = widgets.Label(VERSION,  pos=(4,  self.logo.size[1] + 4))
+        
         self.btnQuit = widgets.Button(widgets.Label("Quit"), (0,0), (10,10), backcolor=(0.2,0.2,0.2))
         self.btnLoad = widgets.Button(widgets.Label("Load Level"), (0,0), (10,10), backcolor=(0.2,0.2,0.2))
         self.btnScript = widgets.Button(widgets.Label("Load Car Script"), (0,0), (10,10), backcolor=(0.2,0.2,0.2))
@@ -45,7 +57,11 @@ class MainWindow(widgets.Window):
         self.btnLoad.onClick.subscribe(self.OnLoad)
         self.btnScript.onClick.subscribe(self.OnScript)
         
-        self.vp = widgets.Pack(orientation = widgets.VERTICAL,  padding=10,  pos=(10,10), size=(200, 300))
+        self.vp = widgets.Pack(orientation = widgets.VERTICAL,   padding=5, margin=10,  pos=(0,self.logo.size[1] + 25), size=(300, 180))
+        
+        self.add_entity(self.logo)
+        self.add_entity(self.version)
+        
         self.vp.add_entity(self.btnStart)
         self.vp.add_entity(self.btnLoad)
         self.vp.add_entity(self.btnScript)
@@ -114,7 +130,10 @@ class CarcodeApp:
         self.arena = Arena(self.pe)
         self.running = False
         
-        self.console = widgets.Console((0,  545),  (800,  40),  3)
+        self.msgWindow = widgets.Window("Messages",  pos=(3, 3),  size=(260,  60),  backcolor=(0.2,  0.2,  0.2,  0.4))
+        self.msgWindow.visible = False
+        self.console = widgets.Console((0,  0),  (260,  40),  3)
+        self.msgWindow.add_entity(self.console)
         
         car = Car()
         
@@ -135,13 +154,16 @@ class CarcodeApp:
         self.paused = True
         self.hud = widgets.HUD((width, height))
         
+        self.winSB = RankingWindow()
+        
         self.quit_dialog = widgets.Dialog("Really quit carcode?", self.quit_app)
         
         self.mw = MainWindow()
         self.mw.btnQuit.onClick.subscribe(self.quit)
         self.mw.btnStart.onClick.subscribe(self.start)
+        self.hud.add_entity(self.winSB)
         self.hud.add_entity(self.mw)
-        self.hud.add_entity(self.console)
+        self.hud.add_entity(self.msgWindow)
         
         self.init_mappings()
         self.state = 0
@@ -194,6 +216,7 @@ class CarcodeApp:
         if self.mw.script:
             self.load_script(self.mw.script)
         self.hud.remove_entity(self.mw)
+        self.msgWindow.visible = True
         self.paused = False
         
     def pause(self):
@@ -261,8 +284,7 @@ class CarcodeApp:
                         condition,  self.state = self.condition()
                         if condition:
                             self.paused = True
-                            for score in self.scoreboard:
-                                print score.name,  score.score()
+                            self.winSB.do_score(self.scoreboard)
                     if self.levelscript:
                         self.levelscript.update()
                     
