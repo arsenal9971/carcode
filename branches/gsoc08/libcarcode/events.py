@@ -61,24 +61,23 @@ class OR:
 scores = ['C',  'B',  'A',  'S']
 
 class Score:
-    def __init__(self,  name, scorefunc,   evalfunc,  values):
+    def __init__(self,  name,  scorefunc,  values):
         """ Score
         
         @param name string with the name of the scole
         @param scorefunc function that returns a score in numbers
-        @param evalfunc function to evaluate the relation between current score and score lists (<, >, ==, etc)
-        @param values tuple with 4 values to evaluate.
+        @param values list of tuples which contains min and max values range for a given score
         """
         self.name = name
-        self.evalfunc = evalfunc
         self.scorefunc = scorefunc
         self.values = values
         
     def score(self):
         val = self.scorefunc()
         i = 0
-        for v in self.values:
-            if self.evalfunc(val,  v):
+        
+        for vmin,  vmax in self.values:
+            if val >= vmin and val <= vmax:
                 return scores[i]
             i += 1
             if i == 4:
