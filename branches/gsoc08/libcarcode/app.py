@@ -72,7 +72,28 @@ class MainWindow(widgets.Window):
     def OnScript(self, button):
         fdialog = widgets.FileDialog("Open Script", pos=(100, 100), size=(320, 240), callback=self.cbScript)
         self.parent.add_entity(fdialog)
+
+class GoalWindow(widgets.Window):
+    def __init__(self):
+        widgets.Window.__init__(self,  "Objectives", pos=(2, 2 ),  size=(180,  100),  backcolor=(0.2, 0.2, 0.2,  0.5))
+        self.layout = widgets.Pack(pos=(0, 0),  size=(180, 100),  margin=3)
+        self.add_entity(self.layout)
+        self.goals = {}
+    
+    def events(self,  event):
+        return False
         
+    def update_goals(self, goal,  val,  state):
+        self.goals[goal].checked = val
+        
+    def set_goals(self,  goals):
+        if type(goals) != type([]):
+            self.set_goals(goals.goals)
+        else:
+            for goal in goals:
+                self.goals[goal] = widgets.Checkbox(goal.desc,  pos=(0, 0),  size=(13, 13),)
+                goal.onTest.subscribe(self.update_goals)
+                self.layout.add_entity(self.goals[goal],  expand=False)
         
 class CarcodeApp:
     ''' Carcode initialization and mainloop '''
@@ -152,6 +173,10 @@ class CarcodeApp:
         self.hud.add_entity(self.mw)
         self.hud.add_entity(self.msgWindow)
         
+        self.goalWindow = GoalWindow()
+        self.goalWindow.visible = False
+        self.hud.add_entity(self.goalWindow)
+        
         self.init_mappings()
         self.state = 0
         self.condition = None
@@ -177,6 +202,8 @@ class CarcodeApp:
         'EventDispatcher': widgets.EventDispatcher, 
         'AND': events.AND, 
         'OR': events.OR, 
+        'Goal': events.Goal, 
+        'Chain': events.Chain, 
         'Score': events.Score
         }
         for k in OpenGL.GL.__dict__.keys():
@@ -208,7 +235,8 @@ class CarcodeApp:
         if self.mw.script:
             self.load_script(self.mw.script)
         self.hud.remove_entity(self.mw)
-        self.msgWindow.visible = True
+        #self.msgWindow.visible = True
+        self.goalWindow.visible = True
         self.paused = False
         
     def pause(self):
@@ -281,7 +309,7 @@ class CarcodeApp:
                         self.levelscript.update()
                         
                     if self.condition is not None:
-                        condition,  self.state = self.condition()
+                        condition,  self.state = self.condition.test()
                         if condition:
                             self.paused = True
                             self.console.clear()
