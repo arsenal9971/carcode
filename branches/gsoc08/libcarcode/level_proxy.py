@@ -21,3 +21,5 @@ class AppProxy:
         return self.__app__.state
     def add_score(self,  score):
         self.__app__.scoreboard.append(score)
+    def get_game_time(self):
+        return self.__app__.game_time
