@@ -87,9 +87,15 @@ class Goal:
         return res, self.state
         
 class Chain:
-    """ Chain of goals """
+    """ Chain of goals 
+    
+    It will test True only if all goals are met sequentially.
+    """
     def __init__(self,  *args):
-        """ Chain """
+        """ Chain 
+        
+        @param *args optional goals to use to initialize the chain
+        """
         
         if len(args) > 0:
             self.goals = list(args)
