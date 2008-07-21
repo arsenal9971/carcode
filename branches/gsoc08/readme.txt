@@ -1,13 +1,13 @@
                              README
-                    Carcode v3.0 Alpha1
+                    Carcode v3.0 Alpha2
 =====================================================================
 
-This is our first release, is an alpha release "As is" 
-from our current development code, it is not fully featured 
-but is functional, you may want to try it and experiment with it.
+This is an alpha release "As is"  from our current development code, 
+it is not fully featured  but is functional, you may want to try it 
+and experiment with it.
 
 Please report any issues to our issue tracker (see link below), 
-add the tag/label "Milestone-Alpha1" to separate it from 
+add the tag/label "Milestone-Alpha2" to separate it from 
 other releases.
 
 Home Page
@@ -73,37 +73,41 @@ and platform notes to find out where it is.
 Creating car scripts
 --------------------------------------------------
 
-Create a regular python file with your favorite text editor, with a function
-named main that accepts one parameter, the car object, here is an
+Create a regular python file with your favorite text editor, 
+with a class named CarScript, this class should have at least
+and __init__ function that may accept a parameter (the car object),
+and a update function which also accepts a car object as a parameter,
 example from demos/level2_logic.py
 
-# main function
-def main(car):
-    # Obtain the car sensors (left, right)
-    lsensor = car.sensors["fl_sensor"]
-    rsensor = car.sensors["fr_sensor"]
-
-    # Check if the left sensor detected that we
-    # are offroad and steer right
-    if lsensor.pixel and not rsensor.pixel:
-        car.steer_right()
-        
-    # Check if the right sensor detected that we
-    # are offroad and steer left
-    if not lsensor.pixel and rsensor.pixel:
-        car.steer_left()
+class CarScript:
+    def __init__(self,  car):
+        # Obtain the car sensors (left, right)
+        self.lsensor = car.sensors["fl_sensor"]
+        self.rsensor = car.sensors["fr_sensor"]
+        self.car = car
     
-    # Check if both sensors detect we are offroad
-    # try to steer right until we find the road back
-    if lsensor.pixel and rsensor.pixel:
-        car.steer_right()
+    def update(self,  car):
+        if self.lsensor.pixel and not self.rsensor.pixel:
+            car.steer_right()
         
-    # Accelerate constantly
-    if not car.moving() or car.speed < 2:
-        car.accelerate()
+        # Check if the right sensor detected that we
+        # are offroad and steer left
+        if not self.lsensor.pixel and self.rsensor.pixel:
+            car.steer_left()
+    
+        # Check if both sensors detect we are offroad
+        # try to steer right until we find the road back
+        if self.lsensor.pixel and self.rsensor.pixel:
+            car.steer_right()
         
-Now save this file and load it from carcode, the main function 
-will be executed everytime the car is updated.
+        # Accelerate constantly
+        if not car.moving() or car.speed < 2:
+            car.accelerate()
+        
+Now save this file and load it from carcode, the update function 
+will be executed everytime the car is updated. You may want to
+initialize any extra variables in the __init__ function for posterior
+use in update.
 
 To know about the available sensors and level characteristics 
 consult the level file first, you may want to try the level without 
@@ -207,7 +211,7 @@ Our setup.py script can create windows installer for carcode,
 you can use it by running from the command line the setup.py
 script with the following arguments:
 
- python setup.py bdis_wininst
+ python setup.py bdist_wininst
 
 This will create a windows installer, however, it DOES NOT
 INCLUDE DEPENDENCIES, such as python itself, pygame or pyOpenGL.
