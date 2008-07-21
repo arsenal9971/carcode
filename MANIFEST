@@ -62,6 +62,7 @@ libcarcode/events.py
 libcarcode/helpers.py
 libcarcode/level_proxy.py
 libcarcode/physics.py
+libcarcode/scoreboard.py
 libcarcode/script.py
 libcarcode/sensors.py
 carcode.py
