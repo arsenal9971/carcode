@@ -40,6 +40,26 @@ class LevelScript:
         car.add_sensor("fl_sensor", blacksensor1)
         car.add_sensor("fr_sensor", blacksensor2)
         
+        self.finished = False
+        
+        g1 = Goal("Visit all the track parts",  
+              lambda : self.road1.visited and self.road2.visited and self.road3.visited and self.road4.visited,  0)
+        
+        g2 = Goal("Reach the finish line",  lambda : self.finished,  0)
+        
+        Carcode.set_conditions(Chain(g1,  g2))
+        
+        eng_score = Score("Engine Utilization",  # Score Title
+                           lambda : car.__engine_flips__ ,           # Score Function
+                            [(10,  5),  (4, 3), (2, 1),  (0, 0)])           # Score Ranges
+                            
+        time_score = Score("Time Spend",  # Score Title
+                           lambda : int(Carcode.get_game_time()) ,           # Score Function
+                            [(50,  35),  (34, 15), (14, 10),  (9, 0)])           # Score Ranges
+        
+        Carcode.add_score(eng_score)
+        Carcode.add_score(time_score)
+        
     def update(self):
         pass
         
@@ -51,11 +71,4 @@ class LevelScript:
             obj.collisionable = False
             
     def onFinish(self,  obj,  col_evt):
-        # Triggered when car reaches finish line
-        # check if the player has visited all the 4 road sections
-        if self.road1.visited and self.road2.visited and self.road3.visited and self.road4.visited:
-            Console.clear()
-            Console.write('Finished!')
-        else:
-            Console.write('Did not visit all the paths')
-        
+        self.finished = True
