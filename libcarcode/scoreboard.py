@@ -25,12 +25,16 @@ class Scoreboard(widgets.Window):
             self.exitcb()
         
     def show_scoring(self,  score_list):
+        self.visible = True
+        
+        if len(score_list) == 0:
+            return 0
         p = 0.0
         for score in score_list:
             p += score.score()
             lblstr = "%s : %s" % (score.name,   self.scoring[score.score()])
             self.scorelayout.add_entity(widgets.Label(lblstr,  pos=(0, 0),  size=(0, 0)),  expand = False)
-        self.visible = True
+        
         p = p / len(score_list)
         lblstr = "Total : %s" % self.scoring[int(p)]
         self.scorelayout.add_entity(widgets.Label(lblstr,  pos=(0, 0),  size=(0, 0)),  expand = True)
