@@ -75,8 +75,8 @@ class MainWindow(widgets.Window):
 
 class GoalWindow(widgets.Window):
     def __init__(self):
-        widgets.Window.__init__(self,  "Objectives", pos=(2, 2 ),  size=(180,  100),  backcolor=(0.2, 0.2, 0.2,  0.5))
-        self.layout = widgets.Pack(pos=(0, 0),  size=(180, 100),  margin=3)
+        widgets.Window.__init__(self,  "Objectives", pos=(2, 2 ),  size=(240,  100),  backcolor=(0.2, 0.2, 0.2,  0.5))
+        self.layout = widgets.Pack(pos=(0, 0),  size=(240, 100),  margin=3)
         self.add_entity(self.layout)
         self.goals = {}
     
