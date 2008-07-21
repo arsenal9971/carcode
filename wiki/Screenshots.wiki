@@ -1,4 +1,5 @@
 #summary Carcode screenshots
+#labels Featured
 
 = Latest development screenshots =
 
