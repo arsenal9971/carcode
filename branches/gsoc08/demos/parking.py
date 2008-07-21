@@ -42,7 +42,9 @@ class LevelScript:
         Arena.add_entity(ParkPlace(100, 150))
         
         park.evt_collision.subscribe(self.onCollision)
-        Carcode.set_conditions(AND(lambda : self.inParking == True,  1,  lambda : abs(car.angle) < 1.8,  2 ))
+        g1 = Goal("Park in the red zone",  lambda : self.inParking and not car.running,  1)
+        g2= Goal("Park horizontally",  lambda : abs(car.angle) < 1.8,  2 )
+        Carcode.set_conditions(Chain(g1,  g2))
         
         Console.write("Park over the red zone")
         
