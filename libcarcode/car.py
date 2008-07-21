@@ -230,10 +230,18 @@ class Car(ccEntity):
         self.on_honk.dispatch(self)
     
     def steer_left(self, deg = 7.0):
-        if self.running and self.moving(): self.angle = round(self.angle + deg) % 360
+        if self.running and self.moving(): 
+            if self.forward_gear:
+                self.angle = round(self.angle + deg) % 360
+            else:
+                self.angle = round(self.angle - deg) % 360
             
     def steer_right(self, deg = -7.0):
-        if self.running and self.moving(): self.angle = round(self.angle + deg) % 360
+        if self.running and self.moving():
+            if self.forward_gear:
+                self.angle = round(self.angle + deg) % 360
+            else:
+                self.angle = round(self.angle - deg) % 360
 
     # turn on/off left indicator lights
     def blinker_left_flip(self):
