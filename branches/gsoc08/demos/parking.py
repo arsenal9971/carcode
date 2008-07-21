@@ -42,15 +42,20 @@ class LevelScript:
         Arena.add_entity(ParkPlace(100, 150))
         
         park.evt_collision.subscribe(self.onCollision)
-        Carcode.set_conditions(AND(lambda : self.inParking == True,  1,  lambda : abs(car.angle) < 2.5,  2 ))
+        Carcode.set_conditions(AND(lambda : self.inParking == True,  1,  lambda : abs(car.angle) < 1.8,  2 ))
         
         Console.write("Park over the red zone")
         
         eng_score = Score("Engine Utilization",  # Score Title
                            lambda : car.__engine_flips__ ,           # Score Function
                             [(10,  5),  (4, 3), (2, 1),  (0, 0)])           # Score Ranges
+                            
+        time_score = Score("Time Spend",  # Score Title
+                           lambda : int(Carcode.get_game_time()) ,           # Score Function
+                            [(50,  10),  (9, 5), (4, 3),  (2, 0)])           # Score Ranges
         
         Carcode.add_score(eng_score)
+        Carcode.add_score(time_score)
     
     def update(self):
         st = Carcode.get_state()
