@@ -2,10 +2,10 @@ import widgets
 
 class Scoreboard(widgets.Window):
     def __init__(self,  exitcb = None):
-        widgets.Window.__init__(self, "Scoreboard",  pos=(0, 0),  size=(240, 320),  backcolor=(0.2,0.2,0.2, 0.5))
+        widgets.Window.__init__(self, "Scoreboard",  pos=(0, 0),  size=(240, 180),  backcolor=(0.2,0.2,0.2, 0.5))
         self.centered = True
         
-        self.layout = widgets.Pack(orientation=widgets.VERTICAL,  margin=5,  pos=(0, 0),  size=(240,  320))
+        self.layout = widgets.Pack(orientation=widgets.VERTICAL,  margin=5,  pos=(0, 0),  size=(240,  180))
         self.scorelayout = widgets.Pack(orientation=widgets.VERTICAL,  margin=5,  pos=(0, 0),  size=(0,  0))
         
         self.btnOk = widgets.Button(widgets.Label("Ok"),  pos=(0, 0),  size=(10,  32))
