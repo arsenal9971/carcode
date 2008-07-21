@@ -58,7 +58,7 @@ class OR:
         
         return rt,  st
 
-scores = ['C',  'B',  'A',  'S']
+scores = [1,  2,  3,  4]
 
 class Score:
     def __init__(self,  name,  scorefunc,  values):
@@ -72,13 +72,28 @@ class Score:
         self.scorefunc = scorefunc
         self.values = values
         
+        # Check in which order are the values in the tuple
+        vmin,  vmax = self.values[0]
+        if vmin > vmax:
+            self.inverse = True
+        else:
+            self.inverse = False
+        
     def score(self):
         val = self.scorefunc()
         i = 0
         
-        for vmin,  vmax in self.values:
+        # Create a lambda function to act as an 
+        # accesor for the score range tuple in correct order
+        if self.inverse:
+            vfunc = lambda x: (x[1], x[0])
+        else:
+            vfunc =  lambda x: (x[0], x[1])
+        
+        for vrange in self.values:
+            vmin,  vmax = vfunc(vrange)
             if val >= vmin and val <= vmax:
                 return scores[i]
             i += 1
             if i == 4:
-                return 'Out rank'
+                return 5
