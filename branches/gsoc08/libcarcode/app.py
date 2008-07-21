@@ -24,23 +24,10 @@ import widgets
 from physics import PhysicsEngine
 import physics
 import helpers
+from scoreboard import Scoreboard
 
 VERSION = "Version: 3.0 Alpha 2"
 
-class RankingWindow(widgets.Window):
-    def __init__(self):
-        widgets.Window.__init__(self, "Scoreboard",  pos=(0, 0),  size=(240, 320),  backcolor=(0.2,0.2,0.2, 0.5))
-        self.centered = True
-        self.layout = widgets.Pack(orientation=widgets.VERTICAL,  margin=5,  pos=(0, 0),  size=(240,  320))
-        self.add_entity(self.layout)
-        self.visible = False
-    
-    def do_score(self,  scoreboard):
-        for score in scoreboard:
-            lblstr = "%s : %s" % (score.name,   score.score())
-            self.layout.add_entity(widgets.Label(lblstr,  pos=(0, 0),  size=(0, 0)))
-        self.visible = True
-        
 class MainWindow(widgets.Window):
     def __init__(self):
         widgets.Window.__init__(self, "Carcode", pos=(0,0), size=(300, 330), backcolor=(0.2,0.2,0.2, 0.5))
@@ -154,14 +141,14 @@ class CarcodeApp:
         self.paused = True
         self.hud = widgets.HUD((width, height))
         
-        self.winSB = RankingWindow()
+        self.winScoreboard = Scoreboard(lambda : self.quit_app("Yes"))
         
         self.quit_dialog = widgets.Dialog("Really quit carcode?", self.quit_app)
         
         self.mw = MainWindow()
         self.mw.btnQuit.onClick.subscribe(self.quit)
         self.mw.btnStart.onClick.subscribe(self.start)
-        self.hud.add_entity(self.winSB)
+        self.hud.add_entity(self.winScoreboard)
         self.hud.add_entity(self.mw)
         self.hud.add_entity(self.msgWindow)
         
@@ -170,6 +157,7 @@ class CarcodeApp:
         self.condition = None
         self.scoreboard = []
         self.levelscript = None
+        self.game_time = 0.0
         
     def init_mappings(self):
         self.mappings = {
@@ -247,7 +235,8 @@ class CarcodeApp:
         '''
         self.running = True
         
-        ttime = time.time() + 0.05
+        ltime = time.time()
+        ttime = ltime + 0.05
         
         while self.running:
             # Process Events
@@ -282,15 +271,22 @@ class CarcodeApp:
             if etime >= ttime:
                 # Update the Arena
                 if not self.paused:
+                    self.game_time +=  etime-ltime 
+                    ltime = time.time()
+                    
                     self.arena.update()
                     self.pe.update()
+                    
+                    if self.levelscript:
+                        self.levelscript.update()
+                        
                     if self.condition is not None:
                         condition,  self.state = self.condition()
                         if condition:
                             self.paused = True
-                            self.winSB.do_score(self.scoreboard)
-                    if self.levelscript:
-                        self.levelscript.update()
+                            self.console.clear()
+                            self.console.write("Task completed!")
+                            self.winScoreboard.show_scoring(self.scoreboard)
                     
                 # Render
                 self.arena.draw(self.screen)
