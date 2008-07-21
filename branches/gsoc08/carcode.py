@@ -3,7 +3,7 @@ from libcarcode import CarcodeApp, Car
 import sys
 from optparse import OptionParser
 
-VERSION = "3.0a1"
+VERSION = "3.0a2"
 
 parser = OptionParser()
 parser.add_option('-l', '--level', dest='level',

@@ -12,7 +12,7 @@ if 'bdist_deb' in sys.argv:
 # Setup base 'setup' arguments as a dictionary
 setup_args = dict(
     name = "carcode",
-    version = "3.0a1",
+    version = "3.0a2",
     description = "Learn Python programming using an animated car",
     long_description = """
     carcode is an experiment in programming education.
