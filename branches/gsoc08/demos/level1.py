@@ -25,6 +25,21 @@ class LevelScript:
         car.add_sensor("blacksensor2", blacksensor2)
         car.add_sensor("mainsensor", sensor)
         
+        g1 = Goal("Reach the finish line", 
+                  lambda : sensor.pixel,  0)
+        Carcode.set_conditions(Chain(g1))
+        
+        eng_score = Score("Engine Utilization",  # Score Title
+                           lambda : car.__engine_flips__ ,           # Score Function
+                            [(10,  5),  (4, 3), (2, 1),  (0, 0)])           # Score Ranges
+                            
+        time_score = Score("Time Spend",  # Score Title
+                           lambda : int(Carcode.get_game_time()) ,           # Score Function
+                            [(10,  5),  (4, 2), (2, 1),  (1, 0)])           # Score Ranges
+        
+        Carcode.add_score(eng_score)
+        Carcode.add_score(time_score)
+        
     def update(self):
         pass
         
