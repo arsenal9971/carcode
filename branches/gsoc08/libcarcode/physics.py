@@ -80,7 +80,7 @@ class ccEntity:
     def update(self):
         """ Update entity state and execute script """
         if self.script is not None:
-            self.script.call('main', self)
+            self.script.update(self)
         
     def draw(self):
         """ Draw entity """

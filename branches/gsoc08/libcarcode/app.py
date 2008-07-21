@@ -208,7 +208,11 @@ class CarcodeApp:
         
         @param script filename of the script
         """
-        self.car.attach_script(Script(script, autoload=True))
+        
+        self.car.carscript = Script(script, autoload=True)
+        CarScript =  self.car.carscript.get("CarScript")
+        
+        self.car.attach_script(CarScript(self.car))
 		
     def start(self, button):
         if self.mw.level:
