@@ -17,7 +17,17 @@ class Checkbox(Widget):
         y = (self.size[1] / 2) + 6
         
         self.text = Label(text, pos=(self.boxsize+2,  0),  size=(self.size[0] - self.boxsize,  self.size[1]),  fontcolor=self.fontcolor)
-    
+        
+    def events(self,  event):
+        if event.type == MOUSEBUTTONUP:
+            inX = lambda x: x >= self.pos[0] and x <= self.pos[0]+self.size[0]
+            inY = lambda y: y >= self.pos[1] and y <= self.pos[1]+self.size[1]
+            
+            if inX(event.pos[0]) and inY(event.pos[1]):
+                self.checked = not self.checked
+                return True
+            return False
+            
     def draw(self):
         glPushMatrix()
         glTranslatef(self.pos[0], self.pos[1], 0)
