@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN'
+'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<html><head>
+<title>libcarcode.widgets.hud</title>
+<style>
+body {
+    background:white;
+    margin: 0em 1em 10em 1em;
+    color: black;
+}
+
+h1 { color: white; background: #4FA4FF; }
+h2 { color: white; background: #4FA4FF; }
+h3 { color: white; background: #00557F; }
+h4 { color: white; background: #00557F; }
+    
+a { color: #AA5500; }
+
+</style>
+</head>
+<body><a NAME="top" ID="top"></a>
+<h1>libcarcode.widgets.hud</h1>
+
+<h3>Classes</h3>
+<table>
+<tr>
+<td><a href="#HUD">HUD</a></td>
+<td>Head up display This class controls event passing and rendering of widgets added to it.</td>
+</tr>
+</table>
+<h3>Functions</h3>
+<table>
+<tr><td>None</td></tr>
+</table>
+<hr /><hr />
+<a NAME="HUD" ID="HUD"></a>
+<h2>HUD</h2>
+<p>
+Head up display
+    This class controls event passing and rendering of widgets added to it.
+</p>
+<h3>Derived from</h3>
+None
+<h3>Methods</h3>
+<table>
+<tr>
+<td><a href="#HUD.__init__">HUD</a></td>
+<td>HUD</td>
+</tr><tr>
+<td><a href="#HUD.add_entity">add_entity</a></td>
+<td>Adds a widget to the HUD object which will manage it</td>
+</tr><tr>
+<td><a href="#HUD.draw">draw</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#HUD.events">events</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#HUD.remove_entity">remove_entity</a></td>
+<td>Removes a widget from the HUD list</td>
+</tr>
+</table>
+<p><a NAME="HUD.__init__" ID="HUD.__init__"></a>
+<h4>HUD (Constructor)</h4>
+<b>HUD</b>(<i>size</i>)
+<p>
+HUD
+</p><dl>
+<dt><i>size</i></dt>
+<dd>
+tuple with screen size (width, height)
+</dd>
+</dl><a NAME="HUD.add_entity" ID="HUD.add_entity"></a>
+<h4>HUD.add_entity</h4>
+<b>add_entity</b>(<i>entity</i>)
+<p>
+Adds a widget to the HUD object which will manage it
+</p><dl>
+<dt><i>entity</i></dt>
+<dd>
+object implementing the widget protocol
+</dd>
+</dl><a NAME="HUD.draw" ID="HUD.draw"></a>
+<h4>HUD.draw</h4>
+<b>draw</b>(<i></i>)
+<a NAME="HUD.events" ID="HUD.events"></a>
+<h4>HUD.events</h4>
+<b>events</b>(<i>event</i>)
+<a NAME="HUD.remove_entity" ID="HUD.remove_entity"></a>
+<h4>HUD.remove_entity</h4>
+<b>remove_entity</b>(<i>entity</i>)
+<p>
+Removes a widget from the HUD list
+</p></p>
+<div align="right"><a href="#top">Up</a></div>
+<hr />
+</body></html>
