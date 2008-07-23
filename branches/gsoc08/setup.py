@@ -1,6 +1,7 @@
 from distutils.core import setup
 import sys
 import os
+import glob
 
 # If we want debian package, build it and exit
 if 'bdist_deb' in sys.argv:
@@ -29,7 +30,8 @@ setup_args = dict(
     scripts = ['carcode.py'],
     package_data = {
         '': ['*.png', '*.wav']
-    }
+    }, 
+    data_files = [(os.path.join('share', 'doc', 'carcode', 'docs', 'api'),  glob.glob(os.path.join('docs', 'api', '*.html')))]
     )
 
 
@@ -39,7 +41,7 @@ if 'py2exe' in sys.argv:
     print "Building Windows Executable"
     setup_args['windows'] = ['carcode.py']
     import py2exe
-
+    
 # Run setup and unfold setup_args as arguments
 setup(**setup_args)
 
