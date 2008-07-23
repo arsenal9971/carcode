@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN'
+'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<html><head>
+<title>libcarcode.widgets.utils</title>
+<style>
+body {
+    background:white;
+    margin: 0em 1em 10em 1em;
+    color: black;
+}
+
+h1 { color: white; background: #4FA4FF; }
+h2 { color: white; background: #4FA4FF; }
+h3 { color: white; background: #00557F; }
+h4 { color: white; background: #00557F; }
+    
+a { color: #AA5500; }
+
+</style>
+</head>
+<body><a NAME="top" ID="top"></a>
+<h1>libcarcode.widgets.utils</h1>
+
+<h3>Classes</h3>
+<table>
+<tr>
+<td><a href="#Clipper">Clipper</a></td>
+<td>Region clipping manager object Uses Stencil Buffer and manages multiple superimposing regions, uses singleton-like pattern from ASPN cookbook: http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52558</td>
+</tr><tr>
+<td><a href="#Dummy">Dummy</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#__Clipper2">__Clipper2</a></td>
+<td></td>
+</tr>
+</table>
+<h3>Functions</h3>
+<table>
+<tr>
+<td><a href="#mangle_event">mangle_event</a></td>
+<td>Mangle mouse events data with object offsets</td>
+</tr>
+</table>
+<hr /><hr />
+<a NAME="Clipper" ID="Clipper"></a>
+<h2>Clipper</h2>
+<p>
+ Region clipping manager object 
+    Uses Stencil Buffer and manages multiple
+    superimposing regions, uses singleton-like
+    pattern from ASPN cookbook:
+        http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52558
+</p>
+<h3>Derived from</h3>
+None
+<h3>Methods</h3>
+<table>
+<tr>
+<td><a href="#Clipper.__init__">Clipper</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Clipper.begin">begin</a></td>
+<td>Begin cliping region defined by a rectangle</td>
+</tr><tr>
+<td><a href="#Clipper.end">end</a></td>
+<td>End cliping region</td>
+</tr>
+</table>
+<p><a NAME="Clipper.__init__" ID="Clipper.__init__"></a>
+<h4>Clipper (Constructor)</h4>
+<b>Clipper</b>(<i></i>)
+<a NAME="Clipper.begin" ID="Clipper.begin"></a>
+<h4>Clipper.begin</h4>
+<b>begin</b>(<i>*args</i>)
+<p>
+Begin cliping region defined by a rectangle
+</p><dl>
+<dt><i>x1</i></dt>
+<dd>
+Upper left rect vector X
+</dd><dt><i>y1</i></dt>
+<dd>
+Upper left rect vector Y
+</dd><dt><i>x2</i></dt>
+<dd>
+Bottom right rect vector X
+</dd><dt><i>y2</i></dt>
+<dd>
+Bottom right rect vector Y
+</dd>
+</dl><a NAME="Clipper.end" ID="Clipper.end"></a>
+<h4>Clipper.end</h4>
+<b>end</b>(<i></i>)
+<p>
+ End cliping region 
+</p></p>
+<div align="right"><a href="#top">Up</a></div>
+<hr /><hr />
+<a NAME="Dummy" ID="Dummy"></a>
+<h2>Dummy</h2>
+
+<h3>Derived from</h3>
+None
+<h3>Methods</h3>
+<table>
+<tr><td>None</td></tr>
+</table>
+<p></p>
+<div align="right"><a href="#top">Up</a></div>
+<hr /><hr />
+<a NAME="__Clipper2" ID="__Clipper2"></a>
+<h2>__Clipper2</h2>
+
+<h3>Derived from</h3>
+None
+<h3>Methods</h3>
+<table>
+<tr>
+<td><a href="#__Clipper2.__init__">__Clipper2</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#__Clipper2.begin">begin</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#__Clipper2.end">end</a></td>
+<td></td>
+</tr>
+</table>
+<p><a NAME="__Clipper2.__init__" ID="__Clipper2.__init__"></a>
+<h4>__Clipper2 (Constructor)</h4>
+<b>__Clipper2</b>(<i></i>)
+<a NAME="__Clipper2.begin" ID="__Clipper2.begin"></a>
+<h4>__Clipper2.begin</h4>
+<b>begin</b>(<i>region</i>)
+<a NAME="__Clipper2.end" ID="__Clipper2.end"></a>
+<h4>__Clipper2.end</h4>
+<b>end</b>(<i></i>)
+</p>
+<div align="right"><a href="#top">Up</a></div>
+<hr /><hr />
+<a NAME="mangle_event" ID="mangle_event"></a>
+<h2>mangle_event</h2>
+<b>mangle_event</b>(<i>event, obj_pos</i>)
+<p>
+ Mangle mouse events data with object offsets 
+</p><dl>
+<dt><i>event</i></dt>
+<dd>
+original event object from pygame
+</dd><dt><i>obj_pos</i></dt>
+<dd>
+tuple with object position to offset (x, y)
+</dd>
+</dl>
+<div align="right"><a href="#top">Up</a></div>
+<hr />
+</body></html>

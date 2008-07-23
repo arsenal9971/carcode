@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN'
+'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<html><head>
+<title>libcarcode.app</title>
+<style>
+body {
+    background:white;
+    margin: 0em 1em 10em 1em;
+    color: black;
+}
+
+h1 { color: white; background: #4FA4FF; }
+h2 { color: white; background: #4FA4FF; }
+h3 { color: white; background: #00557F; }
+h4 { color: white; background: #00557F; }
+    
+a { color: #AA5500; }
+
+</style>
+</head>
+<body><a NAME="top" ID="top"></a>
+<h1>libcarcode.app</h1>
+
+<h3>Classes</h3>
+<table>
+<tr>
+<td><a href="#CarcodeApp">CarcodeApp</a></td>
+<td>Carcode initialization and mainloop</td>
+</tr><tr>
+<td><a href="#GoalWindow">GoalWindow</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#MainWindow">MainWindow</a></td>
+<td></td>
+</tr>
+</table>
+<h3>Functions</h3>
+<table>
+<tr><td>None</td></tr>
+</table>
+<hr /><hr />
+<a NAME="CarcodeApp" ID="CarcodeApp"></a>
+<h2>CarcodeApp</h2>
+<p>
+ Carcode initialization and mainloop 
+</p>
+<h3>Derived from</h3>
+None
+<h3>Methods</h3>
+<table>
+<tr>
+<td><a href="#CarcodeApp.__init__">CarcodeApp</a></td>
+<td>CarcodeApp</td>
+</tr><tr>
+<td><a href="#CarcodeApp.add_key">add_key</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#CarcodeApp.init_mappings">init_mappings</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#CarcodeApp.load_level">load_level</a></td>
+<td>Load a level script file</td>
+</tr><tr>
+<td><a href="#CarcodeApp.load_script">load_script</a></td>
+<td>Load a car script file</td>
+</tr><tr>
+<td><a href="#CarcodeApp.main_loop">main_loop</a></td>
+<td>Carcode Main loop, does updating, rendering and event processing.</td>
+</tr><tr>
+<td><a href="#CarcodeApp.pause">pause</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#CarcodeApp.quit">quit</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#CarcodeApp.quit_app">quit_app</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#CarcodeApp.start">start</a></td>
+<td></td>
+</tr>
+</table>
+<p><a NAME="CarcodeApp.__init__" ID="CarcodeApp.__init__"></a>
+<h4>CarcodeApp (Constructor)</h4>
+<b>CarcodeApp</b>(<i>width, height</i>)
+<p>
+ CarcodeApp
+</p><dl>
+<dt><i>width</i></dt>
+<dd>
+app window width
+</dd><dt><i>height</i></dt>
+<dd>
+app window height
+</dd>
+</dl><a NAME="CarcodeApp.add_key" ID="CarcodeApp.add_key"></a>
+<h4>CarcodeApp.add_key</h4>
+<b>add_key</b>(<i>key, func</i>)
+<a NAME="CarcodeApp.init_mappings" ID="CarcodeApp.init_mappings"></a>
+<h4>CarcodeApp.init_mappings</h4>
+<b>init_mappings</b>(<i></i>)
+<a NAME="CarcodeApp.load_level" ID="CarcodeApp.load_level"></a>
+<h4>CarcodeApp.load_level</h4>
+<b>load_level</b>(<i>script</i>)
+<p>
+ Load a level script file
+</p><dl>
+<dt><i>script</i></dt>
+<dd>
+filename of the script
+</dd>
+</dl><a NAME="CarcodeApp.load_script" ID="CarcodeApp.load_script"></a>
+<h4>CarcodeApp.load_script</h4>
+<b>load_script</b>(<i>script</i>)
+<p>
+ Load a car script file
+</p><dl>
+<dt><i>script</i></dt>
+<dd>
+filename of the script
+</dd>
+</dl><a NAME="CarcodeApp.main_loop" ID="CarcodeApp.main_loop"></a>
+<h4>CarcodeApp.main_loop</h4>
+<b>main_loop</b>(<i></i>)
+<p>
+            Carcode Main loop, does updating, 
+            rendering and event processing.
+</p><a NAME="CarcodeApp.pause" ID="CarcodeApp.pause"></a>
+<h4>CarcodeApp.pause</h4>
+<b>pause</b>(<i></i>)
+<a NAME="CarcodeApp.quit" ID="CarcodeApp.quit"></a>
+<h4>CarcodeApp.quit</h4>
+<b>quit</b>(<i>obj = None</i>)
+<a NAME="CarcodeApp.quit_app" ID="CarcodeApp.quit_app"></a>
+<h4>CarcodeApp.quit_app</h4>
+<b>quit_app</b>(<i>ans</i>)
+<a NAME="CarcodeApp.start" ID="CarcodeApp.start"></a>
+<h4>CarcodeApp.start</h4>
+<b>start</b>(<i>button</i>)
+</p>
+<div align="right"><a href="#top">Up</a></div>
+<hr /><hr />
+<a NAME="GoalWindow" ID="GoalWindow"></a>
+<h2>GoalWindow</h2>
+
+<h3>Derived from</h3>
+widgets.Window
+<h3>Methods</h3>
+<table>
+<tr>
+<td><a href="#GoalWindow.__init__">GoalWindow</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#GoalWindow.events">events</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#GoalWindow.set_goals">set_goals</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#GoalWindow.update_goals">update_goals</a></td>
+<td></td>
+</tr>
+</table>
+<p><a NAME="GoalWindow.__init__" ID="GoalWindow.__init__"></a>
+<h4>GoalWindow (Constructor)</h4>
+<b>GoalWindow</b>(<i></i>)
+<a NAME="GoalWindow.events" ID="GoalWindow.events"></a>
+<h4>GoalWindow.events</h4>
+<b>events</b>(<i>event</i>)
+<a NAME="GoalWindow.set_goals" ID="GoalWindow.set_goals"></a>
+<h4>GoalWindow.set_goals</h4>
+<b>set_goals</b>(<i>goals</i>)
+<a NAME="GoalWindow.update_goals" ID="GoalWindow.update_goals"></a>
+<h4>GoalWindow.update_goals</h4>
+<b>update_goals</b>(<i>goal, val, state</i>)
+</p>
+<div align="right"><a href="#top">Up</a></div>
+<hr /><hr />
+<a NAME="MainWindow" ID="MainWindow"></a>
+<h2>MainWindow</h2>
+
+<h3>Derived from</h3>
+widgets.Window
+<h3>Methods</h3>
+<table>
+<tr>
+<td><a href="#MainWindow.__init__">MainWindow</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#MainWindow.OnLoad">OnLoad</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#MainWindow.OnScript">OnScript</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#MainWindow.cbLoad">cbLoad</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#MainWindow.cbScript">cbScript</a></td>
+<td></td>
+</tr>
+</table>
+<p><a NAME="MainWindow.__init__" ID="MainWindow.__init__"></a>
+<h4>MainWindow (Constructor)</h4>
+<b>MainWindow</b>(<i></i>)
+<a NAME="MainWindow.OnLoad" ID="MainWindow.OnLoad"></a>
+<h4>MainWindow.OnLoad</h4>
+<b>OnLoad</b>(<i>button</i>)
+<a NAME="MainWindow.OnScript" ID="MainWindow.OnScript"></a>
+<h4>MainWindow.OnScript</h4>
+<b>OnScript</b>(<i>button</i>)
+<a NAME="MainWindow.cbLoad" ID="MainWindow.cbLoad"></a>
+<h4>MainWindow.cbLoad</h4>
+<b>cbLoad</b>(<i>filename</i>)
+<a NAME="MainWindow.cbScript" ID="MainWindow.cbScript"></a>
+<h4>MainWindow.cbScript</h4>
+<b>cbScript</b>(<i>filename</i>)
+</p>
+<div align="right"><a href="#top">Up</a></div>
+<hr />
+</body></html>
