@@ -1,0 +1,55 @@
+#summary Essential guide to level making with carcode
+
+= Introduction =
+
+This is a guide with the essentials to build you own level scripts for carcode, from basic objects and sensors to collision detection, events, goals and objectives.
+
+This is a guide by examples, for additional information refer to the API documents.
+
+== How level scripts work ==
+
+Carcode level scripts are plain python files, this means that you use standard python language features to define objects and its interactions with the environment and car.
+
+The level script is loaded by carcode as if it where a normal python module (think of math module for example), then it will look for a class named LevelScript and proceed to create and instance of it.
+
+On the main loop, carcode will call for the update function of this LevelScript instance.
+
+So far design requirements are two, there must be a class named LevelScript which should contain a function named update (even if it does nothing).
+
+Level setup (objects, goals, scoring) should be done within the constructor/initialization function of the LevelScript class (__init__), this function will be called without arguments as the environment supplies required objects.
+
+The LevelScript may check environment state each frame in its update function, this function is called without arguments in the main loop if the game is running.
+
+== Script environment ==
+
+Carcode will provide the level script with a environment with all needed objects to manipulate the game world and add entities (objects) to it.
+
+There is two main objects used to interact with the environment, Arena and Carcode, these are instances not classes and should be used directly, Arena manages the game entity list while Carcode manages events, goals and scoring.
+
+=== Base entities ===
+
+Carcode provides a small set of common entities to construct levels, these include the Box class (to draw rectangles).
+
+=== Sensors ===
+
+Carcode provides two basic sensors, the base Sensor class which will read the pixel color and return a tuple with the rgb components and the ColorSensor which will look for a specific color and will return a boolean depending if it detected the specified color.
+
+=== Custom entities ===
+
+The level script can create custom entities by subclassing ccEntity (refer to libcarcode.physics API documentation).
+
+Because carcode uses OpenGL internally to draw it will provide to the level script with all base OpenGL functions, refer to pyOpenGL API docs:
+
+http://pyopengl.sourceforge.net/documentation/manual/reference-GL.html
+
+= Simple objects =
+
+{{{
+class LevelScript:
+  def __init__(self):
+    box = Box(pos=(10, 10), size=(800, 50))
+    Arena.add_entity(box)
+  
+  def update(self):
+    pass
+}}}
