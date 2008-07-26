@@ -53,7 +53,7 @@ as show in the example:
 
 A full example of loading a level and logic:
 
- python carcode.py -l demos/level1.py -s mylogic.py
+ python carcode.py -l demos/level2.py -s demos/level2_logic.py
 
 Lengthy car scripts or with tight loops can degrade overall
 performance.
@@ -71,6 +71,7 @@ and platform notes to find out where it is.
 
 === Command Line Options ===
 
+{{{
 $ python carcode.py -h
 Usage: carcode.py [options]
 
@@ -81,6 +82,7 @@ Options:
   -v, --version         display carcode version and exit.
   -s SCRIPT, --script=SCRIPT
                         load an specific script file
+}}}
 
 === Creating car scripts ===
 
