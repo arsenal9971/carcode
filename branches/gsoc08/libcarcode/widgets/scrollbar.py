@@ -67,12 +67,13 @@ class ScrollBar(Widget):
         self.startitem = 0
         self.maxoffset = 0
     
-    def set_value(self,  val):
+    def set_value(self,  value):
         """ Set the scrollbar value
         
         @param val number for value 
         """
         self.value = value
+        self.onScroll.dispatch(self,  self.value)
         
     def get_value(self):
         """ Get the current scrollbar value
