@@ -1,8 +1,6 @@
 #summary Steps for creating a carcode release
 #labels Phase-Deploy
 
-When creating a new release for carcode, please follow these steps.
-
 == Step 1: Choose the Right Version Name ==
 
 Currently, carcode has an X.Y version number (e.g. 3.0), and an optional "alphaX" or "betaX" afterwards. Alpha versions are meant only for developers, while beta versions are meant to be testable by non-developers. Release without an "alpha" or "beta" are meant to be major public releases of stable, polished code.
