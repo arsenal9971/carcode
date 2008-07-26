@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN'
+'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<html><head>
+<title>libcarcode.car</title>
+<style>
+body {
+    background:white;
+    margin: 0em 1em 10em 1em;
+    color: black;
+}
+
+h1 { color: white; background: #4FA4FF; }
+h2 { color: white; background: #4FA4FF; }
+h3 { color: white; background: #00557F; }
+h4 { color: white; background: #00557F; }
+    
+a { color: #AA5500; }
+
+</style>
+</head>
+<body><a NAME="top" ID="top"></a>
+<h1>libcarcode.car</h1>
+
+<h3>Classes</h3>
+<table>
+<tr>
+<td><a href="#Blinker">Blinker</a></td>
+<td>Blinks by flipping the light color every  blink_count calls to color().</td>
+</tr><tr>
+<td><a href="#Car">Car</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Light">Light</a></td>
+<td>A car light.</td>
+</tr>
+</table>
+<h3>Functions</h3>
+<table>
+<tr><td>None</td></tr>
+</table>
+<hr /><hr />
+<a NAME="Blinker" ID="Blinker"></a>
+<h2>Blinker</h2>
+<p>
+ Blinks by flipping the light color every  blink_count calls to color().
+    Of course, in reality, a blinking light usually blinks by time increments, so if
+    for some reason color() is called more frequently or less frequently than
+    normal, the blinking could be too slow or fast.
+</p>
+<h3>Derived from</h3>
+Light
+<h3>Methods</h3>
+<table>
+<tr>
+<td><a href="#Blinker.__init__">Blinker</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Blinker.color">color</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Blinker.color_flip">color_flip</a></td>
+<td></td>
+</tr>
+</table>
+<p><a NAME="Blinker.__init__" ID="Blinker.__init__"></a>
+<h4>Blinker (Constructor)</h4>
+<b>Blinker</b>(<i>on_color, off_color, rect, blinking = False, blink_count = 50</i>)
+<a NAME="Blinker.color" ID="Blinker.color"></a>
+<h4>Blinker.color</h4>
+<b>color</b>(<i></i>)
+<a NAME="Blinker.color_flip" ID="Blinker.color_flip"></a>
+<h4>Blinker.color_flip</h4>
+<b>color_flip</b>(<i></i>)
+</p>
+<div align="right"><a href="#top">Up</a></div>
+<hr /><hr />
+<a NAME="Car" ID="Car"></a>
+<h2>Car</h2>
+
+<h3>Derived from</h3>
+ccEntity
+<h3>Methods</h3>
+<table>
+<tr>
+<td><a href="#Car.__init__">Car</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Car.accelerate">accelerate</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Car.add_sensor">add_sensor</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Car.blinker_left_flip">blinker_left_flip</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Car.blinker_right_flip">blinker_right_flip</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Car.brake">brake</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Car.draw">draw</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Car.engine_off">engine_off</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Car.engine_on">engine_on</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Car.flip_engine">flip_engine</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Car.flip_gear">flip_gear</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Car.flip_tracer">flip_tracer</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Car.honk">honk</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Car.moving">moving</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Car.set_gear_forward">set_gear_forward</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Car.set_gear_reverse">set_gear_reverse</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Car.set_script">set_script</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Car.set_tracer_down">set_tracer_down</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Car.set_tracer_up">set_tracer_up</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Car.speed">speed</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Car.steer_left">steer_left</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Car.steer_right">steer_right</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Car.update">update</a></td>
+<td></td>
+</tr>
+</table>
+<p><a NAME="Car.__init__" ID="Car.__init__"></a>
+<h4>Car (Constructor)</h4>
+<b>Car</b>(<i>x_init = 0, y_init = 0, angle_init = 0.0, running_init = True, body_color = (131, 111, 255), tracer_color = (255, 0, 0), tracer_down = False, tracer_width = 1, show_rect = False</i>)
+<a NAME="Car.accelerate" ID="Car.accelerate"></a>
+<h4>Car.accelerate</h4>
+<b>accelerate</b>(<i>s = 2</i>)
+<a NAME="Car.add_sensor" ID="Car.add_sensor"></a>
+<h4>Car.add_sensor</h4>
+<b>add_sensor</b>(<i>name, sensor</i>)
+<a NAME="Car.blinker_left_flip" ID="Car.blinker_left_flip"></a>
+<h4>Car.blinker_left_flip</h4>
+<b>blinker_left_flip</b>(<i></i>)
+<a NAME="Car.blinker_right_flip" ID="Car.blinker_right_flip"></a>
+<h4>Car.blinker_right_flip</h4>
+<b>blinker_right_flip</b>(<i></i>)
+<a NAME="Car.brake" ID="Car.brake"></a>
+<h4>Car.brake</h4>
+<b>brake</b>(<i>s = 2</i>)
+<a NAME="Car.draw" ID="Car.draw"></a>
+<h4>Car.draw</h4>
+<b>draw</b>(<i></i>)
+<a NAME="Car.engine_off" ID="Car.engine_off"></a>
+<h4>Car.engine_off</h4>
+<b>engine_off</b>(<i></i>)
+<a NAME="Car.engine_on" ID="Car.engine_on"></a>
+<h4>Car.engine_on</h4>
+<b>engine_on</b>(<i></i>)
+<a NAME="Car.flip_engine" ID="Car.flip_engine"></a>
+<h4>Car.flip_engine</h4>
+<b>flip_engine</b>(<i></i>)
+<a NAME="Car.flip_gear" ID="Car.flip_gear"></a>
+<h4>Car.flip_gear</h4>
+<b>flip_gear</b>(<i></i>)
+<a NAME="Car.flip_tracer" ID="Car.flip_tracer"></a>
+<h4>Car.flip_tracer</h4>
+<b>flip_tracer</b>(<i></i>)
+<a NAME="Car.honk" ID="Car.honk"></a>
+<h4>Car.honk</h4>
+<b>honk</b>(<i></i>)
+<a NAME="Car.moving" ID="Car.moving"></a>
+<h4>Car.moving</h4>
+<b>moving</b>(<i></i>)
+<a NAME="Car.set_gear_forward" ID="Car.set_gear_forward"></a>
+<h4>Car.set_gear_forward</h4>
+<b>set_gear_forward</b>(<i></i>)
+<a NAME="Car.set_gear_reverse" ID="Car.set_gear_reverse"></a>
+<h4>Car.set_gear_reverse</h4>
+<b>set_gear_reverse</b>(<i></i>)
+<a NAME="Car.set_script" ID="Car.set_script"></a>
+<h4>Car.set_script</h4>
+<b>set_script</b>(<i>script</i>)
+<a NAME="Car.set_tracer_down" ID="Car.set_tracer_down"></a>
+<h4>Car.set_tracer_down</h4>
+<b>set_tracer_down</b>(<i></i>)
+<a NAME="Car.set_tracer_up" ID="Car.set_tracer_up"></a>
+<h4>Car.set_tracer_up</h4>
+<b>set_tracer_up</b>(<i></i>)
+<a NAME="Car.speed" ID="Car.speed"></a>
+<h4>Car.speed</h4>
+<b>speed</b>(<i></i>)
+<a NAME="Car.steer_left" ID="Car.steer_left"></a>
+<h4>Car.steer_left</h4>
+<b>steer_left</b>(<i>deg = 7.0</i>)
+<a NAME="Car.steer_right" ID="Car.steer_right"></a>
+<h4>Car.steer_right</h4>
+<b>steer_right</b>(<i>deg = -7.0</i>)
+<a NAME="Car.update" ID="Car.update"></a>
+<h4>Car.update</h4>
+<b>update</b>(<i></i>)
+</p>
+<div align="right"><a href="#top">Up</a></div>
+<hr /><hr />
+<a NAME="Light" ID="Light"></a>
+<h2>Light</h2>
+<p>
+ A car light.
+    A light is rectangle with an off color and an on color. You can change or
+    query its current color.
+</p>
+<h3>Derived from</h3>
+object
+<h3>Methods</h3>
+<table>
+<tr>
+<td><a href="#Light.__init__">Light</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Light.color">color</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Light.onoff_flip">onoff_flip</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Light.turn_off">turn_off</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Light.turn_on">turn_on</a></td>
+<td></td>
+</tr>
+</table>
+<p><a NAME="Light.__init__" ID="Light.__init__"></a>
+<h4>Light (Constructor)</h4>
+<b>Light</b>(<i>on_color, off_color, rect</i>)
+<a NAME="Light.color" ID="Light.color"></a>
+<h4>Light.color</h4>
+<b>color</b>(<i></i>)
+<a NAME="Light.onoff_flip" ID="Light.onoff_flip"></a>
+<h4>Light.onoff_flip</h4>
+<b>onoff_flip</b>(<i></i>)
+<a NAME="Light.turn_off" ID="Light.turn_off"></a>
+<h4>Light.turn_off</h4>
+<b>turn_off</b>(<i></i>)
+<a NAME="Light.turn_on" ID="Light.turn_on"></a>
+<h4>Light.turn_on</h4>
+<b>turn_on</b>(<i></i>)
+</p>
+<div align="right"><a href="#top">Up</a></div>
+<hr />
+</body></html>

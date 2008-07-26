@@ -1,0 +1,15 @@
+Source: carcode
+Section: python
+Priority: extra
+Maintainer: Carlos Daniel Ruvalcaba Valenzuela <clsdaniel@gmail.com>
+Standards-Version: 3.7.2
+
+Package: carcode
+Architecture: any
+Depends: ${shlibs:Depends},  python (>= 2.4.1), python-pygame (>= 1.7.0), python-opengl (>= 2.0.0)
+Description: Learn Python programming using an animated car
+ carcode is an experiment in programming education.
+ The idea is to give beginning programmers carcode, 
+ which provides an animated car they can drive around 
+ the screen either using the keyboard, or 
+ programmatically through a simple API.

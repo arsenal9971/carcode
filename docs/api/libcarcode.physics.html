@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN'
+'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<html><head>
+<title>libcarcode.physics</title>
+<style>
+body {
+    background:white;
+    margin: 0em 1em 10em 1em;
+    color: black;
+}
+
+h1 { color: white; background: #4FA4FF; }
+h2 { color: white; background: #4FA4FF; }
+h3 { color: white; background: #00557F; }
+h4 { color: white; background: #00557F; }
+    
+a { color: #AA5500; }
+
+</style>
+</head>
+<body><a NAME="top" ID="top"></a>
+<h1>libcarcode.physics</h1>
+
+<h3>Classes</h3>
+<table>
+<tr>
+<td><a href="#PhysicsEngine">PhysicsEngine</a></td>
+<td>2D Physics Engine</td>
+</tr><tr>
+<td><a href="#ccEntity">ccEntity</a></td>
+<td>Base entity class for in simulation objects</td>
+</tr>
+</table>
+<h3>Functions</h3>
+<table>
+<tr>
+<td><a href="#BoxGeometry">BoxGeometry</a></td>
+<td></td>
+</tr>
+</table>
+<hr /><hr />
+<a NAME="PhysicsEngine" ID="PhysicsEngine"></a>
+<h2>PhysicsEngine</h2>
+<p>
+ 2D Physics Engine 
+</p>
+<h3>Derived from</h3>
+None
+<h3>Methods</h3>
+<table>
+<tr>
+<td><a href="#PhysicsEngine.__init__">PhysicsEngine</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#PhysicsEngine.add_entity">add_entity</a></td>
+<td>Add an entity to the engine</td>
+</tr><tr>
+<td><a href="#PhysicsEngine.get_extends">get_extends</a></td>
+<td>Get the extends of a region in x and y axis</td>
+</tr><tr>
+<td><a href="#PhysicsEngine.get_extends_axis">get_extends_axis</a></td>
+<td>Get the extends of a region in given axis</td>
+</tr><tr>
+<td><a href="#PhysicsEngine.test_collision">test_collision</a></td>
+<td>Test collision between two entities</td>
+</tr><tr>
+<td><a href="#PhysicsEngine.update">update</a></td>
+<td>Update physics state of all entities</td>
+</tr>
+</table>
+<p><a NAME="PhysicsEngine.__init__" ID="PhysicsEngine.__init__"></a>
+<h4>PhysicsEngine (Constructor)</h4>
+<b>PhysicsEngine</b>(<i></i>)
+<a NAME="PhysicsEngine.add_entity" ID="PhysicsEngine.add_entity"></a>
+<h4>PhysicsEngine.add_entity</h4>
+<b>add_entity</b>(<i>entity</i>)
+<p>
+ Add an entity to the engine 
+</p><dl>
+<dt><i>entity</i></dt>
+<dd>
+object which implements the ccEntity protocol
+</dd>
+</dl><a NAME="PhysicsEngine.get_extends" ID="PhysicsEngine.get_extends"></a>
+<h4>PhysicsEngine.get_extends</h4>
+<b>get_extends</b>(<i>region</i>)
+<p>
+ Get the extends of a region in x and y axis
+</p><dl>
+<dt><i>region</i></dt>
+<dd>
+list of vectors difining the region
+</dd>
+</dl><dl>
+<dt>Returns:</dt>
+<dd>
+pair of tuples with minimum and maximum values in each axis (x, y)
+</dd>
+</dl><a NAME="PhysicsEngine.get_extends_axis" ID="PhysicsEngine.get_extends_axis"></a>
+<h4>PhysicsEngine.get_extends_axis</h4>
+<b>get_extends_axis</b>(<i>region, axis</i>)
+<p>
+ Get the extends of a region in given axis
+</p><dl>
+<dt><i>region</i></dt>
+<dd>
+list of vectors defining the region
+</dd><dt><i>axis</i></dt>
+<dd>
+unit vector indicating axis direction
+</dd>
+</dl><dl>
+<dt>Returns:</dt>
+<dd>
+tuple indictating the minimum and maximum values in given axis
+</dd>
+</dl><a NAME="PhysicsEngine.test_collision" ID="PhysicsEngine.test_collision"></a>
+<h4>PhysicsEngine.test_collision</h4>
+<b>test_collision</b>(<i>e1, e2</i>)
+<p>
+ Test collision between two entities
+</p><dl>
+<dt><i>e1</i></dt>
+<dd>
+first entity
+</dd><dt><i>e2</i></dt>
+<dd>
+second entity
+</dd>
+</dl><dl>
+<dt>Returns:</dt>
+<dd>
+boolean indicating if the entities overlap
+</dd>
+</dl><a NAME="PhysicsEngine.update" ID="PhysicsEngine.update"></a>
+<h4>PhysicsEngine.update</h4>
+<b>update</b>(<i></i>)
+<p>
+ Update physics state of all entities 
+</p></p>
+<div align="right"><a href="#top">Up</a></div>
+<hr /><hr />
+<a NAME="ccEntity" ID="ccEntity"></a>
+<h2>ccEntity</h2>
+<p>
+ Base entity class for in simulation objects 
+</p>
+<h3>Derived from</h3>
+None
+<h3>Methods</h3>
+<table>
+<tr>
+<td><a href="#ccEntity.__init__">ccEntity</a></td>
+<td>Entity</td>
+</tr><tr>
+<td><a href="#ccEntity.attach_script">attach_script</a></td>
+<td>Attaches a script to entity</td>
+</tr><tr>
+<td><a href="#ccEntity.deattach_script">deattach_script</a></td>
+<td>Removes script from entity</td>
+</tr><tr>
+<td><a href="#ccEntity.draw">draw</a></td>
+<td>Draw entity</td>
+</tr><tr>
+<td><a href="#ccEntity.get_axis">get_axis</a></td>
+<td>Get additional axis to use for collision</td>
+</tr><tr>
+<td><a href="#ccEntity.get_center">get_center</a></td>
+<td>Get the entity center vector in current position</td>
+</tr><tr>
+<td><a href="#ccEntity.get_region">get_region</a></td>
+<td>Get the entity bounding region</td>
+</tr><tr>
+<td><a href="#ccEntity.update">update</a></td>
+<td>Update entity state and execute script</td>
+</tr>
+</table>
+<p><a NAME="ccEntity.__init__" ID="ccEntity.__init__"></a>
+<h4>ccEntity (Constructor)</h4>
+<b>ccEntity</b>(<i>entity_type = 0, pos = [0, 0], angle=0.0, speed=0.0, center = (0, 0)</i>)
+<p>
+Entity
+</p><dl>
+<dt><i>entity_type</i></dt>
+<dd>
+entity type, defines entity properties
+</dd><dt><i>pos</i></dt>
+<dd>
+tuple with entity position (x, y)
+</dd><dt><i>angle</i></dt>
+<dd>
+entity angle in degrees
+</dd><dt><i>speed</i></dt>
+<dd>
+entity speed units/sec
+</dd><dt><i>center</i></dt>
+<dd>
+touple with the center point offset of the entity (x, y)
+</dd>
+</dl><a NAME="ccEntity.attach_script" ID="ccEntity.attach_script"></a>
+<h4>ccEntity.attach_script</h4>
+<b>attach_script</b>(<i>script</i>)
+<p>
+ Attaches a script to entity 
+</p><dl>
+<dt><i>script</i></dt>
+<dd>
+script object
+</dd>
+</dl><a NAME="ccEntity.deattach_script" ID="ccEntity.deattach_script"></a>
+<h4>ccEntity.deattach_script</h4>
+<b>deattach_script</b>(<i></i>)
+<p>
+ Removes script from entity 
+</p><a NAME="ccEntity.draw" ID="ccEntity.draw"></a>
+<h4>ccEntity.draw</h4>
+<b>draw</b>(<i></i>)
+<p>
+ Draw entity 
+</p><a NAME="ccEntity.get_axis" ID="ccEntity.get_axis"></a>
+<h4>ccEntity.get_axis</h4>
+<b>get_axis</b>(<i></i>)
+<p>
+ Get additional axis to use for collision 
+</p><dl>
+<dt>Returns:</dt>
+<dd>
+A pair of 2d vectors representing the additional axis
+</dd>
+</dl><a NAME="ccEntity.get_center" ID="ccEntity.get_center"></a>
+<h4>ccEntity.get_center</h4>
+<b>get_center</b>(<i></i>)
+<p>
+ Get the entity center vector in current position 
+</p><dl>
+<dt>Returns:</dt>
+<dd>
+A tuple with entity center position (x, y)
+</dd>
+</dl><a NAME="ccEntity.get_region" ID="ccEntity.get_region"></a>
+<h4>ccEntity.get_region</h4>
+<b>get_region</b>(<i></i>)
+<p>
+ Get the entity bounding region 
+</p><dl>
+<dt>Returns:</dt>
+<dd>
+A list of 2d vectors representing the bounding region
+</dd>
+</dl><a NAME="ccEntity.update" ID="ccEntity.update"></a>
+<h4>ccEntity.update</h4>
+<b>update</b>(<i></i>)
+<p>
+ Update entity state and execute script 
+</p></p>
+<div align="right"><a href="#top">Up</a></div>
+<hr /><hr />
+<a NAME="BoxGeometry" ID="BoxGeometry"></a>
+<h2>BoxGeometry</h2>
+<b>BoxGeometry</b>(<i>x, y, width, height</i>)
+
+<div align="right"><a href="#top">Up</a></div>
+<hr />
+</body></html>
