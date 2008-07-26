@@ -1,6 +1,7 @@
+#summary Steps for creating a carcode release
 #labels Phase-Deploy
-When creating a new release for carcode, please follow these steps.
 
+When creating a new release for carcode, please follow these steps.
 
 == Step 1: Choose the Right Version Name ==
 
