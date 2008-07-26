@@ -61,13 +61,26 @@ performance.
 
 === Demo Levels ===
 
-We have included a few levels demostrating current capabilities 
+We have included a few levels demonstrating current capabilities 
 and scripting facilities of carcode, feel free of testing them out 
 and doing your own car scripts to accomplish these levels.
 
 Look for the files in the demos directory, check your package 
 and platform notes to find out where it is.
 
+
+=== Command Line Options ===
+
+$ python carcode.py -h
+Usage: carcode.py [options]
+
+Options:
+  -h, --help            show this help message and exit
+  -l LEVEL, --level=LEVEL
+                        load an specific level file
+  -v, --version         display carcode version and exit.
+  -s SCRIPT, --script=SCRIPT
+                        load an specific script file
 
 === Creating car scripts ===
 
