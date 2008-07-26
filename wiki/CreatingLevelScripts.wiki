@@ -6,6 +6,8 @@ This is a guide with the essentials to build you own level scripts for carcode, 
 
 This is a guide by examples, for additional information refer to the API documents.
 
+This documentation is based on latest code from subversion some interfaces may not be the same in previous releases but that will be signaled.
+
 == How level scripts work ==
 
 Carcode level scripts are plain python files, this means that you use standard python language features to define objects and its interactions with the environment and car.
@@ -57,3 +59,31 @@ class LevelScript:
 This is a simple script which only adds an object to carcode, there is the LevelScript class, the constructor instances Box which is an entity with a rectangular shape, we set the position for this entity (pos=(x,y)) and the size (size=(width, height)), finally we add this entity to the Arena object with the function add_entity.
 
 We add an empty update function as required, however we don't use it at the moment.
+
+
+= Collision detection =
+
+Carcore physics engine will test for collisions only between entities whose member collisionable is set to True, by default it set to False.
+
+Physics engine does not keep track of collisions, when detecting one it will trigger an event, all entities contain the member evt_collision, which is the event handler for collisions, you may add a function to it which will be called when the event collision is triggered for that object.
+
+{{{
+class LevelScript:
+  def __init__(self):
+    box = Box(pos=(500, 10), size=(50, 50))
+    box.collisionable = True
+    box.evt_collision.subscribe(self.onCollision)
+    Arena.add_entity(box)
+    self.boxcollision = False
+  
+  def onCollision(self, entity, colTest):
+    print 'Object collided!'
+    self.boxcollision = True
+  
+  def update(self):
+    pass
+}}}
+
+This code creates a box entity and sets the collisionable flag to True, which means that we want carcode to test collision for that object. We subscribe the function onCollision from our class to box.evt_collision, this function will receive 2 parameters, the first is the entity which triggered this event (box in this case), then a tuple of two booleans describing the results of collision test, the first boolean is whatever there was a collision (always true as the event is generated only when positive tests), and the second boolean is whatever the the object is completely contained in entity (for example the car inside a box).
+
+As carcode physics engine does not keep track of collision results you may want to keep track of it inside a variable in your LevelScript, this will be useful later when using Goals and Scores.
