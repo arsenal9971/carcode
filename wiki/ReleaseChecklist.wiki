@@ -9,6 +9,7 @@ Currently, carcode has an X.Y version number (e.g. 3.0), and an optional "alphaX
 For example, the first two alpha releases of carcode 3.0 were named like this:
 
   carcode_v3.0_alpha1
+
   carcode_v3.0_alpha2
 
 == Step 2: Copy the release to the tags folder ==
