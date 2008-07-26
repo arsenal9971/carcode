@@ -276,6 +276,15 @@ class Car(ccEntity):
         glColor3ub(131, 111, 255)
         glRecti(-24, -12, 24, 12)
         
+        glBegin(GL_LINE_STRIP)
+        glColor3f(0.0,  0.0,  0.0)
+        glVertex2f(0.0,  0.0)
+        glVertex2f(20.0,  0.0)
+        glVertex2f(15.0,  5.0)
+        glVertex2f(15.0,  -5.0)
+        glVertex2f(20.0,  0.0)
+        glEnd()
+        
         for light in self.lights:
             r = light.rect
             glColor3ub(*light.color())
