@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN'
+'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<html><head>
+<title>libcarcode.collision</title>
+<style>
+body {
+    background:white;
+    margin: 0em 1em 10em 1em;
+    color: black;
+}
+
+h1 { color: white; background: #4FA4FF; }
+h2 { color: white; background: #4FA4FF; }
+h3 { color: white; background: #00557F; }
+h4 { color: white; background: #00557F; }
+    
+a { color: #AA5500; }
+
+</style>
+</head>
+<body><a NAME="top" ID="top"></a>
+<h1>libcarcode.collision</h1>
+
+<h3>Classes</h3>
+<table>
+<tr>
+<td><a href="#BoudingCircle">BoudingCircle</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#BoundingBox">BoundingBox</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#BoundingRegion">BoundingRegion</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#pyLine">pyLine</a></td>
+<td></td>
+</tr>
+</table>
+<h3>Functions</h3>
+<table>
+<tr><td>None</td></tr>
+</table>
+<hr /><hr />
+<a NAME="BoudingCircle" ID="BoudingCircle"></a>
+<h2>BoudingCircle</h2>
+
+<h3>Derived from</h3>
+BoundingRegion
+<h3>Methods</h3>
+<table>
+<tr>
+<td><a href="#BoudingCircle.__init__">BoudingCircle</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#BoudingCircle.inVector">inVector</a></td>
+<td></td>
+</tr>
+</table>
+<p><a NAME="BoudingCircle.__init__" ID="BoudingCircle.__init__"></a>
+<h4>BoudingCircle (Constructor)</h4>
+<b>BoudingCircle</b>(<i>y, radius</i>)
+<a NAME="BoudingCircle.inVector" ID="BoudingCircle.inVector"></a>
+<h4>BoudingCircle.inVector</h4>
+<b>inVector</b>(<i>v</i>)
+</p>
+<div align="right"><a href="#top">Up</a></div>
+<hr /><hr />
+<a NAME="BoundingBox" ID="BoundingBox"></a>
+<h2>BoundingBox</h2>
+
+<h3>Derived from</h3>
+BoundingRegion
+<h3>Methods</h3>
+<table>
+<tr>
+<td><a href="#BoundingBox.__init__">BoundingBox</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#BoundingBox.inLine">inLine</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#BoundingBox.inVector">inVector</a></td>
+<td></td>
+</tr>
+</table>
+<p><a NAME="BoundingBox.__init__" ID="BoundingBox.__init__"></a>
+<h4>BoundingBox (Constructor)</h4>
+<b>BoundingBox</b>(<i>x, y, height, width</i>)
+<a NAME="BoundingBox.inLine" ID="BoundingBox.inLine"></a>
+<h4>BoundingBox.inLine</h4>
+<b>inLine</b>(<i>v1, v2</i>)
+<a NAME="BoundingBox.inVector" ID="BoundingBox.inVector"></a>
+<h4>BoundingBox.inVector</h4>
+<b>inVector</b>(<i>v</i>)
+</p>
+<div align="right"><a href="#top">Up</a></div>
+<hr /><hr />
+<a NAME="BoundingRegion" ID="BoundingRegion"></a>
+<h2>BoundingRegion</h2>
+
+<h3>Derived from</h3>
+None
+<h3>Methods</h3>
+<table>
+<tr>
+<td><a href="#BoundingRegion.__init__">BoundingRegion</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#BoundingRegion.collide">collide</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#BoundingRegion.contains">contains</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#BoundingRegion.draw">draw</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#BoundingRegion.get_sa">get_sa</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#BoundingRegion.inLine">inLine</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#BoundingRegion.inVector">inVector</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#BoundingRegion.update">update</a></td>
+<td></td>
+</tr>
+</table>
+<p><a NAME="BoundingRegion.__init__" ID="BoundingRegion.__init__"></a>
+<h4>BoundingRegion (Constructor)</h4>
+<b>BoundingRegion</b>(<i>offsetx, offsety, angle=0.0</i>)
+<a NAME="BoundingRegion.collide" ID="BoundingRegion.collide"></a>
+<h4>BoundingRegion.collide</h4>
+<b>collide</b>(<i>region</i>)
+<a NAME="BoundingRegion.contains" ID="BoundingRegion.contains"></a>
+<h4>BoundingRegion.contains</h4>
+<b>contains</b>(<i>region</i>)
+<a NAME="BoundingRegion.draw" ID="BoundingRegion.draw"></a>
+<h4>BoundingRegion.draw</h4>
+<b>draw</b>(<i></i>)
+<a NAME="BoundingRegion.get_sa" ID="BoundingRegion.get_sa"></a>
+<h4>BoundingRegion.get_sa</h4>
+<b>get_sa</b>(<i></i>)
+<a NAME="BoundingRegion.inLine" ID="BoundingRegion.inLine"></a>
+<h4>BoundingRegion.inLine</h4>
+<b>inLine</b>(<i>v1, v2</i>)
+<a NAME="BoundingRegion.inVector" ID="BoundingRegion.inVector"></a>
+<h4>BoundingRegion.inVector</h4>
+<b>inVector</b>(<i>v</i>)
+<a NAME="BoundingRegion.update" ID="BoundingRegion.update"></a>
+<h4>BoundingRegion.update</h4>
+<b>update</b>(<i></i>)
+</p>
+<div align="right"><a href="#top">Up</a></div>
+<hr /><hr />
+<a NAME="pyLine" ID="pyLine"></a>
+<h2>pyLine</h2>
+
+<h3>Derived from</h3>
+None
+<h3>Methods</h3>
+<table>
+<tr>
+<td><a href="#pyLine.__init__">pyLine</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#pyLine.__add__">__add__</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#pyLine.__eq__">__eq__</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#pyLine.__repr__">__repr__</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#pyLine.arg2">arg2</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#pyLine.arg4">arg4</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#pyLine.crossect">crossect</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#pyLine.draw">draw</a></td>
+<td></td>
+</tr>
+</table>
+<p><a NAME="pyLine.__init__" ID="pyLine.__init__"></a>
+<h4>pyLine (Constructor)</h4>
+<b>pyLine</b>(<i>*args</i>)
+<a NAME="pyLine.__add__" ID="pyLine.__add__"></a>
+<h4>pyLine.__add__</h4>
+<b>__add__</b>(<i>line</i>)
+<a NAME="pyLine.__eq__" ID="pyLine.__eq__"></a>
+<h4>pyLine.__eq__</h4>
+<b>__eq__</b>(<i>line</i>)
+<a NAME="pyLine.__repr__" ID="pyLine.__repr__"></a>
+<h4>pyLine.__repr__</h4>
+<b>__repr__</b>(<i></i>)
+<a NAME="pyLine.arg2" ID="pyLine.arg2"></a>
+<h4>pyLine.arg2</h4>
+<b>arg2</b>(<i>pos2</i>)
+<a NAME="pyLine.arg4" ID="pyLine.arg4"></a>
+<h4>pyLine.arg4</h4>
+<b>arg4</b>(<i>y1, x2, y2</i>)
+<a NAME="pyLine.crossect" ID="pyLine.crossect"></a>
+<h4>pyLine.crossect</h4>
+<b>crossect</b>(<i>line</i>)
+<a NAME="pyLine.draw" ID="pyLine.draw"></a>
+<h4>pyLine.draw</h4>
+<b>draw</b>(<i></i>)
+</p>
+<div align="right"><a href="#top">Up</a></div>
+<hr />
+</body></html>

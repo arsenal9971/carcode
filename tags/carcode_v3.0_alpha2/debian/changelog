@@ -1,0 +1,13 @@
+carcode (3.0a2) unstable; urgency=low
+
+  * New level and script format using classes.
+  * New conditions and score classes.
+  * FIX issue #3: Steering is backwards when driving in reverse
+
+ -- Carlos Daniel Ruvalcaba Valenzuela <clsdaniel@gmail.com>  Sun, 20 Jul 2008 20:31:28 -0700
+
+carcode (3.0a1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Carlos Daniel Ruvalcaba Valenzuela <clsdaniel@gmail.com>  Sat, 12 Apr 2008 01:54:37 -0700

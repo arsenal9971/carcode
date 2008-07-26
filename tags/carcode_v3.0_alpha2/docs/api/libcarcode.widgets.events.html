@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN'
+'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<html><head>
+<title>libcarcode.widgets.events</title>
+<style>
+body {
+    background:white;
+    margin: 0em 1em 10em 1em;
+    color: black;
+}
+
+h1 { color: white; background: #4FA4FF; }
+h2 { color: white; background: #4FA4FF; }
+h3 { color: white; background: #00557F; }
+h4 { color: white; background: #00557F; }
+    
+a { color: #AA5500; }
+
+</style>
+</head>
+<body><a NAME="top" ID="top"></a>
+<h1>libcarcode.widgets.events</h1>
+
+<h3>Classes</h3>
+<table>
+<tr>
+<td><a href="#EventDispatcher">EventDispatcher</a></td>
+<td>Simple event dispatcher class with multiple subscriber support</td>
+</tr><tr>
+<td><a href="#MultiEventDispatcher">MultiEventDispatcher</a></td>
+<td></td>
+</tr>
+</table>
+<h3>Functions</h3>
+<table>
+<tr><td>None</td></tr>
+</table>
+<hr /><hr />
+<a NAME="EventDispatcher" ID="EventDispatcher"></a>
+<h2>EventDispatcher</h2>
+<p>
+ Simple event dispatcher class with multiple subscriber support 
+</p>
+<h3>Derived from</h3>
+None
+<h3>Methods</h3>
+<table>
+<tr>
+<td><a href="#EventDispatcher.__init__">EventDispatcher</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#EventDispatcher.disable">disable</a></td>
+<td>Disable event dispatching</td>
+</tr><tr>
+<td><a href="#EventDispatcher.dispatch">dispatch</a></td>
+<td>Dispatch the event to all subscribers</td>
+</tr><tr>
+<td><a href="#EventDispatcher.enable">enable</a></td>
+<td>Enable event dispatching</td>
+</tr><tr>
+<td><a href="#EventDispatcher.subscribe">subscribe</a></td>
+<td>Subscribe to receive event callbacks</td>
+</tr>
+</table>
+<p><a NAME="EventDispatcher.__init__" ID="EventDispatcher.__init__"></a>
+<h4>EventDispatcher (Constructor)</h4>
+<b>EventDispatcher</b>(<i></i>)
+<a NAME="EventDispatcher.disable" ID="EventDispatcher.disable"></a>
+<h4>EventDispatcher.disable</h4>
+<b>disable</b>(<i></i>)
+<p>
+ Disable event dispatching 
+</p><a NAME="EventDispatcher.dispatch" ID="EventDispatcher.dispatch"></a>
+<h4>EventDispatcher.dispatch</h4>
+<b>dispatch</b>(<i>*args</i>)
+<p>
+ Dispatch the event to all subscribers
+</p><dl>
+<dt><i>*args</i></dt>
+<dd>
+optional arguments to send to callback functions
+</dd>
+</dl><a NAME="EventDispatcher.enable" ID="EventDispatcher.enable"></a>
+<h4>EventDispatcher.enable</h4>
+<b>enable</b>(<i></i>)
+<p>
+ Enable event dispatching 
+</p><a NAME="EventDispatcher.subscribe" ID="EventDispatcher.subscribe"></a>
+<h4>EventDispatcher.subscribe</h4>
+<b>subscribe</b>(<i>func</i>)
+<p>
+ Subscribe to receive event callbacks 
+</p><dl>
+<dt><i>func</i></dt>
+<dd>
+function to callback
+</dd>
+</dl></p>
+<div align="right"><a href="#top">Up</a></div>
+<hr /><hr />
+<a NAME="MultiEventDispatcher" ID="MultiEventDispatcher"></a>
+<h2>MultiEventDispatcher</h2>
+
+<h3>Derived from</h3>
+None
+<h3>Methods</h3>
+<table>
+<tr>
+<td><a href="#MultiEventDispatcher.__init__">MultiEventDispatcher</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#MultiEventDispatcher.disable">disable</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#MultiEventDispatcher.dispatch">dispatch</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#MultiEventDispatcher.enable">enable</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#MultiEventDispatcher.subscribe">subscribe</a></td>
+<td></td>
+</tr>
+</table>
+<p><a NAME="MultiEventDispatcher.__init__" ID="MultiEventDispatcher.__init__"></a>
+<h4>MultiEventDispatcher (Constructor)</h4>
+<b>MultiEventDispatcher</b>(<i></i>)
+<a NAME="MultiEventDispatcher.disable" ID="MultiEventDispatcher.disable"></a>
+<h4>MultiEventDispatcher.disable</h4>
+<b>disable</b>(<i></i>)
+<a NAME="MultiEventDispatcher.dispatch" ID="MultiEventDispatcher.dispatch"></a>
+<h4>MultiEventDispatcher.dispatch</h4>
+<b>dispatch</b>(<i>event, *args</i>)
+<a NAME="MultiEventDispatcher.enable" ID="MultiEventDispatcher.enable"></a>
+<h4>MultiEventDispatcher.enable</h4>
+<b>enable</b>(<i></i>)
+<a NAME="MultiEventDispatcher.subscribe" ID="MultiEventDispatcher.subscribe"></a>
+<h4>MultiEventDispatcher.subscribe</h4>
+<b>subscribe</b>(<i>event, func</i>)
+</p>
+<div align="right"><a href="#top">Up</a></div>
+<hr />
+</body></html>

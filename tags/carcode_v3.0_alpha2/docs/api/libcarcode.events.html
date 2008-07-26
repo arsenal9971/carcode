@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN'
+'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<html><head>
+<title>libcarcode.events</title>
+<style>
+body {
+    background:white;
+    margin: 0em 1em 10em 1em;
+    color: black;
+}
+
+h1 { color: white; background: #4FA4FF; }
+h2 { color: white; background: #4FA4FF; }
+h3 { color: white; background: #00557F; }
+h4 { color: white; background: #00557F; }
+    
+a { color: #AA5500; }
+
+</style>
+</head>
+<body><a NAME="top" ID="top"></a>
+<h1>libcarcode.events</h1>
+
+<h3>Classes</h3>
+<table>
+<tr>
+<td><a href="#AND">AND</a></td>
+<td>Conditional AND for events</td>
+</tr><tr>
+<td><a href="#Chain">Chain</a></td>
+<td>Chain of goals</td>
+</tr><tr>
+<td><a href="#Goal">Goal</a></td>
+<td>Class describing a certain goal</td>
+</tr><tr>
+<td><a href="#OR">OR</a></td>
+<td>Conditional OR for events</td>
+</tr><tr>
+<td><a href="#Score">Score</a></td>
+<td></td>
+</tr>
+</table>
+<h3>Functions</h3>
+<table>
+<tr><td>None</td></tr>
+</table>
+<hr /><hr />
+<a NAME="AND" ID="AND"></a>
+<h2>AND</h2>
+<p>
+ Conditional AND for events 
+</p>
+<h3>Derived from</h3>
+None
+<h3>Methods</h3>
+<table>
+<tr>
+<td><a href="#AND.__init__">AND</a></td>
+<td>AND</td>
+</tr><tr>
+<td><a href="#AND.__call__">__call__</a></td>
+<td></td>
+</tr>
+</table>
+<p><a NAME="AND.__init__" ID="AND.__init__"></a>
+<h4>AND (Constructor)</h4>
+<b>AND</b>(<i>con1, st1, con2, st2</i>)
+<p>
+AND
+</p><dl>
+<dt><i>con1</i></dt>
+<dd>
+function to evaluate condition, must return boolean
+</dd><dt><i>st1</i></dt>
+<dd>
+state to set if con1 evaluates True
+</dd><dt><i>con2</i></dt>
+<dd>
+function to evaluate condition, must return boolean
+</dd><dt><i>st2</i></dt>
+<dd>
+state to set if con2 evaluates True
+</dd>
+</dl><a NAME="AND.__call__" ID="AND.__call__"></a>
+<h4>AND.__call__</h4>
+<b>__call__</b>(<i></i>)
+</p>
+<div align="right"><a href="#top">Up</a></div>
+<hr /><hr />
+<a NAME="Chain" ID="Chain"></a>
+<h2>Chain</h2>
+<p>
+ Chain of goals 
+</p><p>
+    It will test True only if all goals are met sequentially.
+</p>
+<h3>Derived from</h3>
+None
+<h3>Methods</h3>
+<table>
+<tr>
+<td><a href="#Chain.__init__">Chain</a></td>
+<td>Chain</td>
+</tr><tr>
+<td><a href="#Chain.add_objective">add_objective</a></td>
+<td>Add a goal to the chain</td>
+</tr><tr>
+<td><a href="#Chain.test">test</a></td>
+<td>Test goals @returns tuple with test bolean and state</td>
+</tr>
+</table>
+<p><a NAME="Chain.__init__" ID="Chain.__init__"></a>
+<h4>Chain (Constructor)</h4>
+<b>Chain</b>(<i>*args</i>)
+<p>
+ Chain 
+</p><dl>
+<dt><i>*args</i></dt>
+<dd>
+optional goals to use to initialize the chain
+</dd>
+</dl><a NAME="Chain.add_objective" ID="Chain.add_objective"></a>
+<h4>Chain.add_objective</h4>
+<b>add_objective</b>(<i>obj</i>)
+<p>
+Add a goal to the chain 
+</p><dl>
+<dt><i>obj</i></dt>
+<dd>
+goal object
+</dd>
+</dl><a NAME="Chain.test" ID="Chain.test"></a>
+<h4>Chain.test</h4>
+<b>test</b>(<i></i>)
+<p>
+ Test goals 
+</p><dl>
+<dt>Returns:</dt>
+<dd>
+tuple with test bolean and state
+</dd>
+</dl></p>
+<div align="right"><a href="#top">Up</a></div>
+<hr /><hr />
+<a NAME="Goal" ID="Goal"></a>
+<h2>Goal</h2>
+<p>
+ Class describing a certain goal 
+</p>
+<h3>Derived from</h3>
+None
+<h3>Methods</h3>
+<table>
+<tr>
+<td><a href="#Goal.__init__">Goal</a></td>
+<td>Goal</td>
+</tr><tr>
+<td><a href="#Goal.test">test</a></td>
+<td>Test goal function</td>
+</tr>
+</table>
+<p><a NAME="Goal.__init__" ID="Goal.__init__"></a>
+<h4>Goal (Constructor)</h4>
+<b>Goal</b>(<i>desc, testfunc, state = 0</i>)
+<p>
+Goal
+</p><dl>
+<dt><i>desc</i></dt>
+<dd>
+string describing the objective
+</dd><dt><i>testfunc</i></dt>
+<dd>
+function that test of a given condition returning a boolean
+</dd><dt><i>state</i></dt>
+<dd>
+state number to set if condition is true
+</dd>
+</dl><a NAME="Goal.test" ID="Goal.test"></a>
+<h4>Goal.test</h4>
+<b>test</b>(<i></i>)
+<p>
+ Test goal function 
+</p><dl>
+<dt>Returns:</dt>
+<dd>
+tuple of boolean and state
+</dd>
+</dl></p>
+<div align="right"><a href="#top">Up</a></div>
+<hr /><hr />
+<a NAME="OR" ID="OR"></a>
+<h2>OR</h2>
+<p>
+ Conditional OR for events 
+</p>
+<h3>Derived from</h3>
+None
+<h3>Methods</h3>
+<table>
+<tr>
+<td><a href="#OR.__init__">OR</a></td>
+<td>AND</td>
+</tr><tr>
+<td><a href="#OR.__call__">__call__</a></td>
+<td></td>
+</tr>
+</table>
+<p><a NAME="OR.__init__" ID="OR.__init__"></a>
+<h4>OR (Constructor)</h4>
+<b>OR</b>(<i>con1, st1, con2, st2</i>)
+<p>
+AND
+</p><dl>
+<dt><i>con1</i></dt>
+<dd>
+function to evaluate condition, must return boolean
+</dd><dt><i>st1</i></dt>
+<dd>
+state to set if con1 evaluates True
+</dd><dt><i>con2</i></dt>
+<dd>
+function to evaluate condition, must return boolean
+</dd><dt><i>st2</i></dt>
+<dd>
+state to set if con2 evaluates True
+</dd>
+</dl><a NAME="OR.__call__" ID="OR.__call__"></a>
+<h4>OR.__call__</h4>
+<b>__call__</b>(<i></i>)
+</p>
+<div align="right"><a href="#top">Up</a></div>
+<hr /><hr />
+<a NAME="Score" ID="Score"></a>
+<h2>Score</h2>
+
+<h3>Derived from</h3>
+None
+<h3>Methods</h3>
+<table>
+<tr>
+<td><a href="#Score.__init__">Score</a></td>
+<td>Score</td>
+</tr><tr>
+<td><a href="#Score.score">score</a></td>
+<td></td>
+</tr>
+</table>
+<p><a NAME="Score.__init__" ID="Score.__init__"></a>
+<h4>Score (Constructor)</h4>
+<b>Score</b>(<i>name, scorefunc, values</i>)
+<p>
+ Score
+</p><dl>
+<dt><i>name</i></dt>
+<dd>
+string with the name of the scole
+</dd><dt><i>scorefunc</i></dt>
+<dd>
+function that returns a score in numbers
+</dd><dt><i>values</i></dt>
+<dd>
+list of tuples which contains min and max values range for a given score
+</dd>
+</dl><a NAME="Score.score" ID="Score.score"></a>
+<h4>Score.score</h4>
+<b>score</b>(<i></i>)
+</p>
+<div align="right"><a href="#top">Up</a></div>
+<hr />
+</body></html>

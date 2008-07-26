@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN'
+'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<html><head>
+<title>libcarcode.sensors</title>
+<style>
+body {
+    background:white;
+    margin: 0em 1em 10em 1em;
+    color: black;
+}
+
+h1 { color: white; background: #4FA4FF; }
+h2 { color: white; background: #4FA4FF; }
+h3 { color: white; background: #00557F; }
+h4 { color: white; background: #00557F; }
+    
+a { color: #AA5500; }
+
+</style>
+</head>
+<body><a NAME="top" ID="top"></a>
+<h1>libcarcode.sensors</h1>
+
+<h3>Classes</h3>
+<table>
+<tr>
+<td><a href="#ColorSensor">ColorSensor</a></td>
+<td>ColorSensor class Looks for a specific color in the backbuffer, pixel is True of the color is found, False otherwise.</td>
+</tr><tr>
+<td><a href="#Sensor">Sensor</a></td>
+<td>Sensor class Reads pixel data from backbuffer in a given position, pixel is a touple containing (R,G,B) values.</td>
+</tr>
+</table>
+<h3>Functions</h3>
+<table>
+<tr><td>None</td></tr>
+</table>
+<hr /><hr />
+<a NAME="ColorSensor" ID="ColorSensor"></a>
+<h2>ColorSensor</h2>
+<p>
+ ColorSensor class
+    Looks for a specific color in the backbuffer,
+    pixel is True of the color is found, False otherwise.
+</p>
+<h3>Derived from</h3>
+Sensor
+<h3>Methods</h3>
+<table>
+<tr>
+<td><a href="#ColorSensor.__init__">ColorSensor</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#ColorSensor.update">update</a></td>
+<td></td>
+</tr>
+</table>
+<p><a NAME="ColorSensor.__init__" ID="ColorSensor.__init__"></a>
+<h4>ColorSensor (Constructor)</h4>
+<b>ColorSensor</b>(<i>x, y, color</i>)
+<a NAME="ColorSensor.update" ID="ColorSensor.update"></a>
+<h4>ColorSensor.update</h4>
+<b>update</b>(<i>angle</i>)
+</p>
+<div align="right"><a href="#top">Up</a></div>
+<hr /><hr />
+<a NAME="Sensor" ID="Sensor"></a>
+<h2>Sensor</h2>
+<p>
+ Sensor class
+    Reads pixel data from backbuffer in a given position,
+    pixel is a touple containing (R,G,B) values.
+</p>
+<h3>Derived from</h3>
+None
+<h3>Methods</h3>
+<table>
+<tr>
+<td><a href="#Sensor.__init__">Sensor</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Sensor.draw">draw</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Sensor.read_data">read_data</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Sensor.update">update</a></td>
+<td></td>
+</tr>
+</table>
+<p><a NAME="Sensor.__init__" ID="Sensor.__init__"></a>
+<h4>Sensor (Constructor)</h4>
+<b>Sensor</b>(<i>x, y</i>)
+<a NAME="Sensor.draw" ID="Sensor.draw"></a>
+<h4>Sensor.draw</h4>
+<b>draw</b>(<i>angle</i>)
+<a NAME="Sensor.read_data" ID="Sensor.read_data"></a>
+<h4>Sensor.read_data</h4>
+<b>read_data</b>(<i></i>)
+<a NAME="Sensor.update" ID="Sensor.update"></a>
+<h4>Sensor.update</h4>
+<b>update</b>(<i>angle</i>)
+</p>
+<div align="right"><a href="#top">Up</a></div>
+<hr />
+</body></html>

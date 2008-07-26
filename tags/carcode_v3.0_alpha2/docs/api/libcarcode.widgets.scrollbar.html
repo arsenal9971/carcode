@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN'
+'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<html><head>
+<title>libcarcode.widgets.scrollbar</title>
+<style>
+body {
+    background:white;
+    margin: 0em 1em 10em 1em;
+    color: black;
+}
+
+h1 { color: white; background: #4FA4FF; }
+h2 { color: white; background: #4FA4FF; }
+h3 { color: white; background: #00557F; }
+h4 { color: white; background: #00557F; }
+    
+a { color: #AA5500; }
+
+</style>
+</head>
+<body><a NAME="top" ID="top"></a>
+<h1>libcarcode.widgets.scrollbar</h1>
+
+<h3>Classes</h3>
+<table>
+<tr>
+<td><a href="#Arrow">Arrow</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#ScrollBar">ScrollBar</a></td>
+<td>Simple scroll bar</td>
+</tr>
+</table>
+<h3>Functions</h3>
+<table>
+<tr>
+<td><a href="#Quad">Quad</a></td>
+<td></td>
+</tr>
+</table>
+<hr /><hr />
+<a NAME="Arrow" ID="Arrow"></a>
+<h2>Arrow</h2>
+
+<h3>Derived from</h3>
+None
+<h3>Methods</h3>
+<table>
+<tr>
+<td><a href="#Arrow.__init__">Arrow</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Arrow.draw">draw</a></td>
+<td></td>
+</tr>
+</table>
+<p><a NAME="Arrow.__init__" ID="Arrow.__init__"></a>
+<h4>Arrow (Constructor)</h4>
+<b>Arrow</b>(<i>size, orientation</i>)
+<a NAME="Arrow.draw" ID="Arrow.draw"></a>
+<h4>Arrow.draw</h4>
+<b>draw</b>(<i></i>)
+</p>
+<div align="right"><a href="#top">Up</a></div>
+<hr /><hr />
+<a NAME="ScrollBar" ID="ScrollBar"></a>
+<h2>ScrollBar</h2>
+<p>
+ Simple scroll bar 
+</p>
+<h3>Derived from</h3>
+Widget
+<h3>Methods</h3>
+<table>
+<tr>
+<td><a href="#ScrollBar.__init__">ScrollBar</a></td>
+<td>ScrollBar</td>
+</tr><tr>
+<td><a href="#ScrollBar.draw">draw</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#ScrollBar.events">events</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#ScrollBar.get_value">get_value</a></td>
+<td>Get the current scrollbar value</td>
+</tr><tr>
+<td><a href="#ScrollBar.scrolldown">scrolldown</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#ScrollBar.scrollup">scrollup</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#ScrollBar.set_maxvalue">set_maxvalue</a></td>
+<td>Set the maximum allowed value for scrollbar</td>
+</tr><tr>
+<td><a href="#ScrollBar.set_value">set_value</a></td>
+<td>Set the scrollbar value</td>
+</tr>
+</table>
+<p><a NAME="ScrollBar.__init__" ID="ScrollBar.__init__"></a>
+<h4>ScrollBar (Constructor)</h4>
+<b>ScrollBar</b>(<i>orientation = VERTICAL, maxval = 100, *args, **kargs</i>)
+<p>
+ ScrollBar
+</p><dl>
+<dt><i>orientation</i></dt>
+<dd>
+scrollbar orientation, either VERTICAL or HORIZONTAL
+</dd><dt><i>maxval</i></dt>
+<dd>
+maximum scroll value (default 100)
+</dd><dt><i>pos</i></dt>
+<dd>
+tuple with widget position (x, y)
+</dd><dt><i>size</i></dt>
+<dd>
+tuple with widget size (width, height)
+</dd>
+</dl><a NAME="ScrollBar.draw" ID="ScrollBar.draw"></a>
+<h4>ScrollBar.draw</h4>
+<b>draw</b>(<i></i>)
+<a NAME="ScrollBar.events" ID="ScrollBar.events"></a>
+<h4>ScrollBar.events</h4>
+<b>events</b>(<i>event</i>)
+<a NAME="ScrollBar.get_value" ID="ScrollBar.get_value"></a>
+<h4>ScrollBar.get_value</h4>
+<b>get_value</b>(<i></i>)
+<p>
+ Get the current scrollbar value
+</p><dl>
+<dt>Returns:</dt>
+<dd>
+scrollbar value
+</dd>
+</dl><a NAME="ScrollBar.scrolldown" ID="ScrollBar.scrolldown"></a>
+<h4>ScrollBar.scrolldown</h4>
+<b>scrolldown</b>(<i>btn</i>)
+<a NAME="ScrollBar.scrollup" ID="ScrollBar.scrollup"></a>
+<h4>ScrollBar.scrollup</h4>
+<b>scrollup</b>(<i>btn</i>)
+<a NAME="ScrollBar.set_maxvalue" ID="ScrollBar.set_maxvalue"></a>
+<h4>ScrollBar.set_maxvalue</h4>
+<b>set_maxvalue</b>(<i>maxval</i>)
+<p>
+ Set the maximum allowed value for scrollbar
+</p><dl>
+<dt><i>maxval</i></dt>
+<dd>
+number for maximum value
+</dd>
+</dl><a NAME="ScrollBar.set_value" ID="ScrollBar.set_value"></a>
+<h4>ScrollBar.set_value</h4>
+<b>set_value</b>(<i>val</i>)
+<p>
+ Set the scrollbar value
+</p><dl>
+<dt><i>val</i></dt>
+<dd>
+number for value
+</dd>
+</dl></p>
+<div align="right"><a href="#top">Up</a></div>
+<hr /><hr />
+<a NAME="Quad" ID="Quad"></a>
+<h2>Quad</h2>
+<b>Quad</b>(<i>v1, v2</i>)
+
+<div align="right"><a href="#top">Up</a></div>
+<hr />
+</body></html>

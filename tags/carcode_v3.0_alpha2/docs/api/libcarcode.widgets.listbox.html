@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN'
+'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<html><head>
+<title>libcarcode.widgets.listbox</title>
+<style>
+body {
+    background:white;
+    margin: 0em 1em 10em 1em;
+    color: black;
+}
+
+h1 { color: white; background: #4FA4FF; }
+h2 { color: white; background: #4FA4FF; }
+h3 { color: white; background: #00557F; }
+h4 { color: white; background: #00557F; }
+    
+a { color: #AA5500; }
+
+</style>
+</head>
+<body><a NAME="top" ID="top"></a>
+<h1>libcarcode.widgets.listbox</h1>
+
+<h3>Classes</h3>
+<table>
+<tr>
+<td><a href="#Arrow">Arrow</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#ListBox">ListBox</a></td>
+<td>Simple text item list</td>
+</tr>
+</table>
+<h3>Functions</h3>
+<table>
+<tr>
+<td><a href="#Quad">Quad</a></td>
+<td></td>
+</tr>
+</table>
+<hr /><hr />
+<a NAME="Arrow" ID="Arrow"></a>
+<h2>Arrow</h2>
+
+<h3>Derived from</h3>
+None
+<h3>Methods</h3>
+<table>
+<tr>
+<td><a href="#Arrow.__init__">Arrow</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#Arrow.draw">draw</a></td>
+<td></td>
+</tr>
+</table>
+<p><a NAME="Arrow.__init__" ID="Arrow.__init__"></a>
+<h4>Arrow (Constructor)</h4>
+<b>Arrow</b>(<i>size, orientation</i>)
+<a NAME="Arrow.draw" ID="Arrow.draw"></a>
+<h4>Arrow.draw</h4>
+<b>draw</b>(<i></i>)
+</p>
+<div align="right"><a href="#top">Up</a></div>
+<hr /><hr />
+<a NAME="ListBox" ID="ListBox"></a>
+<h2>ListBox</h2>
+<p>
+ Simple text item list 
+</p>
+<h3>Derived from</h3>
+Widget
+<h3>Methods</h3>
+<table>
+<tr>
+<td><a href="#ListBox.__init__">ListBox</a></td>
+<td>ListBox</td>
+</tr><tr>
+<td><a href="#ListBox.add_item">add_item</a></td>
+<td>Add a item to the list</td>
+</tr><tr>
+<td><a href="#ListBox.add_list">add_list</a></td>
+<td>Add a list with items</td>
+</tr><tr>
+<td><a href="#ListBox.draw">draw</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#ListBox.empty">empty</a></td>
+<td>Empty the item list</td>
+</tr><tr>
+<td><a href="#ListBox.events">events</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#ListBox.remove_item">remove_item</a></td>
+<td>Remove an item from the list</td>
+</tr><tr>
+<td><a href="#ListBox.scrolldown">scrolldown</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#ListBox.scrollup">scrollup</a></td>
+<td></td>
+</tr><tr>
+<td><a href="#ListBox.update">update</a></td>
+<td></td>
+</tr>
+</table>
+<p><a NAME="ListBox.__init__" ID="ListBox.__init__"></a>
+<h4>ListBox (Constructor)</h4>
+<b>ListBox</b>(<i>*args, **kargs</i>)
+<p>
+ ListBox
+</p><dl>
+<dt><i>pos</i></dt>
+<dd>
+tuple with widget position (x, y)
+</dd><dt><i>size</i></dt>
+<dd>
+tuple with widget size (width, height)
+</dd>
+</dl><a NAME="ListBox.add_item" ID="ListBox.add_item"></a>
+<h4>ListBox.add_item</h4>
+<b>add_item</b>(<i>item</i>)
+<p>
+ Add a item to the list
+</p><dl>
+<dt><i>item</i></dt>
+<dd>
+string to add
+</dd>
+</dl><a NAME="ListBox.add_list" ID="ListBox.add_list"></a>
+<h4>ListBox.add_list</h4>
+<b>add_list</b>(<i>items</i>)
+<p>
+ Add a list with items
+</p><dl>
+<dt><i>items</i></dt>
+<dd>
+list with strings to add
+</dd>
+</dl><a NAME="ListBox.draw" ID="ListBox.draw"></a>
+<h4>ListBox.draw</h4>
+<b>draw</b>(<i></i>)
+<a NAME="ListBox.empty" ID="ListBox.empty"></a>
+<h4>ListBox.empty</h4>
+<b>empty</b>(<i></i>)
+<p>
+ Empty the item list 
+</p><a NAME="ListBox.events" ID="ListBox.events"></a>
+<h4>ListBox.events</h4>
+<b>events</b>(<i>event</i>)
+<a NAME="ListBox.remove_item" ID="ListBox.remove_item"></a>
+<h4>ListBox.remove_item</h4>
+<b>remove_item</b>(<i>n</i>)
+<p>
+ Remove an item from the list
+</p><dl>
+<dt><i>n</i></dt>
+<dd>
+index of the item starting from 0
+</dd>
+</dl><a NAME="ListBox.scrolldown" ID="ListBox.scrolldown"></a>
+<h4>ListBox.scrolldown</h4>
+<b>scrolldown</b>(<i>btn</i>)
+<a NAME="ListBox.scrollup" ID="ListBox.scrollup"></a>
+<h4>ListBox.scrollup</h4>
+<b>scrollup</b>(<i>btn</i>)
+<a NAME="ListBox.update" ID="ListBox.update"></a>
+<h4>ListBox.update</h4>
+<b>update</b>(<i></i>)
+</p>
+<div align="right"><a href="#top">Up</a></div>
+<hr /><hr />
+<a NAME="Quad" ID="Quad"></a>
+<h2>Quad</h2>
+<b>Quad</b>(<i>v1, v2</i>)
+
+<div align="right"><a href="#top">Up</a></div>
+<hr />
+</body></html>
