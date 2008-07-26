@@ -32,7 +32,18 @@ class TextArea(Widget):
         self.srow = 0
         self.mrow = self.size[1] / 13
         self.visible = True
+        self.linestart = 0
+        self.lineend = 1
         self.sb = ScrollBar(maxval=0,  pos=(self.size[0],  0),  size=(12,  self.size[1]),  backcolor=self.backcolor,  forecolor=self.forecolor)
+        self.sb.onScroll.subscribe(self.scroll)
+    
+    def scroll(self, event,  val):
+        self.linestart = self.sb.get_value()
+        self.lineend = self.linestart
+        if len(self.text) > self.mrow:
+            self.lineend = self.linestart + self.mrow
+        else:
+            self.lineend = len(self.text)
         
     def set_size(self,  size):
         Widget.set_size(self,  size)
@@ -97,12 +108,18 @@ class TextArea(Widget):
                     self.ycursor -= 1
                     if len(self.text[self.ycursor]) < self.xcursor:
                         self.xcursor = len(self.text[self.ycursor])
+                    if self.linestart > self.ycursor:
+                        self.sb.set_value(self.sb.get_value()-1)
+                        
                 return True
             elif event.key == K_DOWN:
                 if self.ycursor < len(self.text)-1:
                     self.ycursor += 1
                     if len(self.text[self.ycursor]) < self.xcursor:
                         self.xcursor = len(self.text[self.ycursor])
+                    if self.ycursor >= self.mrow:
+                        self.sb.set_value(self.sb.get_value()+1)
+                        
                 return True
             elif event.key == K_RETURN or event.key == K_KP_ENTER:
                 if self.xcursor == clen:
@@ -118,7 +135,11 @@ class TextArea(Widget):
                     self.text.insert(self.ycursor, itext)
                 if len(self.text) > self.mrow:
                     self.sb.set_maxvalue(len(self.text) - self.mrow)
+                    self.sb.set_value(len(self.text) - self.mrow)
                 else:
+                    if self.lineend < len(self.text):
+                        self.lineend = len(self.text)
+                        
                     self.sb.set_maxvalue(0)
             else:
                 try:
@@ -166,13 +187,7 @@ class TextArea(Widget):
         glRasterPos3i(0, 0, 0)
         li = 0
         
-        offset = self.sb.value
-        offend = offset
-        if len(self.text) > self.mrow:
-            offend = offset + self.mrow
-        else:
-            offend = len(self.text)
-        lines = self.text[offset:offend]
+        lines = self.text[self.linestart:self.lineend]
         
         for line in lines:
             for c in line:
@@ -182,11 +197,11 @@ class TextArea(Widget):
             
         glPopMatrix()
         
-        #TODO: adjust cursor caret
         if self.focus:
-            x = (self.xcursor*8) + 2
-            y = (self.ycursor*13) + 2
-            glRecti(x, y, x+4, y+13)
+            if self.ycursor >= self.linestart and self.ycursor <= self.lineend:
+                x = (self.xcursor*8) + 2
+                y = ((self.ycursor - self.linestart)*13) + 2
+                glRecti(x, y, x+4, y+13)
             
         clip.end()
         self.sb.draw()
