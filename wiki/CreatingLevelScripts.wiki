@@ -53,3 +53,7 @@ class LevelScript:
   def update(self):
     pass
 }}}
+
+This is a simple script which only adds an object to carcode, there is the LevelScript class, the constructor instances Box which is an entity with a rectangular shape, we set the position for this entity (pos=(x,y)) and the size (size=(width, height)), finally we add this entity to the Arena object with the function add_entity.
+
+We add an empty update function as required, however we don't use it at the moment.
