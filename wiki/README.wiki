@@ -24,7 +24,7 @@ Issue Tracker
 
  * Python 2.4 or later
  * Pygame 1.6 or later
- * PyOpenGL 2.0 or later (2.0 highly recomended), you do not need 3D acceleration.
+ * PyOpenGL 2.0 or later (2.0 highly recommended), you do not need 3D acceleration.
  * Python supported OS:
    - Linux
    - Windows
