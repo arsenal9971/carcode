@@ -26,7 +26,7 @@ import physics
 import helpers
 from scoreboard import Scoreboard
 
-VERSION = "Version: 3.0 Alpha 2"
+VERSION = "3.0 Beta 1"
 
 class MainWindow(widgets.Window):
     def __init__(self):
@@ -34,7 +34,7 @@ class MainWindow(widgets.Window):
         self.centered = True
         
         self.logo = widgets.Image(os.path.join(helpers.IMAGE_PATH,  "carcode.png"),  pos=(4,  4))
-        self.version = widgets.Label(VERSION,  pos=(4,  self.logo.size[1] + 4))
+        self.version = widgets.Label("Version: " + VERSION,  pos=(4,  self.logo.size[1] + 4))
         
         self.btnQuit = widgets.Button(widgets.Label("Quit"), (0,0), (10,10), backcolor=(0.2,0.2,0.2))
         self.btnLoad = widgets.Button(widgets.Label("Load Level"), (0,0), (10,10), backcolor=(0.2,0.2,0.2))
@@ -119,6 +119,8 @@ class CarcodeApp:
         
         #Initialize GLUT, requiered in some platforms
         glutInit([])
+        
+        pygame.display.set_caption("Carcode " + VERSION)
         
         glEnable (GL_BLEND) 
         glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
