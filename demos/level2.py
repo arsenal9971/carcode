@@ -47,7 +47,7 @@ class LevelScript:
         
         g2 = Goal("Reach the finish line",  lambda : self.finished,  0)
         
-        Carcode.set_conditions(Chain(g1,  g2))
+        Carcode.set_goals([g1,  g2])
         
         eng_score = Score("Engine Utilization",  # Score Title
                            lambda : car.__engine_flips__ ,           # Score Function
@@ -57,8 +57,7 @@ class LevelScript:
                            lambda : int(Carcode.get_game_time()) ,           # Score Function
                             [(50,  35),  (34, 15), (14, 10),  (9, 0)])           # Score Ranges
         
-        Carcode.add_score(eng_score)
-        Carcode.add_score(time_score)
+        Carcode.set_scores([eng_score, time_score])
         
     def update(self):
         pass
