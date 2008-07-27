@@ -181,7 +181,7 @@ class CarcodeApp:
         
         self.init_mappings()
         self.state = 0
-        self.condition = None
+        self.goals = None
         self.scoreboard = []
         self.levelscript = None
         self.game_time = 0.0
@@ -258,6 +258,21 @@ class CarcodeApp:
     def add_key(self, key, func):
         self.key_commands[key] = func
     
+    def test_goals(self):
+        # Check if goals are set
+        if self.goals is not None:
+            # Iterate out goal list
+            for goal in self.goals:
+                res,  self.state = goal.test()
+                if not res:
+                    break
+            # If all goals are meet end the game and show scoreboard
+            if res:
+                self.paused = True
+                self.console.clear()
+                self.console.write("Task completed!")
+                self.winScoreboard.show_scoring(self.scoreboard)
+                
     def main_loop(self):
         '''
             Carcode Main loop, does updating, 
@@ -310,13 +325,7 @@ class CarcodeApp:
                     if self.levelscript:
                         self.levelscript.update()
                         
-                    if self.condition is not None:
-                        condition,  self.state = self.condition.test()
-                        if condition:
-                            self.paused = True
-                            self.console.clear()
-                            self.console.write("Task completed!")
-                            self.winScoreboard.show_scoring(self.scoreboard)
+                    self.test_goals()
                     
                 # Render
                 self.arena.draw(self.screen)
