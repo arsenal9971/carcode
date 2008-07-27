@@ -87,3 +87,21 @@ class LevelScript:
 This code creates a box entity and sets the collisionable flag to True, which means that we want carcode to test collision for that object. We subscribe the function onCollision from our class to box.evt_collision, this function will receive 2 parameters, the first is the entity which triggered this event (box in this case), then a tuple of two booleans describing the results of collision test, the first boolean is whatever there was a collision (always true as the event is generated only when positive tests), and the second boolean is whatever the the object is completely contained in entity (for example the car inside a box).
 
 As carcode physics engine does not keep track of collision results you may want to keep track of it inside a variable in your LevelScript, this will be useful later when using Goals and Scores.
+
+= Sensors =
+
+Providing sensors is essential for the user, thus the type and position of the sensors should be chosen carefully according the level design.
+
+{{{
+class LevelScript:
+  def __init__(self):
+    box = Box(pos=(500, 10), size=(50, 50))
+    Arena.add_entity(box)
+    sens = Sensor(24, 0)
+    car = Arena.get_car()
+    car.add_sensor("frontsensor", sens)
+  def update(self):
+    pass
+}}}
+
+This script creates an entity (Box) and a sensor which will be placed 24 units right of the car center and 0 pixels below the center, we get the car object from the Arena object and add the sensor to it, adding a sensor to a car needs two arguments, the name of the sensor and the sensor object, later on the user can lookup for an specific sensor by its name, be sure to use descriptive names.
