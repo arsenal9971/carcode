@@ -32,6 +32,7 @@ class TextArea(Widget):
         self.srow = 0
         self.mrow = self.size[1] / 13
         self.visible = True
+        self.readonly = False
         self.linestart = 0
         self.lineend = 1
         self.sb = ScrollBar(maxval=0,  pos=(self.size[0],  0),  size=(12,  self.size[1]),  backcolor=self.backcolor,  forecolor=self.forecolor)
@@ -55,6 +56,14 @@ class TextArea(Widget):
             @param text string to edit
         """
         self.text = text.split('\n')
+        if len(self.text) > self.mrow:
+            self.sb.set_maxvalue(len(self.text) - self.mrow)
+            self.sb.set_value(0)
+        else:
+            if self.lineend < len(self.text):
+                self.lineend = len(self.text)
+                
+            self.sb.set_maxvalue(0)
         
     def get_text(self):
         """ Gets the widget text 
@@ -76,6 +85,9 @@ class TextArea(Widget):
         if event.type == KEYUP and self.focus:
             return True
         if event.type == KEYDOWN and self.focus:
+            if self.readonly:
+                return False
+                
             cline = self.text[self.ycursor]
             clen = len(cline)
             if event.key == K_BACKSPACE:
@@ -197,7 +209,7 @@ class TextArea(Widget):
             
         glPopMatrix()
         
-        if self.focus:
+        if self.focus and not self.readonly:
             if self.ycursor >= self.linestart and self.ycursor <= self.lineend:
                 x = (self.xcursor*8) + 2
                 y = ((self.ycursor - self.linestart)*13) + 2
