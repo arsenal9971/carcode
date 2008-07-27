@@ -44,7 +44,7 @@ class LevelScript:
         park.evt_collision.subscribe(self.onCollision)
         g1 = Goal("Park in the red zone",  lambda : self.inParking and not car.running,  1)
         g2= Goal("Park horizontally",  lambda : abs(car.angle) < 1.8,  2 )
-        Carcode.set_conditions(Chain(g1,  g2))
+        Carcode.set_goals([g1,  g2])
         
         Console.write("Park over the red zone")
         
@@ -56,8 +56,7 @@ class LevelScript:
                            lambda : int(Carcode.get_game_time()) ,           # Score Function
                             [(50,  10),  (9, 5), (4, 3),  (2, 0)])           # Score Ranges
         
-        Carcode.add_score(eng_score)
-        Carcode.add_score(time_score)
+        Carcode.set_scores([eng_score, time_score])
     
     def update(self):
         st = Carcode.get_state()
