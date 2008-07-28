@@ -49,6 +49,8 @@ class TextArea(Widget):
     def set_size(self,  size):
         Widget.set_size(self,  size)
         self.mrow = size[1] / 13
+        self.sb.pos = (self.size[0],  0)
+        self.sb.set_size((12,  self.size[1]))
         
     def set_text(self, text):
         """ Set the widget text
