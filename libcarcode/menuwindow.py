@@ -42,7 +42,9 @@ class MainWindow(widgets.Window):
         widgets.Window.__init__(self, "Carcode", pos=(0,0), size=(300, 330), backcolor=(0.2,0.2,0.2, 0.5))
         self.centered = True
         
-        self.logo = widgets.Image(os.path.join(helpers.IMAGE_PATH,  "carcode.png"),  pos=(4,  4))
+        loader = helpers.Loader()
+        
+        self.logo = widgets.Image(loader.get_image_path("carcode.png"),  pos=(4,  4))
         self.version = widgets.Label("Version: " + VERSION,  pos=(4,  self.logo.size[1] + 4))
         
         self.btnQuit = widgets.Button(widgets.Label("Quit"), (0,0), (10,10), backcolor=(0.2,0.2,0.2))
