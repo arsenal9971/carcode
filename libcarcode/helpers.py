@@ -10,6 +10,7 @@ class Loader:
             self.base_path = []
             self.image_path = []
             self.sound_path = []
+            self.level_path = []
             
             def check_path(path):
                 try:
@@ -29,6 +30,7 @@ class Loader:
                 self.base_path.append(CARCODE_PATH)
                 self.image_path.append(os.path.join(CARCODE_PATH, 'media', 'images'))
                 self.sound_path.append(os.path.join(CARCODE_PATH, 'media', 'sound'))
+                self.sound_path.append(os.path.join(CARCODE_PATH, 'levels'))
             else:
                 path = CARCODE_PATH
                 for i in xrange(2):
@@ -37,12 +39,25 @@ class Loader:
                         self.base_path.append(path)
                         self.image_path.append(os.path.join(path, 'media', 'images'))
                         self.sound_path.append(os.path.join(path, 'media', 'sound'))
+                        self.sound_path.append(os.path.join(path, 'levels'))
                         break
+                        
             unix_path = '/usr/share/carcode'
             if check_path(unix_path):
                 self.base_path.append(unix_path)
                 self.image_path.append(os.path.join(unix_path, 'media', 'images'))
                 self.sound_path.append(os.path.join(unix_path, 'media', 'sound'))
+                self.sound_path.append(os.path.join(unix_path, 'levels'))
+            
+        def get_level_path(self,  filename):
+            for path in self.level_path:
+                fullpath = os.path.join(path, filename)
+                try:
+                    os.stat(fullpath)
+                    return fullpath
+                except:
+                    pass
+            raise IOError
             
         def get_image_path(self,  filename):
             for path in self.image_path:
@@ -115,6 +130,34 @@ class Loader:
             Loader.__singleton__ = Loader.__Loader__()
         self.__singleton__ = Loader.__singleton__
     
+    def get_base_level_paths(self):
+        """ Return level paths 
+        
+        @return list with level paths
+        """
+        return self.__singleton__.level_path
+        
+    def get_base_image_paths(self):
+        """ Return image paths 
+        
+        @return list with image paths
+        """
+        return self.__singleton__.image_path
+        
+    def get_base_sound_paths(self):
+        """ Return sound paths 
+        
+        @return list with sound paths
+        """
+        return self.__singleton__.sound_path
+    
+    def get_base_paths(self):
+        """ Return base paths 
+        
+        @return list with base paths
+        """
+        return self.__singleton__.base_path
+    
     def get_image_path(self,  filename):
         """ Return the full path to file from standard carcode image paths 
         
@@ -123,6 +166,14 @@ class Loader:
         """
         return self.__singleton__.get_image_path(filename)
     
+    def get_level_path(self,  filename):
+        """ Return the full path to file from standard carcode level paths 
+        
+        @param filename string with filename to search
+        @return string with full path to file
+        """
+        return self.__singleton__.get_level_path(filename)
+        
     def get_sound_path(self,  filename):
         """ Return the full path to file from standard carcode sound paths 
         
