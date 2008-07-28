@@ -6,6 +6,22 @@ from physics import ccEntity,  BoxGeometry
 
 DEBUG = False
 
+def distance(p1,  p2):
+    x,  y = p2[0] - p1[0],   p2[1] - p1[1]
+    
+    d = sqrt(x*x + y*y)
+    return d
+
+def unitv(p1,  p2):
+    x,  y = p2[0] - p1[0],   p2[1] - p1[1]
+    
+    d = sqrt(x*x + y*y)
+    
+    if d == 0:
+        return 0, 0
+    
+    return x/d,  y/d
+    
 class Box(ccEntity):
     def __init__(self, pos, size, color, col=False):
         """Box
@@ -54,58 +70,50 @@ class Text:
             glutBitmapCharacter(GLUT_BITMAP_8_BY_13, ord(c))
         glPopMatrix()
     
-class Road:
-    def __init__(self, road_points, width=50):
+class Road(ccEntity):
+    def __init__(self, road_points):
+        ccEntity.__init__(self)
         self.road_points = road_points
-        self.width = width
         
-    def update(self):
-        # Dummy update function
-        pass
-    
+    # TODO: handle multipoint roads, only 2 points are supported
+    # TODO: Optimize, preprocess at init and use call lists
     def draw(self):
+        width = glGetIntegerv(GL_LINE_WIDTH)
         for i in xrange(len(self.road_points) - 1):
             p1 = self.road_points[i]
             p2 = self.road_points[i+1]
             
-            # Check if angle could be 90
-            # evading the ZeroDivision exception
-            if p2[0] == p1[0]:
-                if p2[1] < p1[1]:
-                    angle = radians(-90)
-                else:
-                    angle = radians(90)
-            else:
-                m = (p2[1] - p1[1]) / (p2[0] - p1[0])
-                angle = atan(m)
+            d = distance(p1,  p2)
             
-            # Get the perpendicular angle to Line P1-P2 angle
-            angle = angle + radians(90)
+            lc = int(d / 60)
             
-            # Get distance between vectors
-            vlen = sqrt(((p2[0] - p1[0]) ** 2) + ((p2[1] - p1[1]) ** 2))
+            ux,  uy = unitv(p1,  p2)
             
-            if i > 0:
-                # Calculate vectors to just extend past line
-                l1 = l2
-                l4 = l3
-                l2 = (l2[0] + (vlen * cos(angle)), l2[1] + (vlen * -sin(angle)))
-                l3 = (l3[0] + (vlen * cos(angle)), l3[1] + (vlen * -sin(angle)))
-            else:
-                # It is the first line, calculate al vectors
-                l1 = (p1[0] + (-self.width * cos(angle)), p1[1] + (self.width * -sin(angle)))
-                l4 = (p1[0] - (-self.width * cos(angle)), p1[1] - (self.width * -sin(angle)))
+            rx,  ry = -uy * 50,  ux * 50
+            lx,  ly = uy * 50,  -ux * 50
             
-                l2 = (p2[0] + (-self.width * cos(angle)), p2[1] + (self.width * -sin(angle)))
-                l3 = (p2[0] - (-self.width * cos(angle)), p2[1] - (self.width * -sin(angle)))
-            
-            # Set color (greyish)
-            glColor3f(0.4, 0.4, 0.4)
-            
-            # Draw quads
             glBegin(GL_QUADS)
-            glVertex2f(*l1)
-            glVertex2f(*l2)
-            glVertex2f(*l3)
-            glVertex2f(*l4)
+            glColor3f(0.3, 0.3, 0.3)
+            glVertex2f(p1[0]+lx, p1[1]+ly)
+            glVertex2f(p2[0]+lx, p2[1]+ly)
+            glVertex2f(p2[0]+rx, p2[1]+ry)
+            glVertex2f(p1[0]+rx, p1[1]+ry)
             glEnd()
+            
+            
+            cx,  cy = p1
+            glLineWidth(3)
+            for j in xrange(lc):
+                glBegin(GL_LINES)
+                glColor3f(1.0, 1.0, 1.0)
+                glVertex2f(cx,  cy)
+                
+                cx += ux * 45
+                cy += uy * 45
+                
+                glVertex2f(cx,  cy)
+                
+                cx += ux * 15
+                cy += uy * 15
+                glEnd()
+            glLineWidth(width)
