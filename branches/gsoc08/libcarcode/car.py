@@ -120,11 +120,13 @@ class Car(ccEntity):
         # store all the lights in a list for easy processing
         self.lights = [self.rear_brake, self.fl_turn, self.fr_turn,
                        self.bl_turn, self.br_turn]
-
+        
+        loader = helpers.Loader()
+        
         # load sound effects
-        self.horn_sound = helpers.load_sound('carhornshort.wav')
-        self.start_sound = helpers.load_sound('Carstart.wav')
-        self.idle_sound = helpers.load_sound('car_idle.wav', volume = 0.05)
+        self.horn_sound = loader.load_sound('carhornshort.wav')
+        self.start_sound = loader.load_sound('Carstart.wav')
+        self.idle_sound = loader.load_sound('car_idle.wav', volume = 0.05)
         
         self.tracer_color = tracer_color
         self.tracer_down = tracer_down
