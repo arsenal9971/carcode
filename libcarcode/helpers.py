@@ -64,8 +64,8 @@ class Loader:
                     pass
             raise IOError
         
-        def load_image(self,  filename,  colorkey = None):
-            fullname = self.get_image(filename)
+        def load_image(self, filename, colorkey = None):
+            fullname = self.get_image_path(filename)
             try:
                 image = pygame.image.load(fullname)
             except pygame.error, message:
@@ -78,8 +78,8 @@ class Loader:
                 image.set_colorkey(colorkey, RLEACCEL)
             return image, image.get_rect()
             
-        def load_sound(filename, volume = 0.5):
-            fullname = self.get_sound(filename)
+        def load_sound(self, filename, volume = 0.5):
+            fullname = self.get_sound_path(filename)
             try:
                 sound = pygame.mixer.Sound(fullname)
                 sound.set_volume(volume)
@@ -111,21 +111,23 @@ class Loader:
         """
         return self.__singleton__.get_sound_path(filename)
     
-    def load_image(self, filename):
+    def load_image(self, filename,  colorkey = None):
         """ Load a image file to pygame surface from carcode standard image paths 
         
         @param filename string with image filename
+        @param colorkey tuple with key color (r, g, b)
         @return tuple with surface, image rect
         """
-        return self.__singleton__.load_image(filename)
+        return self.__singleton__.load_image(filename,  colorkey)
     
-    def load_sound(self, filename):
+    def load_sound(self, filename,  volume = 0.5):
         """ Load a sound file to pygame sound from carcode standard sound paths 
         
-        @param filename string with image filename
+        @param filename string with sound filename
+        @param volume float with sound volume (default 0.5)
         @return sound object
         """
-        return self.__singleton__.load_sound(filename)
+        return self.__singleton__.load_sound(filename,  volume)
 
 
 def load_texture(filename):
