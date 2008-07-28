@@ -45,11 +45,19 @@ class Widget:
         else:
             self.fontcolor = (1.0,  1.0,  1.0,  1.0)
         
-        if kargs.has_key('pos') and not hasPos:
-            self.pos = [int(x) for x in kargs['pos']]
+        if kargs.has_key('pos'):
+            if not hasPos:
+                self.pos = [int(x) for x in kargs['pos']]
+        else:
+            if not hasPos:
+                self.pos = (0, 0)
         
-        if kargs.has_key('size') and not hasSize:
-            self.size = [int(x) for x in kargs['size']]
+        if kargs.has_key('size'):
+            if not hasSize:
+                self.size = [int(x) for x in kargs['size']]
+        else:
+            if not hasSize:
+                self.size = (10, 10)
             
     def set_size(self,  size):
         """ Set the size of the widget
