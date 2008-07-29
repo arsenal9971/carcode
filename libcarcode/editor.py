@@ -1,3 +1,4 @@
+import os
 import widgets
 
 template = """
@@ -13,7 +14,7 @@ class CarScript:
 
 class Editor(widgets.Window):
     def __init__(self, filename="", callback=None):
-        widgets.Window.__init__(self, "Editor: %s" % filename, size=(700, 500), backcolor=(0.2,0.2,0.2))
+        widgets.Window.__init__(self, "Editor: ", size=(700, 500), backcolor=(0.2,0.2,0.2))
         self.centered = True
         self.callback = callback
         self.filename = filename
@@ -28,15 +29,18 @@ class Editor(widgets.Window):
                 fd = file(filename, 'r')
                 self.txtEditor.set_text(fd.read())
                 fd.close()
+                self.label.set_text('Editor: %s' % os.path.basename(filename))
             except:
                 pass
         else:
             self.txtEditor.set_text(template)
+            self.label.set_text('Editor: *New File*')
         
         self.btnSave = widgets.Button(widgets.Label("Save"))
         self.btnClose = widgets.Button(widgets.Label("Close"))
         
         self.btnClose.onClick.subscribe(self.cbClose)
+        self.btnSave.onClick.subscribe(self.cbSave)
         
         self.layout_menu.add_entity(self.btnSave)
         self.layout_menu.add_entity(self.btnClose)
@@ -45,6 +49,23 @@ class Editor(widgets.Window):
         self.layout.add_entity(self.txtEditor)
         
         self.add_entity(self.layout)
+    
+    def cbSaveDlg(self, filename):
+        self.filename = filename
+        if filename != "":
+            fd = file(filename, 'w')
+            fd.write(self.txtEditor.get_text())
+            fd.close()
+            self.label.set_text("Editor: %s" % os.path.basename(filename))
+        
+    def cbSave(self, btn):
+        if self.filename:
+            self.cbSaveDlg(self.filename)
+        else:
+            dlg = widgets.FileSaveDialog("Save File", callback=self.cbSaveDlg, size=(320, 240))
+            self.parent.add_entity(dlg)
         
     def cbClose(self, btn):
         self.parent.remove_entity(self)
+        if self.callback is not None:
+            self.callback(self.filename)
