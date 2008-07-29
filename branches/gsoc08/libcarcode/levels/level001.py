@@ -12,11 +12,11 @@ class LevelScript:
         
         car = Arena.get_car()
         
-        sensor = ColorSensor(24, 0, (0, 0, 255))
-        car.add_sensor("mainsensor", sensor)
+        self.sensor = ColorSensor(24, 0, (0, 0, 255))
+        car.add_sensor("mainsensor", self.sensor)
         
         g1 = Goal("Reach the finish line", 
-                  lambda : sensor.pixel,  0)
+                  lambda : self.sensor.pixel == True,  0)
                   
         Carcode.set_goals([g1])
         
