@@ -61,26 +61,24 @@ class dlgScriptSelect(widgets.Window):
         self.layout.add_entity(self.layout_buttons, expand = False)
         
         self.add_entity(self.layout)
-        
-    def cbNew(self, filename):
-        pass
     
     def on_new(self, btn):
-        editor = Editor(callback=self.cbNew)
+        editor = Editor(callback=self.cbAdd)
         self.parent.add_entity(editor)
         
     def cbAdd(self, filename):
-        self.scripts.append(filename)
-        self.lstFiles.add_item(os.path.basename(filename))
+        if filename not in self.scripts and filename != "":
+            self.scripts.append(filename)
+            self.lstFiles.add_item(os.path.basename(filename))
         
     def on_add(self, btn):
-        fdialog = widgets.FileDialog("Open File", pos=(100, 100), size=(320, 240), callback=self.cbAdd)
+        fdialog = widgets.FileOpenDialog("Open File", pos=(100, 100), size=(320, 240), callback=self.cbAdd)
         self.parent.add_entity(fdialog)
         
     def on_edit(self, btn):
         if self.lstFiles.selected >= 0:
             idx = self.lstFiles.selected
-            editor = Editor(filename = self.scripts[idx],callback=self.cbNew)
+            editor = Editor(filename = self.scripts[idx],callback=self.cbAdd)
             self.parent.add_entity(editor)
             
     def on_load(self, btn):
@@ -132,7 +130,7 @@ class dlgLevelSelect(widgets.Window):
             self.callback(filename)
     
     def cbFromFile(self, btn):
-        fdialog = widgets.FileDialog("Open File", pos=(100, 100), size=(320, 240), callback=self.cbFromFileDlg)
+        fdialog = widgets.FileOpenDialog("Open File", pos=(100, 100), size=(320, 240), callback=self.cbFromFileDlg)
         self.parent.add_entity(fdialog)
         
     def cbOk(self, btn):
