@@ -35,7 +35,7 @@ class TextArea(Widget):
         self.readonly = False
         self.linestart = 0
         self.lineend = 1
-        self.sb = ScrollBar(maxval=0,  pos=(self.size[0],  0),  size=(12,  self.size[1]),  backcolor=self.backcolor,  forecolor=self.forecolor)
+        self.sb = ScrollBar(maxval=0,  pos=(self.size[0]-12,  0),  size=(12,  self.size[1]),  backcolor=self.backcolor,  forecolor=self.forecolor)
         self.sb.onScroll.subscribe(self.scroll)
     
     def scroll(self, event,  val):
@@ -46,10 +46,9 @@ class TextArea(Widget):
         else:
             self.lineend = len(self.text)
         
-    def set_size(self,  size):
-        Widget.set_size(self,  size)
-        self.mrow = size[1] / 13
-        self.sb.pos = (self.size[0],  0)
+    def on_resize(self):
+        self.mrow = self.size[1] / 13
+        self.sb.pos = (self.size[0]-12,  0)
         self.sb.set_size((12,  self.size[1]))
         
     def set_text(self, text):
@@ -191,7 +190,7 @@ class TextArea(Widget):
         glRecti(1, 1, self.size[0]-1, self.size[1]-1)
         
         clip = Clipper()
-        clip.begin((1, 1, self.size[0]-1, self.size[1]-1))
+        clip.begin((1, 1, self.size[0]-12, self.size[1]-1))
         
         glPushMatrix()
         glTranslatef(2, 13, 0)
