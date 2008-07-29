@@ -16,6 +16,7 @@ class Editor(widgets.Window):
             try:
                 fd = file(filename, 'r')
                 self.txtEditor.set_text(fd.read())
+                fd.close()
             except:
                 pass
         
