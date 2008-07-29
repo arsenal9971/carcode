@@ -38,9 +38,9 @@ class FileSaveDialog(Window):
         
         self.layout = Pack(margin=3, padding=5, size=self.size)
         self.layout_buttons = Pack(orientation = HORIZONTAL, padding=20, margin=5, size=(10,  35))
-        self.layout_filename = Pack(orientation = HORIZONTAL, padding=20, margin=5, size=(10,  35))
+        self.layout_filename = Pack(orientation = HORIZONTAL, padding=4, margin=2, size=(10,  20))
         
-        self.flist = ListBox((5,5), (self.size[0]-10, self.size[1]-50), backcolor=(0.2,0.2,0.2))
+        self.flist = ListBox((5,5), (10, 50), backcolor=(0.2,0.2,0.2))
         
         self.lblFilename = Label("Filename:")
         self.txtFilename = TextBox()
