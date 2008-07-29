@@ -1,6 +1,9 @@
+import glob
 import os
+
 import helpers
 import widgets
+
 VERSION = "3.0 Beta 1"
 
 help_text = """Keyboard Controls
@@ -17,7 +20,57 @@ Arrows:
 - q  Quit
 """
 
-class winHelp(widgets.Window):
+class dlgLevelSelect(widgets.Window):
+    def __init__(self,  callback = None):
+        widgets.Window.__init__(self, "Choose Level",  modal=True,  pos=(0, 0),  size=(300, 240),  backcolor=(0.2, 0.2, 0.2))
+        self.centered = True
+        self.callback = callback
+        self.layout = widgets.Pack(margin=3, padding=5, size=self.size)
+        
+        self.btnFile = widgets.Button(widgets.Label("From file"), size=(80, 24))
+        self.toplayout = widgets.Pack(orientation = widgets.HORIZONTAL, size=(10, 24))
+        self.toplayout.add_entity(self.btnFile, expand=False)
+        self.btnFile.onClick.subscribe(self.cbFromFile)
+        
+        self.lstLevels = widgets.ListBox(backcolor=self.backcolor)
+        self.btnOk = widgets.Button(widgets.Label("Ok"), size=(32, 32))
+        
+        self.btnOk.onClick.subscribe(self.cbOk)
+        
+        self.loader = helpers.Loader()
+        lpath = self.loader.get_base_level_paths()[0]
+        ll = glob.glob(os.path.join(lpath, '*.py'))
+        self.flist = [os.path.basename(filename) for filename in ll]
+        
+        self.lstLevels.add_list(self.flist)
+        
+        self.layout.add_entity(self.toplayout, expand=False)
+        self.layout.add_entity(self.lstLevels)
+        self.layout.add_entity(self.btnOk,  expand=False)
+        self.add_entity(self.layout)
+        
+    def cbFromFileDlg(self, filename):
+        self.parent.remove_entity(self)
+        if self.callback is not None:
+            self.callback(filename)
+    
+    def cbFromFile(self, btn):
+        fdialog = widgets.FileDialog("Open File", pos=(100, 100), size=(320, 240), callback=self.cbFromFileDlg)
+        self.parent.add_entity(fdialog)
+        
+    def cbOk(self, btn):
+        self.parent.remove_entity(self)
+        print self.lstLevels.selected
+        if self.callback is not None:
+            if self.lstLevels.selected >= 0:
+                filename = self.flist[self.lstLevels.selected]
+                filepath = self.loader.get_level_path(filename)
+                print filename, filepath
+            else:
+                filepath = ""
+            self.callback(filepath)
+            
+class dlgHelp(widgets.Window):
     def __init__(self):
         widgets.Window.__init__(self, "Carcode Help",  modal=True,  pos=(0, 0),  size=(300, 400),  backcolor=(0.2, 0.2, 0.2))
         self.centered = True
@@ -74,14 +127,14 @@ class MainWindow(widgets.Window):
         self.script = ""
         
     def cbHelp(self,  btn):
-        w = winHelp()
+        w = dlgHelp()
         self.parent.add_entity(w)
         
     def cbLoad(self, filename):
         self.level = filename
         
     def OnLoad(self, button):
-        fdialog = widgets.FileDialog("Open Level", pos=(100, 100), size=(320, 240), callback=self.cbLoad)
+        fdialog = dlgLevelSelect(callback=self.cbLoad)
         self.parent.add_entity(fdialog)
         
     def cbScript(self, filename):
