@@ -30,7 +30,7 @@ class Loader:
                 self.base_path.append(CARCODE_PATH)
                 self.image_path.append(os.path.join(CARCODE_PATH, 'media', 'images'))
                 self.sound_path.append(os.path.join(CARCODE_PATH, 'media', 'sound'))
-                self.sound_path.append(os.path.join(CARCODE_PATH, 'levels'))
+                self.level_path.append(os.path.join(CARCODE_PATH, 'levels'))
             else:
                 path = CARCODE_PATH
                 for i in xrange(2):
@@ -39,7 +39,7 @@ class Loader:
                         self.base_path.append(path)
                         self.image_path.append(os.path.join(path, 'media', 'images'))
                         self.sound_path.append(os.path.join(path, 'media', 'sound'))
-                        self.sound_path.append(os.path.join(path, 'levels'))
+                        self.level_path.append(os.path.join(path, 'levels'))
                         break
                         
             unix_path = '/usr/share/carcode'
@@ -47,7 +47,7 @@ class Loader:
                 self.base_path.append(unix_path)
                 self.image_path.append(os.path.join(unix_path, 'media', 'images'))
                 self.sound_path.append(os.path.join(unix_path, 'media', 'sound'))
-                self.sound_path.append(os.path.join(unix_path, 'levels'))
+                self.level_path.append(os.path.join(unix_path, 'levels'))
             
         def get_level_path(self,  filename):
             for path in self.level_path:
