@@ -65,6 +65,11 @@ class Widget:
         @param size tuple with widget size (width, height)
         """
         self.size = size
+        self.on_resize()
+    
+    def on_resize(self):
+        """ Function called when widget is resized """
+        pass
     
     def get_size(self):
         """ Get the widget size tuple 
