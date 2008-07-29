@@ -1,6 +1,7 @@
 import glob
 import os
 
+from editor import Editor
 import helpers
 import widgets
 
@@ -31,6 +32,7 @@ class dlgScriptSelect(widgets.Window):
         widgets.Window.__init__(self, "Choose Car Script",  modal=True,  pos=(0, 0),  size=(450, 320),  backcolor=(0.2, 0.2, 0.2))
         self.centered = True
         self.callback = callback
+        self.scripts = []
         
         self.layout = widgets.Pack(orientation=widgets.HORIZONTAL, margin=3, padding=3, size=self.size)
         self.layout_buttons = widgets.Pack(margin=3, padding=5, size=(120, 10))
@@ -60,14 +62,38 @@ class dlgScriptSelect(widgets.Window):
         
         self.add_entity(self.layout)
         
+    def cbNew(self, filename):
+        pass
+    
     def on_new(self, btn):
-        pass
+        editor = Editor(callback=self.cbNew)
+        self.parent.add_entity(editor)
+        
+    def cbAdd(self, filename):
+        self.scripts.append(filename)
+        self.lstFiles.add_item(os.path.basename(filename))
+        
     def on_add(self, btn):
-        pass
+        fdialog = widgets.FileDialog("Open File", pos=(100, 100), size=(320, 240), callback=self.cbAdd)
+        self.parent.add_entity(fdialog)
+        
     def on_edit(self, btn):
-        pass
+        if self.lstFiles.selected >= 0:
+            idx = self.lstFiles.selected
+            editor = Editor(filename = self.scripts[idx],callback=self.cbNew)
+            self.parent.add_entity(editor)
+            
     def on_load(self, btn):
-        pass
+        self.parent.remove_entity(self)
+        if self.lstFiles.selected >= 0:
+            idx = self.lstFiles.selected
+            filename = self.scripts[idx]
+        else: 
+            filename = ""
+            
+        if self.callback is not None:
+            self.callback(filename)
+            
     def on_close(self, btn):
         self.parent.remove_entity(self)
 
