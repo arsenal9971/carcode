@@ -17,8 +17,59 @@ Arrows:
 - s  Start/stop engine
 - g  Change gears (forward/reverse)
 
+- h  Honk
+- t  Turn tracer lines
+- z  Turn left blinker light
+- c  Turn right blinker light
+
+- p  Pause
 - q  Quit
 """
+
+class dlgScriptSelect(widgets.Window):
+    def __init__(self, callback):
+        widgets.Window.__init__(self, "Choose Car Script",  modal=True,  pos=(0, 0),  size=(450, 320),  backcolor=(0.2, 0.2, 0.2))
+        self.centered = True
+        self.callback = callback
+        
+        self.layout = widgets.Pack(orientation=widgets.HORIZONTAL, margin=3, padding=3, size=self.size)
+        self.layout_buttons = widgets.Pack(margin=3, padding=5, size=(120, 10))
+        
+        self.lstFiles = widgets.ListBox(backcolor=self.backcolor)
+        
+        self.btnNew = widgets.Button(widgets.Label("New Script"))
+        self.btnAdd = widgets.Button(widgets.Label("Add From File"))
+        self.btnEdit = widgets.Button(widgets.Label("Edit File"))
+        self.btnLoad = widgets.Button(widgets.Label("Load Selected"))
+        self.btnClose = widgets.Button(widgets.Label("Close"))
+        
+        self.btnNew.onClick.subscribe(self.on_new)
+        self.btnAdd.onClick.subscribe(self.on_add)
+        self.btnEdit.onClick.subscribe(self.on_edit)
+        self.btnLoad.onClick.subscribe(self.on_load)
+        self.btnClose.onClick.subscribe(self.on_close)
+        
+        self.layout_buttons.add_entity(self.btnNew)
+        self.layout_buttons.add_entity(self.btnAdd)
+        self.layout_buttons.add_entity(self.btnEdit)
+        self.layout_buttons.add_entity(self.btnLoad)
+        self.layout_buttons.add_entity(self.btnClose)
+        
+        self.layout.add_entity(self.lstFiles)
+        self.layout.add_entity(self.layout_buttons, expand = False)
+        
+        self.add_entity(self.layout)
+        
+    def on_new(self, btn):
+        pass
+    def on_add(self, btn):
+        pass
+    def on_edit(self, btn):
+        pass
+    def on_load(self, btn):
+        pass
+    def on_close(self, btn):
+        self.parent.remove_entity(self)
 
 class dlgLevelSelect(widgets.Window):
     def __init__(self,  callback = None):
@@ -60,7 +111,6 @@ class dlgLevelSelect(widgets.Window):
         
     def cbOk(self, btn):
         self.parent.remove_entity(self)
-        print self.lstLevels.selected
         if self.callback is not None:
             if self.lstLevels.selected >= 0:
                 filename = self.flist[self.lstLevels.selected]
@@ -72,11 +122,13 @@ class dlgLevelSelect(widgets.Window):
             
 class dlgHelp(widgets.Window):
     def __init__(self):
-        widgets.Window.__init__(self, "Carcode Help",  modal=True,  pos=(0, 0),  size=(300, 400),  backcolor=(0.2, 0.2, 0.2))
+        widgets.Window.__init__(self, "Carcode Help",  modal=True,  pos=(0, 0),  size=(350, 300),  backcolor=(0.2, 0.2, 0.2))
         self.centered = True
-        self.layout = widgets.Pack(padding=10,  margins=5,  pos=(0, 0),  size=self.size)
+        self.layout = widgets.Pack(padding=10,  margin=5,  pos=(0, 0),  size=self.size)
         
         self.txtHelp = widgets.TextArea(backcolor=self.backcolor)
+        self.txtHelp.readonly = True
+        
         self.btnClose = widgets.Button(widgets.Label("Close"),  size=(32,  32))
         self.btnClose.onClick.subscribe(self.cbClose)
         
@@ -141,5 +193,6 @@ class MainWindow(widgets.Window):
         self.script = filename
         
     def OnScript(self, button):
-        fdialog = widgets.FileDialog("Open Script", pos=(100, 100), size=(320, 240), callback=self.cbScript)
+        #fdialog = widgets.FileDialog("Open Script", pos=(100, 100), size=(320, 240), callback=self.cbScript)
+        fdialog = dlgScriptSelect(self.cbScript)
         self.parent.add_entity(fdialog)
