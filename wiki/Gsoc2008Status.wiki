@@ -10,9 +10,9 @@
  * Implement sensors to car API (r102)
  * Implement level creation format (r71, r103)
  * Implement event tracking (r235, r253)
+ * Add script editor (r313, r317, r321)
 
 ------------------------------------------------------------------------------
 
 == TODO ==
- * Create driving tests
- * Add script editor
+ * Create driving tests (r301, LevelDesign)
