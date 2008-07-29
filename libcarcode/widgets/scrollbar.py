@@ -67,6 +67,16 @@ class ScrollBar(Widget):
         self.startitem = 0
         self.maxoffset = 0
     
+    def on_resize(self):
+        self.barh = (self.size[1] - 24) / 5
+        self.maxy = self.size[1] - self.barh - 24
+        
+        self.arrowup.set_pos((0,0))
+        self.arrowdown.set_pos((0,self.size[1]-12))
+        
+        self.arrowdown.set_size((self.size[0],12))
+        self.arrowup.set_size((self.size[0],12))
+        
     def set_value(self,  value):
         """ Set the scrollbar value
         
