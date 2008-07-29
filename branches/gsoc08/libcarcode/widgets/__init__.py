@@ -10,7 +10,7 @@ from button import Button
 from checkbox import Checkbox
 from console import Console
 from dialog import Dialog
-from filedialog import FileDialog
+from filedialog import FileOpenDialog, FileSaveDialog
 from frame import Frame
 from image import Image
 from label import Label
