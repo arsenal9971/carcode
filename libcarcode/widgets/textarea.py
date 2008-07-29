@@ -125,6 +125,10 @@ class TextArea(Widget):
             elif event.key == K_LEFT:
                 if self.xcursor > 0:
                     self.xcursor -= 1
+            elif event.key == K_HOME:
+                self.xcursor = 0
+            elif event.key == K_END:
+                self.xcursor = len(cline)
             elif event.key == K_RIGHT:
                 if self.xcursor < len(self.text[self.ycursor]):
                     self.xcursor += 1
