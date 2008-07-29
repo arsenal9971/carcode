@@ -50,20 +50,28 @@ class TextArea(Widget):
         self.mrow = self.size[1] / 13
         self.sb.pos = (self.size[0]-12,  0)
         self.sb.set_size((12,  self.size[1]))
-        
+        self.linestart = 0
+        if len(self.text) > self.mrow:
+            self.sb.set_maxvalue(len(self.text) - self.mrow)
+            self.sb.set_value(0)
+            self.lineend = self.mrow
+        else:
+            self.lineend = len(self.text)
+            self.sb.set_maxvalue(0)
+            
     def set_text(self, text):
         """ Set the widget text
         
             @param text string to edit
         """
         self.text = text.split('\n')
+        self.linestart = 0
         if len(self.text) > self.mrow:
             self.sb.set_maxvalue(len(self.text) - self.mrow)
             self.sb.set_value(0)
+            self.lineend = self.mrow
         else:
-            if self.lineend < len(self.text):
-                self.lineend = len(self.text)
-                
+            self.lineend = len(self.text)
             self.sb.set_maxvalue(0)
         
     def get_text(self):
