@@ -1,5 +1,16 @@
 import widgets
 
+template = """
+class CarScript:
+    def __init__(self, car):
+        # Your initialization code here
+        pass
+        
+    def update(self, car):
+        # Main script code here
+        pass
+"""
+
 class Editor(widgets.Window):
     def __init__(self, filename="", callback=None):
         widgets.Window.__init__(self, "Editor: %s" % filename, size=(700, 500), backcolor=(0.2,0.2,0.2))
@@ -19,6 +30,8 @@ class Editor(widgets.Window):
                 fd.close()
             except:
                 pass
+        else:
+            self.txtEditor.set_text(template)
         
         self.btnSave = widgets.Button(widgets.Label("Save"))
         self.btnClose = widgets.Button(widgets.Label("Close"))
