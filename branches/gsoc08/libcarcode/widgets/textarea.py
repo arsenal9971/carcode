@@ -107,6 +107,10 @@ class TextArea(Widget):
                     self.sb.set_maxvalue(len(self.text) - self.mrow)
                 else:
                     self.sb.set_maxvalue(0)
+            elif event.key == K_TAB:
+                l = len(self.text[self.ycursor])
+                self.text[self.ycursor] = self.text[self.ycursor][0:self.xcursor] + '    ' + self.text[self.ycursor][self.xcursor:l]
+                self.xcursor += 4
             elif event.key == K_DELETE:
                 if self.xcursor < clen:
                     self.text[self.ycursor] = cline[0:self.xcursor] + cline[self.xcursor+1:clen]
