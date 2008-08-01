@@ -32,17 +32,20 @@ class Editor(widgets.Window):
                 self.label.set_text('Editor: %s' % os.path.basename(filename))
             except:
                 pass
-        else:
-            self.txtEditor.set_text(template)
-            self.label.set_text('Editor: *New File*')
         
+        self.btnNew = widgets.Button(widgets.Label("New"))
         self.btnSave = widgets.Button(widgets.Label("Save"))
+        self.btnOpen = widgets.Button(widgets.Label("Open"))
         self.btnClose = widgets.Button(widgets.Label("Close"))
         
         self.btnClose.onClick.subscribe(self.cbClose)
+        self.btnOpen.onClick.subscribe(self.cbOpen)
         self.btnSave.onClick.subscribe(self.cbSave)
+        self.btnNew.onClick.subscribe(self.cbNew)
         
+        self.layout_menu.add_entity(self.btnNew)
         self.layout_menu.add_entity(self.btnSave)
+        self.layout_menu.add_entity(self.btnOpen)
         self.layout_menu.add_entity(self.btnClose)
         
         self.layout.add_entity(self.layout_menu, expand=False)
@@ -50,6 +53,11 @@ class Editor(widgets.Window):
         
         self.add_entity(self.layout)
     
+    def cbNew(self, btn):
+        self.txtEditor.set_text(template)
+        self.label.set_text('Editor: *New File*')
+        self.filename = ""
+            
     def cbSaveDlg(self, filename):
         self.filename = filename
         if filename != "":
@@ -64,7 +72,22 @@ class Editor(widgets.Window):
         else:
             dlg = widgets.FileSaveDialog("Save File", callback=self.cbSaveDlg, size=(320, 240))
             self.parent.add_entity(dlg)
-        
+
+    def cbOpenDlg(self, filename):
+        if filename:
+            try:
+                fd = file(filename, 'r')
+                self.txtEditor.set_text(fd.read())
+                fd.close()
+                self.label.set_text('Editor: %s' % os.path.basename(filename))
+                self.filename = filename
+            except:
+                pass
+    
+    def cbOpen(self, btn):
+        dlg = widgets.FileOpenDialog("Open Script", callback=self.cbOpenDlg, size=(320, 240))
+        self.parent.add_entity(dlg)
+    
     def cbClose(self, btn):
         self.parent.remove_entity(self)
         if self.callback is not None:
