@@ -217,6 +217,5 @@ class MainWindow(widgets.Window):
         self.script = filename
         
     def OnScript(self, button):
-        #fdialog = widgets.FileDialog("Open Script", pos=(100, 100), size=(320, 240), callback=self.cbScript)
-        fdialog = dlgScriptSelect(self.cbScript)
+        fdialog = Editor(callback=self.cbScript)
         self.parent.add_entity(fdialog)
