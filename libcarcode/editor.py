@@ -36,8 +36,10 @@ class Editor(widgets.Window):
         self.btnNew = widgets.Button(widgets.Label("New"))
         self.btnSave = widgets.Button(widgets.Label("Save"))
         self.btnOpen = widgets.Button(widgets.Label("Open"))
-        self.btnClose = widgets.Button(widgets.Label("Close"))
+        self.btnClose = widgets.Button(widgets.Label("Done"))
+        self.btnCancel = widgets.Button(widgets.Label("Cancel"))
         
+        self.btnCancel.onClick.subscribe(self.cbCancel)
         self.btnClose.onClick.subscribe(self.cbClose)
         self.btnOpen.onClick.subscribe(self.cbOpen)
         self.btnSave.onClick.subscribe(self.cbSave)
@@ -46,6 +48,7 @@ class Editor(widgets.Window):
         self.layout_menu.add_entity(self.btnNew)
         self.layout_menu.add_entity(self.btnSave)
         self.layout_menu.add_entity(self.btnOpen)
+        self.layout_menu.add_entity(self.btnCancel)
         self.layout_menu.add_entity(self.btnClose)
         
         self.layout.add_entity(self.layout_menu, expand=False)
@@ -88,6 +91,11 @@ class Editor(widgets.Window):
         dlg = widgets.FileOpenDialog("Open Script", callback=self.cbOpenDlg, size=(320, 240))
         self.parent.add_entity(dlg)
     
+    def cbCancel(self, btn):
+        self.parent.remove_entity(self)
+        if self.callback is not None:
+            self.callback("")
+            
     def cbClose(self, btn):
         self.parent.remove_entity(self)
         if self.callback is not None:
