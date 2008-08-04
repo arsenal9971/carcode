@@ -17,6 +17,9 @@ debian/docs
 debian/changelog
 libcarcode
 libcarcode/__init__.py
+libcarcode/levels
+libcarcode/levels/__init__.py
+libcarcode/levels/level001.py
 libcarcode/media
 libcarcode/media/__init__.py
 libcarcode/media/images
