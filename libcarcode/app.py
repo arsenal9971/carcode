@@ -158,10 +158,7 @@ class CarcodeApp:
         'ccEntity': physics.ccEntity, 
         'BoxGeometry': physics.BoxGeometry, 
         'EventDispatcher': widgets.EventDispatcher, 
-        'AND': events.AND, 
-        'OR': events.OR, 
         'Goal': events.Goal, 
-        'Chain': events.Chain, 
         'Score': events.Score
         }
         for k in OpenGL.GL.__dict__.keys():
