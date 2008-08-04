@@ -189,7 +189,21 @@ class TextArea(Widget):
             inX = lambda x: x >= self.pos[0] and x <= self.pos[0]+self.size[0]
             inY = lambda y: y >= self.pos[1] and y <= self.pos[1]+self.size[1]
             if inX(event.pos[0]) and inY(event.pos[1]):
-                self.focus = True
+                if self.focus:
+                    lineY = (event.pos[1] - self.pos[1]) / 13
+                    if lineY > len(self.text):
+                        self.ycursor = len(self.text) - 1
+                    else:
+                        self.ycursor = self.linestart + lineY
+                        
+                    lineX = (event.pos[0] - self.pos[0]) / 8
+                    if lineX > len(self.text[self.ycursor]):
+                        self.xcursor = len(self.text[self.ycursor])
+                    else:
+                        self.xcursor = lineX
+                    print (event.pos[0] - self.pos[0]), lineX, self.xcursor
+                else:
+                    self.focus = True
                 return True
             else:
                 self.focus = False
