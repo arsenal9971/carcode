@@ -159,8 +159,10 @@ class Road(ccEntity):
                 lx, ly = uy * 50,  -ux * 50
             
             pu = -ux, -uy
-            pr = rx, ry
-            pl = lx, ly
+            pr = -uy * 50,  ux * 50
+            pl = uy * 50,  -ux * 50
+            #pr = rx, ry
+            #pl = lx, ly
             
             if i == len(path)-1:
                 v1 = v2
