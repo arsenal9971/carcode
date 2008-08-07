@@ -59,6 +59,7 @@ class CarcodeApp:
         @param width app window width
         @param height app window height
         """
+        stencildepths = [1, 8, 16, 0]
         
         if not pygame.font: print 'Warning, fonts disabled'
         if not pygame.mixer: print 'Warning, sound disabled'
@@ -66,12 +67,17 @@ class CarcodeApp:
         # Initialize pygame
         pygame.init()
         
-        pygame.key.set_repeat(200, 50)
+        pygame.key.set_repeat(200, 50)        
         
-        pygame.display.gl_set_attribute(GL_STENCIL_SIZE, 1)
+        for ssize in stencildepths:
+            try:
+                pygame.display.gl_set_attribute(GL_STENCIL_SIZE, ssize)
         
-        # Create screen surface and initialize key commands
-        self.screen = pygame.display.set_mode((width, height), OPENGL | DOUBLEBUF)
+                # Create screen surface and initialize key commands
+                self.screen = pygame.display.set_mode((width, height), OPENGL | DOUBLEBUF)
+                break
+            except:
+                pass
         
         #Initialize GLUT, requiered in some platforms
         glutInit([])
