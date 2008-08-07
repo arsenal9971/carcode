@@ -74,32 +74,32 @@ class Road(ccEntity):
     def __init__(self, road_points):
         ccEntity.__init__(self)
         self.road_points = road_points
-        
-    # TODO: handle multipoint roads, only 2 points are supported
-    # TODO: Optimize, preprocess at init and use call lists
-    def draw(self):
+        self.genPoints(self.road_points)
         width = glGetIntegerv(GL_LINE_WIDTH)
-        for i in xrange(len(self.road_points) - 1):
-            p1 = self.road_points[i]
-            p2 = self.road_points[i+1]
-            
-            d = distance(p1,  p2)
-            
-            lc = int(d / 60)
-            
-            ux,  uy = unitv(p1,  p2)
-            
-            rx,  ry = -uy * 50,  ux * 50
-            lx,  ly = uy * 50,  -ux * 50
+        
+        self.glist = glGenLists(1)
+        glNewList(self.glist, GL_COMPILE)
+        
+        for i in xrange(len(self.vlist) - 1):
+            v1, v4 = self.vlist[i]
+            v2, v3 = self.vlist[i+1]
             
             glBegin(GL_QUADS)
             glColor3f(0.3, 0.3, 0.3)
-            glVertex2f(p1[0]+lx, p1[1]+ly)
-            glVertex2f(p2[0]+lx, p2[1]+ly)
-            glVertex2f(p2[0]+rx, p2[1]+ry)
-            glVertex2f(p1[0]+rx, p1[1]+ry)
+            glVertex2f(*v1)
+            glVertex2f(*v2)
+            glVertex2f(*v3)
+            glVertex2f(*v4)
             glEnd()
             
+        for i in xrange(len(self.road_points)-1):
+            p1 = self.road_points[i]
+            p2 = self.road_points[i+1]
+            
+            d = distance(p1, p2)
+            lc = int(d / 60)
+            
+            ux, uy = unitv(p1, p2)
             
             cx,  cy = p1
             glLineWidth(3)
@@ -117,3 +117,58 @@ class Road(ccEntity):
                 cy += uy * 15
                 glEnd()
             glLineWidth(width)
+        glEndList()
+        
+    def __del__(self):
+        try:
+            glDeleteLists(self.glist, 1)
+        except:
+            pass
+        
+    # TODO: Reduce path skewing
+    def genPoints(self, path):
+        self.vlist = []
+        print 'Path:', path
+        pr = None
+        pl = None
+        for i in xrange(len(path)):
+            if i == len(path)-1:
+                v1 = path[i-1]
+                v2 = path[i]
+            else:
+                v1 = path[i]
+                v2 = path[i+1]
+            
+            ux, uy = unitv(v1, v2)
+            
+            if pr:
+                rx, ry = -uy * 50,  ux * 50
+                lx, ly = uy * 50,  -ux * 50
+                
+                dp = rx * pu[0] + ry * pu[1]
+                px = pu[0] * dp
+                py = pu[1] * dp
+                rx, ry = pr[0] + px , pr[1] + py 
+                
+                dp = lx * pu[0] + ly * pu[1]
+                px = pu[0] * dp
+                py = pu[1] * dp
+                lx, ly = pl[0] + px , pl[1] + py 
+            else:
+                rx, ry = -uy * 50,  ux * 50
+                lx, ly = uy * 50,  -ux * 50
+            
+            pu = -ux, -uy
+            pr = rx, ry
+            pl = lx, ly
+            
+            if i == len(path)-1:
+                v1 = v2
+
+            p1 = v1[0] + rx, v1[1] + ry
+            p2 = v1[0] + lx, v1[1] + ly
+            self.vlist.append((p1, p2))
+        print self.vlist
+            
+    def draw(self):
+        glCallList(self.glist)
