@@ -221,7 +221,9 @@ class PhysicsEngine:
             if Ye2[1] < Ye1[0]:
                 return (False, False)
                 
-        d = sqrt((c1[0]*c2[0]) + (c1[1] * c2[1]))
+        x = c1[0] - c2[0]
+        y = c1[1] - c2[1]
+        d = sqrt(x*x + y*y)
         
         if d == 0:
             return True,  False
