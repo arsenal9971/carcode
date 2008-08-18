@@ -2,6 +2,8 @@
 class LevelScript:
     name = "Entry"
     description = """
+    A simple test to get used to carcode controls
+    and interface in general.
     """
     def __init__(self):
         road_points = [(-50,  -20),  (800,  -20)]
