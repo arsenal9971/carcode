@@ -116,6 +116,8 @@ class dlgLevelSelect(widgets.Window):
         lpath = self.loader.get_base_level_paths()[0]
         ll = glob.glob(os.path.join(lpath, '*.py'))
         self.flist = [os.path.basename(filename) for filename in ll]
+        self.flist.remove('__init__.py')
+        self.flist.sort()
         
         self.lstLevels.add_list(self.flist)
         
