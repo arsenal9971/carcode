@@ -158,10 +158,11 @@ class TextArea(Widget):
                     self.text[self.ycursor] = cline[0:self.xcursor]
                 self.ycursor += 1
                 self.xcursor = 0
-                if self.ycursor < len(self.text) -1:
+                if self.ycursor == len(self.text) -1:
                     self.text.append(itext)
                 else:
                     self.text.insert(self.ycursor, itext)
+                    
                 if len(self.text) > self.mrow:
                     self.sb.set_maxvalue(len(self.text) - self.mrow)
                     self.sb.set_value(len(self.text) - self.mrow)
