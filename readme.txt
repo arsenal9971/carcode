@@ -1,5 +1,5 @@
                              README
-                    Carcode v3.0 Alpha2
+                    Carcode v3.0 Beta 1
 =====================================================================
 
 This is an alpha release "As is"  from our current development code, 
@@ -7,7 +7,7 @@ it is not fully featured  but is functional, you may want to try it
 and experiment with it.
 
 Please report any issues to our issue tracker (see link below), 
-add the tag/label "Milestone-Alpha2" to separate it from 
+add the tag/label "Milestone-Beta1" to separate it from 
 other releases.
 
 Home Page
