@@ -1,0 +1,3 @@
+carcode is an experiment in programming education. The idea is to give beginning programmers carcode, which provides an animated car they can drive around the screen either using the keyboard, or programmatically through a simple API. By working on a series of problems (such as "park the car in parking space A"), beginners learn to program in an engaging, and goal-driven environment they already have much familiarity with.
+
+If you are interesting in using or helping to develop carcode, consider joining the carcode mailing list: http://groups.google.com/group/carcode?lnk=gcimv
